@@ -1152,7 +1152,7 @@ def kickstart(db, bitcoind_dir):
         else:
             bitcoind_dir = os.path.expanduser('~/.unobtanium')
     if not os.path.isdir(bitcoind_dir):
-        raise Exception('Unobtanium Core data directory not found at {}. Use --bxtcoind-dir parameter.'.format(bitcoind_dir))
+        raise Exception('Unobtanium Core data directory not found at {}. Use --bitcoind-dir parameter.'.format(bitcoind_dir))
 
     cursor = db.cursor()
 

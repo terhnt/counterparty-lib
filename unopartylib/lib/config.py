@@ -34,7 +34,7 @@ OP_RETURN_MAX_SIZE = 80  # bytes
 
 # Currency agnosticism
 BTC = 'UNO'
-XUP = 'XUP'
+XCP = 'XUP'
 
 BTC_NAME = 'Unobtanium'
 XUP_NAME = 'Unoparty'

@@ -757,7 +757,7 @@ class APIServer(threading.Thread):
             return {
                 'server_ready': server_ready,
                 'db_caught_up': caught_up,
-                'unobtanium_block_count': latestBlockIndex,
+                'bitcoin_block_count': latestBlockIndex,
                 'last_block': last_block,
                 'indexd_caught_up': indexd_caught_up,
                 'indexd_blocks_behind': indexd_blocks_behind,

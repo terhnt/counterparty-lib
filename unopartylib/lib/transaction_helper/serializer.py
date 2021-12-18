@@ -18,7 +18,7 @@ import requests
 import bitcoin as bitcoinlib
 from bitcoin.core import Hash160
 from bitcoin.core.script import CScript
-from bitcoin.wallet import P2PKHBitcoinAddress, P2SHUnobtaniumAddress
+from bitcoin.wallet import P2PKHBitcoinAddress, P2SHBitcoinAddress
 import cachetools
 
 from unopartylib.lib import config
