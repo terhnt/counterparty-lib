@@ -9,7 +9,7 @@
 # Description
 `unoparty-lib` is the reference implementation of the [Unoparty Protocol](https://unoparty.io).
 
-**Note:** for the command-line interface to `unoparty-lib`, see [`unoparty-cli`](https://github.com/terhnt/UnopartyXUP/unoparty-cli).
+**Note:** for the command-line interface to `unoparty-lib`, see [`unoparty-cli`](https://github.com/terhnt/unoparty-cli).
 
 
 # Installation
@@ -38,15 +38,15 @@ addresstype=legacy
 
 Download and install latest addrindexrs:
 ```
-$ git clone https://github.com/terhnt/UnopartyXUP/addrindexrs.git
+$ git clone https://github.com/terhnt/addrindexrs.git
 $ cd addrindexrs
 $ cargo check
  -- Setup the appropiate environment variables --
   - ADDRINDEXRS_JSONRPC_IMPORT=1
   - ADDRINDEXRS_TXID_LIMIT=15000
   - ADDRINDEXRS_COOKIE=user:password
-  - ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8432
-  - ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:8332
+  - ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8122
+  - ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:8120
  --
 $ cargo build --release
 $ cargo run --release
@@ -57,7 +57,7 @@ You could run the indexd daemon with a process manager like `forever` or `pm2` (
 Then, download and install `unoparty-lib`:
 
 ```
-$ git clone https://github.com/terhnt/UnopartyXUP/unoparty-lib.git
+$ git clone https://github.com/terhnt/unoparty-lib.git
 $ cd unoparty-lib
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install
@@ -66,7 +66,7 @@ $ sudo python3 setup.py install
 Followed by `unoparty-cli`:
 
 ```
-$ git clone https://github.com/terhnt/UnopartyXUP/unoparty-cli.git
+$ git clone https://github.com/terhnt/unoparty-cli.git
 $ cd unoparty-cli
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install
@@ -145,7 +145,7 @@ A `unoparty-server` configuration file looks like this:
 	backend-user = <user>
 	backend-password = <password>
 	indexd-connect = localhost
-	indexd-port = 8432
+	indexd-port = 8122
 	rpc-host = 0.0.0.0
 	rpc-user = <rpcuser>
 	rpc-password = <rpcpassword>
