@@ -37,8 +37,8 @@ BTC = 'UNO'
 XCP = 'XUP'
 
 BTC_NAME = 'Unobtanium'
-XUP_NAME = 'Unoparty'
-APP_NAME = XUP_NAME.lower()
+XCP_NAME = 'Unoparty'
+APP_NAME = XCP_NAME.lower()
 
 DEFAULT_RPC_PORT_REGTEST = 24120
 DEFAULT_RPC_PORT_TESTNET = 14120
