@@ -30,8 +30,8 @@ CREATE TABLE assets(
                       asset_name TEXT UNIQUE,
                       block_index INTEGER,
                       asset_longname TEXT);
-INSERT INTO assets VALUES('0','BTC',NULL,NULL);
-INSERT INTO assets VALUES('1','XCP',NULL,NULL);
+INSERT INTO assets VALUES('0','UNO',NULL,NULL);
+INSERT INTO assets VALUES('1','XUP',NULL,NULL);
 INSERT INTO assets VALUES('18279','BBBB',310005,NULL);
 INSERT INTO assets VALUES('18280','BBBC',310006,NULL);
 -- Triggers and indices on  assets
@@ -54,8 +54,8 @@ CREATE TABLE balances(
                       address TEXT,
                       asset TEXT,
                       quantity INTEGER);
-INSERT INTO balances VALUES('2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',149849426438);
-INSERT INTO balances VALUES('2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50420824);
+INSERT INTO balances VALUES('2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',149849426438);
+INSERT INTO balances VALUES('2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50420824);
 INSERT INTO balances VALUES('2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',996000000);
 INSERT INTO balances VALUES('2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',89474);
 INSERT INTO balances VALUES('2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',4000000);
@@ -453,30 +453,30 @@ CREATE TABLE credits(
                       calling_function TEXT,
                       event TEXT,
                       FOREIGN KEY (block_index) REFERENCES blocks(block_index));
-INSERT INTO credits VALUES(310000,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',93000000000,'burn','5fde1c728d8d00aaa1b5f8dae963ceb4fd30c415eb0b8a982ba2d8d676fec0bb');
-INSERT INTO credits VALUES(310001,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50000000,'send','63242f35c724cd03163541785b69fbd620df9ebeb72706a0caeb5e19ce7680cc');
-INSERT INTO credits VALUES(310004,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',100000000,'btcpay','f307fdf5e231e05f9e9ecf23e5fc8bfff87951b223575840690b3f8bb502ad0f');
+INSERT INTO credits VALUES(310000,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',93000000000,'burn','5fde1c728d8d00aaa1b5f8dae963ceb4fd30c415eb0b8a982ba2d8d676fec0bb');
+INSERT INTO credits VALUES(310001,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50000000,'send','63242f35c724cd03163541785b69fbd620df9ebeb72706a0caeb5e19ce7680cc');
+INSERT INTO credits VALUES(310004,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',100000000,'btcpay','f307fdf5e231e05f9e9ecf23e5fc8bfff87951b223575840690b3f8bb502ad0f');
 INSERT INTO credits VALUES(310005,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',1000000000,'issuance','ddd50ba93798b76cf1342fbed755b5aec4df77b99622d670ea70dceb21f8c975');
 INSERT INTO credits VALUES(310006,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',100000,'issuance','b693ef32344d5663f9a8368f6bbb311cc06ebc19bfc2818455af2ca098ed8f06');
 INSERT INTO credits VALUES(310007,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',4000000,'send','cfdba3d6b7a8dafd12d45751395d3a2a99e2b36456d68db5e2080ce8118503ab');
 INSERT INTO credits VALUES(310008,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',526,'send','0f649981bbe02942cc0e2f2e43cdb6e41d22c9275506792873b89b683e023f89');
-INSERT INTO credits VALUES(310009,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',24,'dividend','4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3');
-INSERT INTO credits VALUES(310010,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',420800,'dividend','2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7');
-INSERT INTO credits VALUES(310013,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',4250000,'filled','08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12');
-INSERT INTO credits VALUES(310014,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',5000000,'cancel order','371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1');
-INSERT INTO credits VALUES(310015,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',0,'filled','75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572');
-INSERT INTO credits VALUES(310015,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',0,'filled','75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572');
-INSERT INTO credits VALUES(310017,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',0,'filled','4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9');
-INSERT INTO credits VALUES(310017,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',0,'filled','4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9');
-INSERT INTO credits VALUES(310018,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',59137500,'bet settled: liquidated for bear','3c120af6e8f350e4e55e319d699e7f715e5b049f94491c5706426ffe101e1452');
-INSERT INTO credits VALUES(310018,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',3112500,'feed fee','3c120af6e8f350e4e55e319d699e7f715e5b049f94491c5706426ffe101e1452');
-INSERT INTO credits VALUES(310019,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',159300000,'bet settled','f1b036ae3c9e9be338370b7be53f0210b830bd86ac2ddc7a757b80c2f7fb093f');
-INSERT INTO credits VALUES(310019,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',315700000,'bet settled','f1b036ae3c9e9be338370b7be53f0210b830bd86ac2ddc7a757b80c2f7fb093f');
-INSERT INTO credits VALUES(310019,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',25000000,'feed fee','f1b036ae3c9e9be338370b7be53f0210b830bd86ac2ddc7a757b80c2f7fb093f');
-INSERT INTO credits VALUES(310020,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',1330000000,'bet settled: for notequal','63199a0ec21c2541171b644e4e3876a81d997d238fec82b62baea7baaa33aaa3');
-INSERT INTO credits VALUES(310020,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',70000000,'feed fee','63199a0ec21c2541171b644e4e3876a81d997d238fec82b62baea7baaa33aaa3');
-INSERT INTO credits VALUES(310022,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',56999887262,'burn','df080a76ceb263201901bc23c85c3e8dce4eca0e72c873131adaf2f46820e9f1');
-INSERT INTO credits VALUES(310023,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',8500000,'recredit wager remaining','44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b');
+INSERT INTO credits VALUES(310009,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',24,'dividend','4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3');
+INSERT INTO credits VALUES(310010,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',420800,'dividend','2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7');
+INSERT INTO credits VALUES(310013,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',4250000,'filled','08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12');
+INSERT INTO credits VALUES(310014,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',5000000,'cancel order','371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1');
+INSERT INTO credits VALUES(310015,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',0,'filled','75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572');
+INSERT INTO credits VALUES(310015,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',0,'filled','75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572');
+INSERT INTO credits VALUES(310017,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',0,'filled','4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9');
+INSERT INTO credits VALUES(310017,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',0,'filled','4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9');
+INSERT INTO credits VALUES(310018,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',59137500,'bet settled: liquidated for bear','3c120af6e8f350e4e55e319d699e7f715e5b049f94491c5706426ffe101e1452');
+INSERT INTO credits VALUES(310018,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',3112500,'feed fee','3c120af6e8f350e4e55e319d699e7f715e5b049f94491c5706426ffe101e1452');
+INSERT INTO credits VALUES(310019,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',159300000,'bet settled','f1b036ae3c9e9be338370b7be53f0210b830bd86ac2ddc7a757b80c2f7fb093f');
+INSERT INTO credits VALUES(310019,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',315700000,'bet settled','f1b036ae3c9e9be338370b7be53f0210b830bd86ac2ddc7a757b80c2f7fb093f');
+INSERT INTO credits VALUES(310019,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',25000000,'feed fee','f1b036ae3c9e9be338370b7be53f0210b830bd86ac2ddc7a757b80c2f7fb093f');
+INSERT INTO credits VALUES(310020,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',1330000000,'bet settled: for notequal','63199a0ec21c2541171b644e4e3876a81d997d238fec82b62baea7baaa33aaa3');
+INSERT INTO credits VALUES(310020,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',70000000,'feed fee','63199a0ec21c2541171b644e4e3876a81d997d238fec82b62baea7baaa33aaa3');
+INSERT INTO credits VALUES(310022,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',56999887262,'burn','df080a76ceb263201901bc23c85c3e8dce4eca0e72c873131adaf2f46820e9f1');
+INSERT INTO credits VALUES(310023,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',8500000,'recredit wager remaining','44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b');
 INSERT INTO credits VALUES(310023,'2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',10000,'send','ff48aca435aafe8e5fec706d3dcb2e3e54710e797ef43d006206136761371bca');
 INSERT INTO credits VALUES(310032,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',50000000,'cancel order','dbbfdae392b27be467139350049f225f6b87682284d1d46c58be7d03d74caf41');
 -- Triggers and indices on  credits
@@ -500,22 +500,22 @@ CREATE TABLE debits(
                       action TEXT,
                       event TEXT,
                       FOREIGN KEY (block_index) REFERENCES blocks(block_index));
-INSERT INTO debits VALUES(310001,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50000000,'send','63242f35c724cd03163541785b69fbd620df9ebeb72706a0caeb5e19ce7680cc');
-INSERT INTO debits VALUES(310003,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',105000000,'open order','371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1');
-INSERT INTO debits VALUES(310005,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50000000,'issuance fee','ddd50ba93798b76cf1342fbed755b5aec4df77b99622d670ea70dceb21f8c975');
-INSERT INTO debits VALUES(310006,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50000000,'issuance fee','b693ef32344d5663f9a8368f6bbb311cc06ebc19bfc2818455af2ca098ed8f06');
+INSERT INTO debits VALUES(310001,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50000000,'send','63242f35c724cd03163541785b69fbd620df9ebeb72706a0caeb5e19ce7680cc');
+INSERT INTO debits VALUES(310003,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',105000000,'open order','371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1');
+INSERT INTO debits VALUES(310005,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50000000,'issuance fee','ddd50ba93798b76cf1342fbed755b5aec4df77b99622d670ea70dceb21f8c975');
+INSERT INTO debits VALUES(310006,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50000000,'issuance fee','b693ef32344d5663f9a8368f6bbb311cc06ebc19bfc2818455af2ca098ed8f06');
 INSERT INTO debits VALUES(310007,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',4000000,'send','cfdba3d6b7a8dafd12d45751395d3a2a99e2b36456d68db5e2080ce8118503ab');
 INSERT INTO debits VALUES(310008,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',526,'send','0f649981bbe02942cc0e2f2e43cdb6e41d22c9275506792873b89b683e023f89');
-INSERT INTO debits VALUES(310009,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',24,'dividend','4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3');
-INSERT INTO debits VALUES(310009,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',20000,'dividend fee','4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3');
-INSERT INTO debits VALUES(310010,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',420800,'dividend','2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7');
-INSERT INTO debits VALUES(310010,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',20000,'dividend fee','2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7');
-INSERT INTO debits VALUES(310012,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50000000,'bet','44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b');
-INSERT INTO debits VALUES(310013,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',25000000,'bet','08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12');
-INSERT INTO debits VALUES(310014,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',150000000,'bet','3709deca4f216971ff70b564f18f8f439313cd38d73dbf20b903685fb89a5f68');
-INSERT INTO debits VALUES(310015,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',350000000,'bet','75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572');
-INSERT INTO debits VALUES(310016,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',750000000,'bet','674c197ae30a86d1771b9e842194dd5a03d2a85a9f45f6148194cf44e4a54644');
-INSERT INTO debits VALUES(310017,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',650000000,'bet','4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9');
+INSERT INTO debits VALUES(310009,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',24,'dividend','4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3');
+INSERT INTO debits VALUES(310009,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',20000,'dividend fee','4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3');
+INSERT INTO debits VALUES(310010,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',420800,'dividend','2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7');
+INSERT INTO debits VALUES(310010,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',20000,'dividend fee','2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7');
+INSERT INTO debits VALUES(310012,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50000000,'bet','44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b');
+INSERT INTO debits VALUES(310013,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',25000000,'bet','08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12');
+INSERT INTO debits VALUES(310014,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',150000000,'bet','3709deca4f216971ff70b564f18f8f439313cd38d73dbf20b903685fb89a5f68');
+INSERT INTO debits VALUES(310015,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',350000000,'bet','75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572');
+INSERT INTO debits VALUES(310016,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',750000000,'bet','674c197ae30a86d1771b9e842194dd5a03d2a85a9f45f6148194cf44e4a54644');
+INSERT INTO debits VALUES(310017,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',650000000,'bet','4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9');
 INSERT INTO debits VALUES(310021,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',50000000,'open order','dbbfdae392b27be467139350049f225f6b87682284d1d46c58be7d03d74caf41');
 INSERT INTO debits VALUES(310023,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',10000,'send','ff48aca435aafe8e5fec706d3dcb2e3e54710e797ef43d006206136761371bca');
 -- Triggers and indices on  debits
@@ -618,8 +618,8 @@ CREATE TABLE dividends(
                       fee_paid INTEGER,
                       status TEXT,
                       FOREIGN KEY (tx_index, tx_hash, block_index) REFERENCES transactions(tx_index, tx_hash, block_index));
-INSERT INTO dividends VALUES(10,'4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3',310009,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB','XCP',600,20000,'valid');
-INSERT INTO dividends VALUES(11,'2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7',310010,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC','XCP',800,20000,'valid');
+INSERT INTO dividends VALUES(10,'4eb273718f2e68efb37d467d5a5e67388274652f4ad83477d126bb8ef4088bc3',310009,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB','XUP',600,20000,'valid');
+INSERT INTO dividends VALUES(11,'2e7b84301a9d340c5b4fdc2b765b4e027112ad4f66a1c219163fb743625059c7',310010,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC','XUP',800,20000,'valid');
 -- Triggers and indices on  dividends
 CREATE TRIGGER _dividends_delete BEFORE DELETE ON dividends BEGIN
                             INSERT INTO undolog VALUES(NULL, 'INSERT INTO dividends(rowid,tx_index,tx_hash,block_index,source,asset,dividend_asset,quantity_per_unit,fee_paid,status) VALUES('||old.rowid||','||quote(old.tx_index)||','||quote(old.tx_hash)||','||quote(old.block_index)||','||quote(old.source)||','||quote(old.asset)||','||quote(old.dividend_asset)||','||quote(old.quantity_per_unit)||','||quote(old.fee_paid)||','||quote(old.status)||')');
@@ -852,7 +852,7 @@ CREATE TABLE order_matches(
                       status TEXT,
                       FOREIGN KEY (tx0_index, tx0_hash, tx0_block_index) REFERENCES transactions(tx_index, tx_hash, block_index),
                       FOREIGN KEY (tx1_index, tx1_hash, tx1_block_index) REFERENCES transactions(tx_index, tx_hash, block_index));
-INSERT INTO order_matches VALUES('82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e_371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1',3,'82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e','2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2',4,'371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1','2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BTC',50000000,'XCP',100000000,310002,310003,310003,10,10,310023,857142,'completed');
+INSERT INTO order_matches VALUES('82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e_371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1',3,'82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e','2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2',4,'371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1','2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','UNO',50000000,'XUP',100000000,310002,310003,310003,10,10,310023,857142,'completed');
 -- Triggers and indices on  order_matches
 CREATE TRIGGER _order_matches_delete BEFORE DELETE ON order_matches BEGIN
                             INSERT INTO undolog VALUES(NULL, 'INSERT INTO order_matches(rowid,id,tx0_index,tx0_hash,tx0_address,tx1_index,tx1_hash,tx1_address,forward_asset,forward_quantity,backward_asset,backward_quantity,tx0_block_index,tx1_block_index,block_index,tx0_expiration,tx1_expiration,match_expire_index,fee_paid,status) VALUES('||old.rowid||','||quote(old.id)||','||quote(old.tx0_index)||','||quote(old.tx0_hash)||','||quote(old.tx0_address)||','||quote(old.tx1_index)||','||quote(old.tx1_hash)||','||quote(old.tx1_address)||','||quote(old.forward_asset)||','||quote(old.forward_quantity)||','||quote(old.backward_asset)||','||quote(old.backward_quantity)||','||quote(old.tx0_block_index)||','||quote(old.tx1_block_index)||','||quote(old.block_index)||','||quote(old.tx0_expiration)||','||quote(old.tx1_expiration)||','||quote(old.match_expire_index)||','||quote(old.fee_paid)||','||quote(old.status)||')');
@@ -891,9 +891,9 @@ CREATE TABLE orders(
                       status TEXT,
                       FOREIGN KEY (tx_index, tx_hash, block_index) REFERENCES transactions(tx_index, tx_hash, block_index),
                       PRIMARY KEY (tx_index, tx_hash));
-INSERT INTO orders VALUES(3,'82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e',310002,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BTC',50000000,0,'XCP',100000000,0,10,310012,0,0,1000000,142858,'expired');
-INSERT INTO orders VALUES(4,'371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1',310003,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',105000000,5000000,'BTC',50000000,0,10,310013,900000,42858,6800,6800,'expired');
-INSERT INTO orders VALUES(22,'dbbfdae392b27be467139350049f225f6b87682284d1d46c58be7d03d74caf41',310021,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',50000000,50000000,'XCP',50000000,50000000,10,310031,0,0,6800,6800,'expired');
+INSERT INTO orders VALUES(3,'82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e',310002,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','UNO',50000000,0,'XUP',100000000,0,10,310012,0,0,1000000,142858,'expired');
+INSERT INTO orders VALUES(4,'371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1',310003,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',105000000,5000000,'UNO',50000000,0,10,310013,900000,42858,6800,6800,'expired');
+INSERT INTO orders VALUES(22,'dbbfdae392b27be467139350049f225f6b87682284d1d46c58be7d03d74caf41',310021,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',50000000,50000000,'XUP',50000000,50000000,10,310031,0,0,6800,6800,'expired');
 -- Triggers and indices on  orders
 CREATE TRIGGER _orders_delete BEFORE DELETE ON orders BEGIN
                             INSERT INTO undolog VALUES(NULL, 'INSERT INTO orders(rowid,tx_index,tx_hash,block_index,source,give_asset,give_quantity,give_remaining,get_asset,get_quantity,get_remaining,expiration,expire_index,fee_required,fee_required_remaining,fee_provided,fee_provided_remaining,status) VALUES('||old.rowid||','||quote(old.tx_index)||','||quote(old.tx_hash)||','||quote(old.block_index)||','||quote(old.source)||','||quote(old.give_asset)||','||quote(old.give_quantity)||','||quote(old.give_remaining)||','||quote(old.get_asset)||','||quote(old.get_quantity)||','||quote(old.get_remaining)||','||quote(old.expiration)||','||quote(old.expire_index)||','||quote(old.fee_required)||','||quote(old.fee_required_remaining)||','||quote(old.fee_provided)||','||quote(old.fee_provided_remaining)||','||quote(old.status)||')');
@@ -1053,7 +1053,7 @@ CREATE TABLE "sends"(
                               PRIMARY KEY (tx_index, msg_index),
                               FOREIGN KEY (tx_index, tx_hash, block_index) REFERENCES transactions(tx_index, tx_hash, block_index),
                               UNIQUE (tx_hash, msg_index) ON CONFLICT FAIL);
-INSERT INTO sends VALUES(2,'63242f35c724cd03163541785b69fbd620df9ebeb72706a0caeb5e19ce7680cc',310001,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XCP',50000000,'valid',0,NULL);
+INSERT INTO sends VALUES(2,'63242f35c724cd03163541785b69fbd620df9ebeb72706a0caeb5e19ce7680cc',310001,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','XUP',50000000,'valid',0,NULL);
 INSERT INTO sends VALUES(8,'cfdba3d6b7a8dafd12d45751395d3a2a99e2b36456d68db5e2080ce8118503ab',310007,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBB',4000000,'valid',0,NULL);
 INSERT INTO sends VALUES(9,'0f649981bbe02942cc0e2f2e43cdb6e41d22c9275506792873b89b683e023f89',310008,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',526,'valid',0,NULL);
 INSERT INTO sends VALUES(24,'ff48aca435aafe8e5fec706d3dcb2e3e54710e797ef43d006206136761371bca',310023,'2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2','BBBC',10000,'valid',0,NULL);
@@ -1146,29 +1146,29 @@ DROP TABLE IF EXISTS undolog;
 CREATE TABLE undolog(
                         undo_index INTEGER PRIMARY KEY AUTOINCREMENT,
                         sql TEXT);
-INSERT INTO undolog VALUES(4,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=93000000000 WHERE rowid=1');
+INSERT INTO undolog VALUES(4,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=93000000000 WHERE rowid=1');
 INSERT INTO undolog VALUES(5,'DELETE FROM debits WHERE rowid=1');
 INSERT INTO undolog VALUES(6,'DELETE FROM balances WHERE rowid=2');
 INSERT INTO undolog VALUES(7,'DELETE FROM credits WHERE rowid=2');
 INSERT INTO undolog VALUES(8,'DELETE FROM sends WHERE rowid=1');
 INSERT INTO undolog VALUES(9,'DELETE FROM orders WHERE rowid=1');
-INSERT INTO undolog VALUES(10,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92950000000 WHERE rowid=1');
+INSERT INTO undolog VALUES(10,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92950000000 WHERE rowid=1');
 INSERT INTO undolog VALUES(11,'DELETE FROM debits WHERE rowid=2');
 INSERT INTO undolog VALUES(12,'DELETE FROM orders WHERE rowid=2');
-INSERT INTO undolog VALUES(13,'UPDATE orders SET tx_index=3,tx_hash=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e'',block_index=310002,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''BTC'',give_quantity=50000000,give_remaining=50000000,get_asset=''XCP'',get_quantity=100000000,get_remaining=100000000,expiration=10,expire_index=310012,fee_required=0,fee_required_remaining=0,fee_provided=1000000,fee_provided_remaining=1000000,status=''open'' WHERE rowid=1');
-INSERT INTO undolog VALUES(14,'UPDATE orders SET tx_index=4,tx_hash=''371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',block_index=310003,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''XCP'',give_quantity=105000000,give_remaining=105000000,get_asset=''BTC'',get_quantity=50000000,get_remaining=50000000,expiration=10,expire_index=310013,fee_required=900000,fee_required_remaining=900000,fee_provided=6800,fee_provided_remaining=6800,status=''open'' WHERE rowid=2');
+INSERT INTO undolog VALUES(13,'UPDATE orders SET tx_index=3,tx_hash=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e'',block_index=310002,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''UNO'',give_quantity=50000000,give_remaining=50000000,get_asset=''XUP'',get_quantity=100000000,get_remaining=100000000,expiration=10,expire_index=310012,fee_required=0,fee_required_remaining=0,fee_provided=1000000,fee_provided_remaining=1000000,status=''open'' WHERE rowid=1');
+INSERT INTO undolog VALUES(14,'UPDATE orders SET tx_index=4,tx_hash=''371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',block_index=310003,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''XUP'',give_quantity=105000000,give_remaining=105000000,get_asset=''UNO'',get_quantity=50000000,get_remaining=50000000,expiration=10,expire_index=310013,fee_required=900000,fee_required_remaining=900000,fee_provided=6800,fee_provided_remaining=6800,status=''open'' WHERE rowid=2');
 INSERT INTO undolog VALUES(15,'DELETE FROM order_matches WHERE rowid=1');
-INSERT INTO undolog VALUES(16,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92845000000 WHERE rowid=1');
+INSERT INTO undolog VALUES(16,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92845000000 WHERE rowid=1');
 INSERT INTO undolog VALUES(17,'DELETE FROM credits WHERE rowid=3');
-INSERT INTO undolog VALUES(18,'UPDATE order_matches SET id=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e_371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',tx0_index=3,tx0_hash=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e'',tx0_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx1_index=4,tx1_hash=''371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',tx1_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',forward_asset=''BTC'',forward_quantity=50000000,backward_asset=''XCP'',backward_quantity=100000000,tx0_block_index=310002,tx1_block_index=310003,block_index=310003,tx0_expiration=10,tx1_expiration=10,match_expire_index=310023,fee_paid=857142,status=''pending'' WHERE rowid=1');
+INSERT INTO undolog VALUES(18,'UPDATE order_matches SET id=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e_371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',tx0_index=3,tx0_hash=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e'',tx0_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx1_index=4,tx1_hash=''371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',tx1_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',forward_asset=''UNO'',forward_quantity=50000000,backward_asset=''XUP'',backward_quantity=100000000,tx0_block_index=310002,tx1_block_index=310003,block_index=310003,tx0_expiration=10,tx1_expiration=10,match_expire_index=310023,fee_paid=857142,status=''pending'' WHERE rowid=1');
 INSERT INTO undolog VALUES(19,'DELETE FROM btcpays WHERE rowid=5');
-INSERT INTO undolog VALUES(20,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92945000000 WHERE rowid=1');
+INSERT INTO undolog VALUES(20,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92945000000 WHERE rowid=1');
 INSERT INTO undolog VALUES(21,'DELETE FROM debits WHERE rowid=3');
 INSERT INTO undolog VALUES(22,'DELETE FROM assets WHERE rowid=3');
 INSERT INTO undolog VALUES(23,'DELETE FROM issuances WHERE rowid=1');
 INSERT INTO undolog VALUES(24,'DELETE FROM balances WHERE rowid=3');
 INSERT INTO undolog VALUES(25,'DELETE FROM credits WHERE rowid=4');
-INSERT INTO undolog VALUES(26,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92895000000 WHERE rowid=1');
+INSERT INTO undolog VALUES(26,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92895000000 WHERE rowid=1');
 INSERT INTO undolog VALUES(27,'DELETE FROM debits WHERE rowid=4');
 INSERT INTO undolog VALUES(28,'DELETE FROM assets WHERE rowid=4');
 INSERT INTO undolog VALUES(29,'DELETE FROM issuances WHERE rowid=2');
@@ -1184,95 +1184,95 @@ INSERT INTO undolog VALUES(38,'DELETE FROM debits WHERE rowid=6');
 INSERT INTO undolog VALUES(39,'DELETE FROM balances WHERE rowid=6');
 INSERT INTO undolog VALUES(40,'DELETE FROM credits WHERE rowid=7');
 INSERT INTO undolog VALUES(41,'DELETE FROM sends WHERE rowid=3');
-INSERT INTO undolog VALUES(42,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92845000000 WHERE rowid=1');
+INSERT INTO undolog VALUES(42,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92845000000 WHERE rowid=1');
 INSERT INTO undolog VALUES(43,'DELETE FROM debits WHERE rowid=7');
-INSERT INTO undolog VALUES(44,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92844999976 WHERE rowid=1');
+INSERT INTO undolog VALUES(44,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92844999976 WHERE rowid=1');
 INSERT INTO undolog VALUES(45,'DELETE FROM debits WHERE rowid=8');
-INSERT INTO undolog VALUES(46,'UPDATE balances SET address=''2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=50000000 WHERE rowid=2');
+INSERT INTO undolog VALUES(46,'UPDATE balances SET address=''2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=50000000 WHERE rowid=2');
 INSERT INTO undolog VALUES(47,'DELETE FROM credits WHERE rowid=8');
 INSERT INTO undolog VALUES(48,'DELETE FROM dividends WHERE rowid=10');
-INSERT INTO undolog VALUES(49,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92844979976 WHERE rowid=1');
+INSERT INTO undolog VALUES(49,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92844979976 WHERE rowid=1');
 INSERT INTO undolog VALUES(50,'DELETE FROM debits WHERE rowid=9');
-INSERT INTO undolog VALUES(51,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92844559176 WHERE rowid=1');
+INSERT INTO undolog VALUES(51,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92844559176 WHERE rowid=1');
 INSERT INTO undolog VALUES(52,'DELETE FROM debits WHERE rowid=10');
-INSERT INTO undolog VALUES(53,'UPDATE balances SET address=''2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=50000024 WHERE rowid=2');
+INSERT INTO undolog VALUES(53,'UPDATE balances SET address=''2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=50000024 WHERE rowid=2');
 INSERT INTO undolog VALUES(54,'DELETE FROM credits WHERE rowid=9');
 INSERT INTO undolog VALUES(55,'DELETE FROM dividends WHERE rowid=11');
 INSERT INTO undolog VALUES(56,'DELETE FROM broadcasts WHERE rowid=12');
-INSERT INTO undolog VALUES(57,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92844539176 WHERE rowid=1');
+INSERT INTO undolog VALUES(57,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92844539176 WHERE rowid=1');
 INSERT INTO undolog VALUES(58,'DELETE FROM debits WHERE rowid=11');
 INSERT INTO undolog VALUES(59,'DELETE FROM bets WHERE rowid=1');
-INSERT INTO undolog VALUES(60,'UPDATE orders SET tx_index=3,tx_hash=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e'',block_index=310002,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''BTC'',give_quantity=50000000,give_remaining=0,get_asset=''XCP'',get_quantity=100000000,get_remaining=0,expiration=10,expire_index=310012,fee_required=0,fee_required_remaining=0,fee_provided=1000000,fee_provided_remaining=142858,status=''open'' WHERE rowid=1');
+INSERT INTO undolog VALUES(60,'UPDATE orders SET tx_index=3,tx_hash=''82e2a0085961f5672c7bcf81a04abf78021d9b91c5f9e0d98421ce3cb083cd4e'',block_index=310002,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''UNO'',give_quantity=50000000,give_remaining=0,get_asset=''XUP'',get_quantity=100000000,get_remaining=0,expiration=10,expire_index=310012,fee_required=0,fee_required_remaining=0,fee_provided=1000000,fee_provided_remaining=142858,status=''open'' WHERE rowid=1');
 INSERT INTO undolog VALUES(61,'DELETE FROM order_expirations WHERE rowid=3');
-INSERT INTO undolog VALUES(62,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92794539176 WHERE rowid=1');
+INSERT INTO undolog VALUES(62,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92794539176 WHERE rowid=1');
 INSERT INTO undolog VALUES(63,'DELETE FROM debits WHERE rowid=12');
 INSERT INTO undolog VALUES(64,'DELETE FROM bets WHERE rowid=2');
 INSERT INTO undolog VALUES(65,'UPDATE bets SET tx_index=13,tx_hash=''44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b'',block_index=310012,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=0,deadline=1388000100,wager_quantity=50000000,wager_remaining=50000000,counterwager_quantity=25000000,counterwager_remaining=25000000,target_value=0.0,leverage=15120,expiration=10,expire_index=310022,fee_fraction_int=99999999,status=''open'' WHERE rowid=1');
-INSERT INTO undolog VALUES(66,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92769539176 WHERE rowid=1');
+INSERT INTO undolog VALUES(66,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92769539176 WHERE rowid=1');
 INSERT INTO undolog VALUES(67,'DELETE FROM credits WHERE rowid=10');
 INSERT INTO undolog VALUES(68,'UPDATE bets SET tx_index=14,tx_hash=''08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12'',block_index=310013,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=1,deadline=1388000100,wager_quantity=25000000,wager_remaining=25000000,counterwager_quantity=41500000,counterwager_remaining=41500000,target_value=0.0,leverage=15120,expiration=10,expire_index=310023,fee_fraction_int=99999999,status=''open'' WHERE rowid=2');
 INSERT INTO undolog VALUES(69,'DELETE FROM bet_matches WHERE rowid=1');
-INSERT INTO undolog VALUES(70,'UPDATE orders SET tx_index=4,tx_hash=''371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',block_index=310003,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''XCP'',give_quantity=105000000,give_remaining=5000000,get_asset=''BTC'',get_quantity=50000000,get_remaining=0,expiration=10,expire_index=310013,fee_required=900000,fee_required_remaining=42858,fee_provided=6800,fee_provided_remaining=6800,status=''open'' WHERE rowid=2');
-INSERT INTO undolog VALUES(71,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92773789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(70,'UPDATE orders SET tx_index=4,tx_hash=''371a06e55fbb3661941dc2300754556a09b6badc04aa182ee7d80842dd6cb9f1'',block_index=310003,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''XUP'',give_quantity=105000000,give_remaining=5000000,get_asset=''UNO'',get_quantity=50000000,get_remaining=0,expiration=10,expire_index=310013,fee_required=900000,fee_required_remaining=42858,fee_provided=6800,fee_provided_remaining=6800,status=''open'' WHERE rowid=2');
+INSERT INTO undolog VALUES(71,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92773789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(72,'DELETE FROM credits WHERE rowid=11');
 INSERT INTO undolog VALUES(73,'DELETE FROM order_expirations WHERE rowid=4');
-INSERT INTO undolog VALUES(74,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92778789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(74,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92778789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(75,'DELETE FROM debits WHERE rowid=13');
 INSERT INTO undolog VALUES(76,'DELETE FROM bets WHERE rowid=3');
-INSERT INTO undolog VALUES(77,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92628789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(77,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92628789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(78,'DELETE FROM debits WHERE rowid=14');
 INSERT INTO undolog VALUES(79,'DELETE FROM bets WHERE rowid=4');
-INSERT INTO undolog VALUES(80,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92278789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(80,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92278789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(81,'DELETE FROM credits WHERE rowid=12');
 INSERT INTO undolog VALUES(82,'UPDATE bets SET tx_index=15,tx_hash=''3709deca4f216971ff70b564f18f8f439313cd38d73dbf20b903685fb89a5f68'',block_index=310014,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=0,deadline=1388000100,wager_quantity=150000000,wager_remaining=150000000,counterwager_quantity=350000000,counterwager_remaining=350000000,target_value=0.0,leverage=5040,expiration=10,expire_index=310024,fee_fraction_int=99999999,status=''open'' WHERE rowid=3');
-INSERT INTO undolog VALUES(83,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92278789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(83,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92278789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(84,'DELETE FROM credits WHERE rowid=13');
 INSERT INTO undolog VALUES(85,'UPDATE bets SET tx_index=16,tx_hash=''75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572'',block_index=310015,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=1,deadline=1388000100,wager_quantity=350000000,wager_remaining=350000000,counterwager_quantity=150000000,counterwager_remaining=150000000,target_value=0.0,leverage=5040,expiration=10,expire_index=310025,fee_fraction_int=99999999,status=''open'' WHERE rowid=4');
 INSERT INTO undolog VALUES(86,'DELETE FROM bet_matches WHERE rowid=2');
-INSERT INTO undolog VALUES(87,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92278789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(87,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92278789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(88,'DELETE FROM debits WHERE rowid=15');
 INSERT INTO undolog VALUES(89,'DELETE FROM bets WHERE rowid=5');
-INSERT INTO undolog VALUES(90,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=91528789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(90,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=91528789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(91,'DELETE FROM debits WHERE rowid=16');
 INSERT INTO undolog VALUES(92,'DELETE FROM bets WHERE rowid=6');
-INSERT INTO undolog VALUES(93,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=90878789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(93,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=90878789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(94,'DELETE FROM credits WHERE rowid=14');
 INSERT INTO undolog VALUES(95,'UPDATE bets SET tx_index=17,tx_hash=''674c197ae30a86d1771b9e842194dd5a03d2a85a9f45f6148194cf44e4a54644'',block_index=310016,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=2,deadline=1388000200,wager_quantity=750000000,wager_remaining=750000000,counterwager_quantity=650000000,counterwager_remaining=650000000,target_value=1.0,leverage=5040,expiration=10,expire_index=310026,fee_fraction_int=99999999,status=''open'' WHERE rowid=5');
-INSERT INTO undolog VALUES(96,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=90878789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(96,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=90878789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(97,'DELETE FROM credits WHERE rowid=15');
 INSERT INTO undolog VALUES(98,'UPDATE bets SET tx_index=18,tx_hash=''4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9'',block_index=310017,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=3,deadline=1388000200,wager_quantity=650000000,wager_remaining=650000000,counterwager_quantity=750000000,counterwager_remaining=750000000,target_value=1.0,leverage=5040,expiration=10,expire_index=310027,fee_fraction_int=99999999,status=''open'' WHERE rowid=6');
 INSERT INTO undolog VALUES(99,'DELETE FROM bet_matches WHERE rowid=3');
 INSERT INTO undolog VALUES(100,'DELETE FROM broadcasts WHERE rowid=19');
-INSERT INTO undolog VALUES(101,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=90878789176 WHERE rowid=1');
+INSERT INTO undolog VALUES(101,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=90878789176 WHERE rowid=1');
 INSERT INTO undolog VALUES(102,'DELETE FROM credits WHERE rowid=16');
-INSERT INTO undolog VALUES(103,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=90937926676 WHERE rowid=1');
+INSERT INTO undolog VALUES(103,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=90937926676 WHERE rowid=1');
 INSERT INTO undolog VALUES(104,'DELETE FROM credits WHERE rowid=17');
 INSERT INTO undolog VALUES(105,'DELETE FROM bet_match_resolutions WHERE rowid=1');
 INSERT INTO undolog VALUES(106,'UPDATE bet_matches SET id=''44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b_08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12'',tx0_index=13,tx0_hash=''44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b'',tx0_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx1_index=14,tx1_hash=''08b5ed9f3262752165c46ce0d17c2c6604f5662144fecb1a5eabf645dd6bee12'',tx1_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx0_bet_type=0,tx1_bet_type=1,feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',initial_value=100,deadline=1388000100,target_value=0.0,leverage=15120,forward_quantity=41500000,backward_quantity=20750000,tx0_block_index=310012,tx1_block_index=310013,block_index=310013,tx0_expiration=10,tx1_expiration=10,match_expire_index=310022,fee_fraction_int=99999999,status=''pending'' WHERE rowid=1');
 INSERT INTO undolog VALUES(107,'DELETE FROM broadcasts WHERE rowid=20');
-INSERT INTO undolog VALUES(108,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=90941039176 WHERE rowid=1');
+INSERT INTO undolog VALUES(108,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=90941039176 WHERE rowid=1');
 INSERT INTO undolog VALUES(109,'DELETE FROM credits WHERE rowid=18');
-INSERT INTO undolog VALUES(110,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=91100339176 WHERE rowid=1');
+INSERT INTO undolog VALUES(110,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=91100339176 WHERE rowid=1');
 INSERT INTO undolog VALUES(111,'DELETE FROM credits WHERE rowid=19');
-INSERT INTO undolog VALUES(112,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=91416039176 WHERE rowid=1');
+INSERT INTO undolog VALUES(112,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=91416039176 WHERE rowid=1');
 INSERT INTO undolog VALUES(113,'DELETE FROM credits WHERE rowid=20');
 INSERT INTO undolog VALUES(114,'DELETE FROM bet_match_resolutions WHERE rowid=2');
 INSERT INTO undolog VALUES(115,'UPDATE bet_matches SET id=''3709deca4f216971ff70b564f18f8f439313cd38d73dbf20b903685fb89a5f68_75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572'',tx0_index=15,tx0_hash=''3709deca4f216971ff70b564f18f8f439313cd38d73dbf20b903685fb89a5f68'',tx0_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx1_index=16,tx1_hash=''75bb331102e80cb98b1d849101442f59718f2d91609c19056f58771781793572'',tx1_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx0_bet_type=0,tx1_bet_type=1,feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',initial_value=100,deadline=1388000100,target_value=0.0,leverage=5040,forward_quantity=150000000,backward_quantity=350000000,tx0_block_index=310014,tx1_block_index=310015,block_index=310015,tx0_expiration=10,tx1_expiration=10,match_expire_index=310024,fee_fraction_int=99999999,status=''pending'' WHERE rowid=2');
 INSERT INTO undolog VALUES(116,'DELETE FROM broadcasts WHERE rowid=21');
-INSERT INTO undolog VALUES(117,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=91441039176 WHERE rowid=1');
+INSERT INTO undolog VALUES(117,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=91441039176 WHERE rowid=1');
 INSERT INTO undolog VALUES(118,'DELETE FROM credits WHERE rowid=21');
-INSERT INTO undolog VALUES(119,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92771039176 WHERE rowid=1');
+INSERT INTO undolog VALUES(119,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92771039176 WHERE rowid=1');
 INSERT INTO undolog VALUES(120,'DELETE FROM credits WHERE rowid=22');
 INSERT INTO undolog VALUES(121,'DELETE FROM bet_match_resolutions WHERE rowid=3');
 INSERT INTO undolog VALUES(122,'UPDATE bet_matches SET id=''674c197ae30a86d1771b9e842194dd5a03d2a85a9f45f6148194cf44e4a54644_4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9'',tx0_index=17,tx0_hash=''674c197ae30a86d1771b9e842194dd5a03d2a85a9f45f6148194cf44e4a54644'',tx0_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx1_index=18,tx1_hash=''4d1ba1b2843a69d9bb822abceff9b41c0d1727be97551546535421b7af2b71b9'',tx1_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',tx0_bet_type=2,tx1_bet_type=3,feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',initial_value=100,deadline=1388000200,target_value=1.0,leverage=5040,forward_quantity=750000000,backward_quantity=650000000,tx0_block_index=310016,tx1_block_index=310017,block_index=310017,tx0_expiration=10,tx1_expiration=10,match_expire_index=310026,fee_fraction_int=99999999,status=''pending'' WHERE rowid=3');
 INSERT INTO undolog VALUES(123,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''BBBB'',quantity=996000000 WHERE rowid=3');
 INSERT INTO undolog VALUES(124,'DELETE FROM debits WHERE rowid=17');
 INSERT INTO undolog VALUES(125,'DELETE FROM orders WHERE rowid=3');
-INSERT INTO undolog VALUES(126,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=92841039176 WHERE rowid=1');
+INSERT INTO undolog VALUES(126,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=92841039176 WHERE rowid=1');
 INSERT INTO undolog VALUES(127,'DELETE FROM credits WHERE rowid=23');
 INSERT INTO undolog VALUES(128,'DELETE FROM burns WHERE rowid=23');
 INSERT INTO undolog VALUES(129,'UPDATE bets SET tx_index=13,tx_hash=''44e2c9f313771d1afb4d656430f41336418d041aa11ab4e1b5eb2cdc51f1832b'',block_index=310012,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',feed_address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',bet_type=0,deadline=1388000100,wager_quantity=50000000,wager_remaining=8500000,counterwager_quantity=25000000,counterwager_remaining=4250000,target_value=0.0,leverage=15120,expiration=10,expire_index=310022,fee_fraction_int=99999999,status=''open'' WHERE rowid=1');
-INSERT INTO undolog VALUES(130,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XCP'',quantity=149840926438 WHERE rowid=1');
+INSERT INTO undolog VALUES(130,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''XUP'',quantity=149840926438 WHERE rowid=1');
 INSERT INTO undolog VALUES(131,'DELETE FROM credits WHERE rowid=24');
 INSERT INTO undolog VALUES(132,'DELETE FROM bet_expirations WHERE rowid=13');
 INSERT INTO undolog VALUES(133,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''BBBC'',quantity=99474 WHERE rowid=4');
@@ -1280,7 +1280,7 @@ INSERT INTO undolog VALUES(134,'DELETE FROM debits WHERE rowid=18');
 INSERT INTO undolog VALUES(135,'UPDATE balances SET address=''2_mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''BBBC'',quantity=526 WHERE rowid=6');
 INSERT INTO undolog VALUES(136,'DELETE FROM credits WHERE rowid=25');
 INSERT INTO undolog VALUES(137,'DELETE FROM sends WHERE rowid=4');
-INSERT INTO undolog VALUES(138,'UPDATE orders SET tx_index=22,tx_hash=''dbbfdae392b27be467139350049f225f6b87682284d1d46c58be7d03d74caf41'',block_index=310021,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''BBBB'',give_quantity=50000000,give_remaining=50000000,get_asset=''XCP'',get_quantity=50000000,get_remaining=50000000,expiration=10,expire_index=310031,fee_required=0,fee_required_remaining=0,fee_provided=6800,fee_provided_remaining=6800,status=''open'' WHERE rowid=3');
+INSERT INTO undolog VALUES(138,'UPDATE orders SET tx_index=22,tx_hash=''dbbfdae392b27be467139350049f225f6b87682284d1d46c58be7d03d74caf41'',block_index=310021,source=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',give_asset=''BBBB'',give_quantity=50000000,give_remaining=50000000,get_asset=''XUP'',get_quantity=50000000,get_remaining=50000000,expiration=10,expire_index=310031,fee_required=0,fee_required_remaining=0,fee_provided=6800,fee_provided_remaining=6800,status=''open'' WHERE rowid=3');
 INSERT INTO undolog VALUES(139,'UPDATE balances SET address=''2_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'',asset=''BBBB'',quantity=946000000 WHERE rowid=3');
 INSERT INTO undolog VALUES(140,'DELETE FROM credits WHERE rowid=26');
 INSERT INTO undolog VALUES(141,'DELETE FROM order_expirations WHERE rowid=22');

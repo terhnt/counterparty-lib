@@ -20,7 +20,7 @@ FIXTURE_OPTIONS = {
 
 
 def construct_tx(db, source, destination, disable_utxo_locks=False, custom_inputs=None):
-    tx_info = send.compose(db, source, destination, 'XCP', 1)
+    tx_info = send.compose(db, source, destination, 'XUP', 1)
     return transaction.construct(db, tx_info, disable_utxo_locks=disable_utxo_locks, custom_inputs=custom_inputs)
 
 

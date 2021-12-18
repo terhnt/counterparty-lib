@@ -60,7 +60,7 @@ def test_p2sh_encoding(server_db):
             server_db, 'send',
             {'source': source,
              'destination': destination,
-             'asset': 'XCP',
+             'asset': 'XUP',
              'quantity': 100},
             encoding='p2sh',
             fee_per_kb=fee_per_kb,
@@ -120,7 +120,7 @@ def test_p2sh_encoding(server_db):
             server_db, 'send',
             {'source': source,
              'destination': destination,
-             'asset': 'XCP',
+             'asset': 'XUP',
              'quantity': 100}
         )
         othertx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify(result))
@@ -132,7 +132,7 @@ def test_p2sh_encoding(server_db):
             server_db, 'send',
             {'source': source,
              'destination': destination,
-             'asset': 'XCP',
+             'asset': 'XUP',
              'quantity': 100},
             p2sh_pretx_txid=pretxid,  # pass the pretxid
             encoding='p2sh',
@@ -348,7 +348,7 @@ def test_p2sh_encoding_p2sh_source_not_supported(server_db):
                 server_db, 'send',
                 {'source': source,
                  'destination': destination,
-                 'asset': 'XCP',
+                 'asset': 'XUP',
                  'quantity': 100},
                 encoding='p2sh',
                 fee_per_kb=fee_per_kb,
@@ -381,7 +381,7 @@ def test_p2sh_encoding_manual_multisig_transaction(server_db):
             server_db, 'send',
             {'source': source,
              'destination': destination,
-             'asset': 'XCP',
+             'asset': 'XUP',
              'quantity': 100,
             },
             p2sh_source_multisig_pubkeys=[DP['pubkey'][ADDR[0]], DP['pubkey'][ADDR[1]], DP['pubkey'][ADDR[2]]],
@@ -401,7 +401,7 @@ def test_p2sh_encoding_manual_multisig_transaction(server_db):
             server_db, 'send',
             {'source': source,
              'destination': destination,
-             'asset': 'XCP',
+             'asset': 'XUP',
              'quantity': 100},
             p2sh_source_multisig_pubkeys=[DP['pubkey'][ADDR[0]], DP['pubkey'][ADDR[1]], DP['pubkey'][ADDR[2]]],
             p2sh_source_multisig_pubkeys_required=2,

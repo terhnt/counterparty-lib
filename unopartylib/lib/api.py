@@ -600,9 +600,9 @@ class APIServer(threading.Thread):
 
         @dispatcher.add_method
         def get_supply(asset):
-            if asset == 'BTC':
+            if asset == 'UNO':
                 return  backend.get_btc_supply(normalize=False)
-            elif asset == 'XCP':
+            elif asset == 'XUP':
                 return util.xcp_supply(self.db)
             else:
                 asset = util.resolve_subasset_longname(self.db, asset)

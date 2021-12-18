@@ -709,14 +709,14 @@ def held (db): #TODO: Rename ?
     queries = [
         "SELECT asset, SUM(quantity) AS total FROM balances GROUP BY asset",
         "SELECT give_asset AS asset, SUM(give_remaining) AS total FROM orders WHERE status = 'open' GROUP BY asset",
-        "SELECT give_asset AS asset, SUM(give_remaining) AS total FROM orders WHERE status = 'filled' and give_asset = 'XCP' and get_asset = 'BTC' GROUP BY asset",
+        "SELECT give_asset AS asset, SUM(give_remaining) AS total FROM orders WHERE status = 'filled' and give_asset = 'XUP' and get_asset = 'UNO' GROUP BY asset",
         "SELECT forward_asset AS asset, SUM(forward_quantity) AS total FROM order_matches WHERE status = 'pending' GROUP BY asset",
         "SELECT backward_asset AS asset, SUM(backward_quantity) AS total FROM order_matches WHERE status = 'pending' GROUP BY asset",
-        "SELECT 'XCP' AS asset, SUM(wager_remaining) AS total FROM bets WHERE status = 'open'",
-        "SELECT 'XCP' AS asset, SUM(forward_quantity) AS total FROM bet_matches WHERE status = 'pending'",
-        "SELECT 'XCP' AS asset, SUM(backward_quantity) AS total FROM bet_matches WHERE status = 'pending'",
-        "SELECT 'XCP' AS asset, SUM(wager) AS total FROM rps WHERE status = 'open'",
-        "SELECT 'XCP' AS asset, SUM(wager * 2) AS total FROM rps_matches WHERE status IN ('pending', 'pending and resolved', 'resolved and pending')",
+        "SELECT 'XUP' AS asset, SUM(wager_remaining) AS total FROM bets WHERE status = 'open'",
+        "SELECT 'XUP' AS asset, SUM(forward_quantity) AS total FROM bet_matches WHERE status = 'pending'",
+        "SELECT 'XUP' AS asset, SUM(backward_quantity) AS total FROM bet_matches WHERE status = 'pending'",
+        "SELECT 'XUP' AS asset, SUM(wager) AS total FROM rps WHERE status = 'open'",
+        "SELECT 'XUP' AS asset, SUM(wager * 2) AS total FROM rps_matches WHERE status IN ('pending', 'pending and resolved', 'resolved and pending')",
         "SELECT asset, SUM(give_remaining) AS total FROM dispensers WHERE status=0 OR status=1 GROUP BY asset",
     ]
 
