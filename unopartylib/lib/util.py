@@ -378,7 +378,7 @@ def debit (db, address, asset, quantity, action=None, event=None):
 
     debit_cursor = db.cursor()
 
-    # Contracts can only hold XCP balances.
+    # Contracts can only hold XUP balances.
     if enabled('contracts_only_xcp_balances'): # Protocol change.
         if len(address) == 40:
             assert asset == config.XCP
@@ -440,7 +440,7 @@ def credit (db, address, asset, quantity, action=None, event=None):
 
     credit_cursor = db.cursor()
 
-    # Contracts can only hold XCP balances.
+    # Contracts can only hold XUP balances.
     if enabled('contracts_only_xcp_balances'): # Protocol change.
         if len(address) == 40:
             assert asset == config.XCP
@@ -592,7 +592,7 @@ def holders(db, asset, exclude_empty_holders=False):
     for order_match in list(cursor):
         holders.append({'address': order_match['tx1_address'], 'address_quantity': order_match['backward_quantity'], 'escrow': order_match['id']})
 
-    # Bets and RPS (and bet/rps matches) only escrow XCP.
+    # Bets and RPS (and bet/rps matches) only escrow XUP.
     if asset == config.XCP:
         cursor.execute('''SELECT * FROM bets \
                           WHERE status = ?''', ('open',))
@@ -627,7 +627,7 @@ def holders(db, asset, exclude_empty_holders=False):
     return holders
 
 def xcp_created (db):
-    """Return number of XCP created thus far."""
+    """Return number of XUP created thus far."""
     cursor = db.cursor()
     cursor.execute('''SELECT SUM(earned) AS total FROM burns \
                       WHERE (status = ?)''', ('valid',))
@@ -636,7 +636,7 @@ def xcp_created (db):
     return total
 
 def xcp_destroyed (db):
-    """Return number of XCP destroyed thus far."""
+    """Return number of XUP destroyed thus far."""
     cursor = db.cursor()
     # Destructions
     cursor.execute('''SELECT SUM(quantity) AS total FROM destructions \
@@ -658,7 +658,7 @@ def xcp_destroyed (db):
     return destroyed_total + issuance_fee_total + dividend_fee_total + sweeps_fee_total
 
 def xcp_supply (db):
-    """Return the XCP supply."""
+    """Return the XUP supply."""
     return xcp_created(db) - xcp_destroyed(db)
 
 def creations (db):

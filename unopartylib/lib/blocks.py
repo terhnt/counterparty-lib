@@ -1468,7 +1468,7 @@ def follow(db):
                         if message['tx_hash'] == tx_hash:
                             xcp_mempool.append((tx_hash, message))
 
-                # If not a supported XCP transaction, skip.
+                # If not a supported XUP transaction, skip.
                 elif tx_hash in not_supported:
                     pass
 
@@ -1547,7 +1547,7 @@ def follow(db):
             elapsed_time = time.time() - start_time
             sleep_time = config.BACKEND_POLL_INTERVAL - elapsed_time if elapsed_time <= config.BACKEND_POLL_INTERVAL else 0
 
-            logger.getChild('mempool').debug('Refresh mempool: %s XCP txs seen, out of %s total entries (took %ss, next refresh in %ss)' % (
+            logger.getChild('mempool').debug('Refresh mempool: %s XUP txs seen, out of %s total entries (took %ss, next refresh in %ss)' % (
                 len(xcp_mempool), len(raw_mempool),
                 "{:.2f}".format(elapsed_time, 3),
                 "{:.2f}".format(sleep_time, 3)))

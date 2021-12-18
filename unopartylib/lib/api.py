@@ -622,7 +622,7 @@ class APIServer(threading.Thread):
             for asset in assets:
                 asset = util.resolve_subasset_longname(self.db, asset)
 
-                # BTC and XCP.
+                # BTC and XUP.
                 if asset in [config.BTC, config.XCP]:
                     if asset == config.BTC:
                         supply = backend.get_btc_supply(normalize=False)

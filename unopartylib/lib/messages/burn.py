@@ -87,7 +87,7 @@ def parse (db, tx, MAINNET_BURNS, message=None):
                 sent = 0
 
         if status == 'valid':
-            # Calculate quantity of XCP earned. (Maximum 1 BTC in total, ever.)
+            # Calculate quantity of XUP earned. (Maximum 1 BTC in total, ever.)
             cursor = db.cursor()
             cursor.execute('''SELECT * FROM burns WHERE (status = ? AND source = ?)''', ('valid', tx['source']))
             burns = cursor.fetchall()
@@ -102,7 +102,7 @@ def parse (db, tx, MAINNET_BURNS, message=None):
             multiplier = (1000 + (500 * Fraction(partial_time, total_time)))
             earned = round(burned * multiplier)
 
-            # Credit source address with earned XCP.
+            # Credit source address with earned XUP.
             util.credit(db, tx['source'], config.XCP, earned, action='burn', event=tx['tx_hash'])
         else:
             burned = 0

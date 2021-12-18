@@ -559,7 +559,7 @@ UNITTEST_VECTOR = {
         }, {
             'comment': 'test changing options to non-int on a specific address',
             'mock_protocol_changes': {'enhanced_sends': True, 'options_require_memo': True},
-            'in': (ADDR[5], 1588000000, 1, DP['fee_multiplier'], 'OPTIONS XCP', DP['default_block_index']),
+            'in': (ADDR[5], 1588000000, 1, DP['fee_multiplier'], 'OPTIONS XUP', DP['default_block_index']),
             'out': (['options not an integer'])
         }],
         'compose': [{
@@ -1529,10 +1529,10 @@ UNITTEST_VECTOR = {
             'out': (0, 0.0, ['cannot change callability'], 0, '', True, True, None)
         }, {
             'in': (ADDR[0], None, 'UNO', 1000, True, False, None, None, '', None, None, DP['default_block_index']),
-            'out': (0, 0.0, ['cannot issue BTC or XCP'], 50000000, '', True, False, None)
+            'out': (0, 0.0, ['cannot issue BTC or XUP'], 50000000, '', True, False, None)
         }, {
             'in': (ADDR[0], None, 'XUP', 1000, True, False, None, None, '', None, None, DP['default_block_index']),
-            'out': (0, 0.0, ['cannot issue BTC or XCP'], 50000000, '', True, False, None)
+            'out': (0, 0.0, ['cannot issue BTC or XUP'], 50000000, '', True, False, None)
         }, {
             'in': (ADDR[0], None, 'NOSATOSHI', 1000.5, True, False, None, None, '', None, None, DP['default_block_index']),
             'out': (0, 0.0, ['quantity must be in satoshis'], 0, '', True, None, None)
@@ -2184,7 +2184,7 @@ UNITTEST_VECTOR = {
                         {'address_quantity': 1000000000, 'dividend_quantity': 1000000000000, 'address': '1_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2'},
                         {'address_quantity': 100000000, 'dividend_quantity': 100000000000, 'address': '2MyJHMUenMWonC35Yi6PHC7i2tkS7PuomCy'}
                     ],
-                    ['insufficient funds (XCP)'],
+                    ['insufficient funds (XUP)'],
                     0)
         }, {
             'in': (ADDR[0], DP['quantity'] * -1000, 'DIVISIBLE', 'XUP', DP['default_block_index']),
@@ -2201,9 +2201,9 @@ UNITTEST_VECTOR = {
             'in': (ADDR[0], DP['quantity'], 'UNO', 'XUP', DP['default_block_index']),
             'out': (None, None, ['cannot pay dividends to holders of BTC', 'no such asset, BTC.'], 0)
         }, {
-            'comment': 'cannot pay dividends to holders of XCP',
+            'comment': 'cannot pay dividends to holders of XUP',
             'in': (ADDR[0], DP['quantity'], 'XUP', 'XUP', DP['default_block_index']),
-            'out': (None, None, ['cannot pay dividends to holders of XCP', 'no such asset, XCP.'], 0)
+            'out': (None, None, ['cannot pay dividends to holders of XUP', 'no such asset, XUP.'], 0)
         }, {
             'comment': 'no such asset, NOASSET',
             'in': (ADDR[0], DP['quantity'], 'NOASSET', 'XUP', DP['default_block_index']),
@@ -2227,7 +2227,7 @@ UNITTEST_VECTOR = {
                         {'address_quantity': 1000000000, 'address': '1_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2', 'dividend_quantity': 1000000000},
                         {'address_quantity': 100000000, 'address': '2MyJHMUenMWonC35Yi6PHC7i2tkS7PuomCy', 'dividend_quantity': 100000000}
                     ],
-                    ['only issuer can pay dividends', 'insufficient funds (XCP)'],
+                    ['only issuer can pay dividends', 'insufficient funds (XUP)'],
                     0)
         }, {
             'in': (ADDR[0], DP['quantity'], 'DIVISIBLE', 'NOASSET', DP['default_block_index']),
@@ -2240,7 +2240,7 @@ UNITTEST_VECTOR = {
                         {'address': '1_mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc_mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns_2', 'dividend_quantity': 83590909090, 'address_quantity': 1000000000},
                         {'address': '2MyJHMUenMWonC35Yi6PHC7i2tkS7PuomCy', 'dividend_quantity': 8359090909, 'address_quantity': 100000000},
                     ],
-                    ['insufficient funds (XCP)'],
+                    ['insufficient funds (XUP)'],
                     0)
         }, {
             'in': (ADDR[2], 100000000, 'DIVIDEND', 'DIVIDEND', DP['default_block_index']),
@@ -2248,7 +2248,7 @@ UNITTEST_VECTOR = {
                     [
                         {'address_quantity': 10, 'address': 'mqPCfvqTfYctXMUfmniXeG2nyaN8w6tPmj', 'dividend_quantity': 10},
                     ],
-                    ['insufficient funds (XCP)'],
+                    ['insufficient funds (XUP)'],
                     20000)
         }, {
             'in': (ADDR[2], 2 ** 63, 'DIVIDEND', 'DIVIDEND', DP['default_block_index']),
@@ -3057,11 +3057,11 @@ UNITTEST_VECTOR = {
             },
             {
                 'in': (ADDR[7], ADDR[5], 1, None, DP['burn_start']),
-                'out': ['insufficient XCP balance for sweep. Need 0.5 XCP for antispam fee']
+                'out': ['insufficient XUP balance for sweep. Need 0.5 XUP for antispam fee']
             },
             {
                 'in': (ADDR[8], ADDR[5], 1, None, DP['burn_start']),
-                'out': ['insufficient XCP balance for sweep. Need 0.5 XCP for antispam fee']
+                'out': ['insufficient XUP balance for sweep. Need 0.5 XUP for antispam fee']
             }
         ],
         'compose': [
@@ -3087,7 +3087,7 @@ UNITTEST_VECTOR = {
             },
             {
                 'in': (ADDR[8], ADDR[5], 1, None),
-                'error': (exceptions.ComposeError, "['insufficient XCP balance for sweep. Need 0.5 XCP for antispam fee']")
+                'error': (exceptions.ComposeError, "['insufficient XUP balance for sweep. Need 0.5 XUP for antispam fee']")
             }
         ],
         'unpack': [
@@ -3382,7 +3382,7 @@ UNITTEST_VECTOR = {
                 ]
             },
             {
-                'mock_protocol_changes': { 'dispensers': True }, # Same test as above, but with excess BTC, should give out the same amount of XCP
+                'mock_protocol_changes': { 'dispensers': True }, # Same test as above, but with excess BTC, should give out the same amount of XUP
                 'in': ({
                     'tx_hash': 'db6d9052b576d973196363e11163d492f50926c2f1d1efd67b3d999817b0d04d',
                     'source': ADDR[0], 'supported': 1, 'block_index': DP['default_block_index'],
@@ -4445,8 +4445,8 @@ UNITTEST_VECTOR = {
             'error': (exceptions.AssetNameError, "parent asset cannot be BTC")
         },
         {
-            'in': ('XCP.child1',),
-            'error': (exceptions.AssetNameError, "parent asset cannot be XCP")
+            'in': ('XUP.child1',),
+            'error': (exceptions.AssetNameError, "parent asset cannot be XUP")
         },
         {
             'in': ('PARENT.',),
@@ -5074,19 +5074,19 @@ UNITTEST_VECTOR = {
             'out': (['send list cannot have only one element'])
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], 0.1)], 1),
-            'out': (['quantities must be an int (in satoshis) for XCP to {}'.format(ADDR[1])])
+            'out': (['quantities must be an int (in satoshis) for XUP to {}'.format(ADDR[1])])
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], -DP['quantity'])], 1),
-            'out': (['negative quantity for XCP to {}'.format(ADDR[1])])
+            'out': (['negative quantity for XUP to {}'.format(ADDR[1])])
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], 0)], 1),
-            'out': (['zero quantity for XCP to {}'.format(ADDR[1])])
+            'out': (['zero quantity for XUP to {}'.format(ADDR[1])])
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], config.MAX_INT + 1)], 1),
-            'out': (['integer overflow for XCP to {}'.format(ADDR[1])])
+            'out': (['integer overflow for XUP to {}'.format(ADDR[1])])
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', None, DP['quantity'])], 1),
-            'out': (['destination is required for XCP'])
+            'out': (['destination is required for XUP'])
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('UNO', ADDR[1], DP['quantity'])], 1),
             'out': (['cannot send BTC to {}'.format(ADDR[1])])
@@ -5105,13 +5105,13 @@ UNITTEST_VECTOR = {
         }],
         'compose': [{
             'in': (ADDR[0], [('XUP', ADDR[1], DP['quantity'] * 1000000)], None, None),
-            'error': (exceptions.ComposeError, 'insufficient funds for XCP')
+            'error': (exceptions.ComposeError, 'insufficient funds for XUP')
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], 0.1)], None, None),
-            'error': (exceptions.ComposeError, 'quantities must be an int (in satoshis) for XCP')
+            'error': (exceptions.ComposeError, 'quantities must be an int (in satoshis) for XUP')
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], DP['quantity'] * 10000)], None, None),
-            'error': (exceptions.ComposeError, 'insufficient funds for XCP')
+            'error': (exceptions.ComposeError, 'insufficient funds for XUP')
         }, {
             'in': (ADDR[0], [('XUP', ADDR[2], DP['quantity']), ('XUP', ADDR[1], DP['quantity'])], None, None),
             'mock_protocol_changes': {'short_tx_type_id': True},

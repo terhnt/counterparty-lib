@@ -33,7 +33,7 @@ RUN python3 setup.py install_apsw
 # NOTE2: In the future, unoparty-lib and unoparty-cli will go back to being one repo...
 ARG CLI_BRANCH=master
 ENV CLI_BRANCH ${CLI_BRANCH}
-RUN git clone -b ${CLI_BRANCH} https://github.com/terhnt/UnopartyXCP/-cli.git /-cli
+RUN git clone -b ${CLI_BRANCH} https://github.com/terhnt/UnopartyXUP/-cli.git /-cli
 WORKDIR /-cli
 RUN pip3 install -r requirements.txt
 RUN python3 setup.py develop

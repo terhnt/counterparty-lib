@@ -7,7 +7,7 @@ in transaction outputs.
 For CFD leverage, 1x = 5040, 2x = 10080, etc.: 5040 is a superior highly
 composite number and a colossally abundant number, and has 1-10, 12 as factors.
 
-All wagers are in XCP.
+All wagers are in XUP.
 
 Expiring a bet match doesn’t re‐open the constituent bets. (So all bets may be ‘filled’.)
 """

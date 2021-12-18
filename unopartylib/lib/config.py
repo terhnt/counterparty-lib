@@ -34,11 +34,11 @@ OP_RETURN_MAX_SIZE = 80  # bytes
 
 # Currency agnosticism
 BTC = 'UNO'
-XCP = 'XUP'
+XUP = 'XUP'
 
 BTC_NAME = 'Unobtanium'
-XCP_NAME = 'Unoparty'
-APP_NAME = XCP_NAME.lower()
+XUP_NAME = 'Unoparty'
+APP_NAME = XUP_NAME.lower()
 
 DEFAULT_RPC_PORT_REGTEST = 24120
 DEFAULT_RPC_PORT_TESTNET = 14120

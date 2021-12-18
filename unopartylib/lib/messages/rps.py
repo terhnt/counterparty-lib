@@ -401,7 +401,7 @@ def expire (db, block_index):
             matched_rps = list(cursor.execute(sql, bindings))
             for rps in matched_rps:
                 cursor.execute('''UPDATE rps SET status = ? WHERE tx_index = ?''', ('open', rps['tx_index']))
-                # Re-debit XCP refund by close_rps_match.
+                # Re-debit XUP refund by close_rps_match.
                 util.debit(db, rps['source'], 'XUP', rps['wager'], action='reopen RPS after matching expiration', event=rps_match['id'])
                 # Rematch
                 match(db, {'tx_index': rps['tx_index']}, block_index)

@@ -1,6 +1,6 @@
-[![Build Status Travis](https://travis-ci.org/UnopartyXCP/unoparty-lib.svg?branch=develop)](https://travis-ci.org/UnopartyXCP/unoparty-lib)
-[![Build Status Circle](https://circleci.com/gh/UnopartyXCP/unoparty-lib.svg?&style=shield)](https://circleci.com/gh/UnopartyXCP/unoparty-lib)
-[![Coverage Status](https://coveralls.io/repos/UnopartyXCP/unoparty-lib/badge.png?branch=develop)](https://coveralls.io/r/UnopartyXCP/unoparty-lib?branch=develop)
+[![Build Status Travis](https://travis-ci.org/UnopartyXUP/unoparty-lib.svg?branch=develop)](https://travis-ci.org/UnopartyXUP/unoparty-lib)
+[![Build Status Circle](https://circleci.com/gh/UnopartyXUP/unoparty-lib.svg?&style=shield)](https://circleci.com/gh/UnopartyXUP/unoparty-lib)
+[![Coverage Status](https://coveralls.io/repos/UnopartyXUP/unoparty-lib/badge.png?branch=develop)](https://coveralls.io/r/UnopartyXUP/unoparty-lib?branch=develop)
 [![Latest Version](https://pypip.in/version/unoparty-lib/badge.svg)](https://pypi.python.org/pypi/unoparty-lib/)
 [![License](https://pypip.in/license/unoparty-lib/badge.svg)](https://pypi.python.org/pypi/unoparty-lib/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/unoparty/unoparty-server.svg?maxAge=2592000)](https://hub.docker.com/r/unoparty/unoparty-server/)
@@ -9,7 +9,7 @@
 # Description
 `unoparty-lib` is the reference implementation of the [Unoparty Protocol](https://unoparty.io).
 
-**Note:** for the command-line interface to `unoparty-lib`, see [`unoparty-cli`](https://github.com/terhnt/UnopartyXCP/unoparty-cli).
+**Note:** for the command-line interface to `unoparty-lib`, see [`unoparty-cli`](https://github.com/terhnt/UnopartyXUP/unoparty-cli).
 
 
 # Installation
@@ -38,7 +38,7 @@ addresstype=legacy
 
 Download and install latest addrindexrs:
 ```
-$ git clone https://github.com/terhnt/UnopartyXCP/addrindexrs.git
+$ git clone https://github.com/terhnt/UnopartyXUP/addrindexrs.git
 $ cd addrindexrs
 $ cargo check
  -- Setup the appropiate environment variables --
@@ -57,7 +57,7 @@ You could run the indexd daemon with a process manager like `forever` or `pm2` (
 Then, download and install `unoparty-lib`:
 
 ```
-$ git clone https://github.com/terhnt/UnopartyXCP/unoparty-lib.git
+$ git clone https://github.com/terhnt/UnopartyXUP/unoparty-lib.git
 $ cd unoparty-lib
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install
@@ -66,7 +66,7 @@ $ sudo python3 setup.py install
 Followed by `unoparty-cli`:
 
 ```
-$ git clone https://github.com/terhnt/UnopartyXCP/unoparty-cli.git
+$ git clone https://github.com/terhnt/UnopartyXUP/unoparty-cli.git
 $ cd unoparty-cli
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install

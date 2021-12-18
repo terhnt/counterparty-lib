@@ -13,10 +13,10 @@ the address that is the source of the feed in an output which includes the
 
 Broadcasts without a price may not be used for betting. Broadcasts about events
 with a small number of possible outcomes (e.g. sports games), should be
-written, for example, such that a price of 1 XCP means one outcome, 2 XCP means
+written, for example, such that a price of 1 XUP means one outcome, 2 XUP means
 another, etc., which schema should be described in the 'text' field.
 
-fee_fraction: .05 XCP means 5%. It may be greater than 1, however; but
+fee_fraction: .05 XUP means 5%. It may be greater than 1, however; but
 because it is stored as a four‐byte integer, it may not be greater than about
 42.
 """

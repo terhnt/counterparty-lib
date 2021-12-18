@@ -62,9 +62,9 @@ def validate (db, source, destination, flags, memo, block_index):
     result = cursor.fetchall()
 
     if len(result) == 0:
-        problems.append('insufficient XCP balance for sweep. Need %s XCP for antispam fee' % ANTISPAM_FEE_DECIMAL)
+        problems.append('insufficient XUP balance for sweep. Need %s XUP for antispam fee' % ANTISPAM_FEE_DECIMAL)
     elif result[0]['quantity'] < ANTISPAM_FEE:
-        problems.append('insufficient XCP balance for sweep. Need %s XCP for antispam fee' % ANTISPAM_FEE_DECIMAL)
+        problems.append('insufficient XUP balance for sweep. Need %s XUP for antispam fee' % ANTISPAM_FEE_DECIMAL)
 
     cursor.close()
 
