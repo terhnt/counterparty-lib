@@ -10,7 +10,7 @@ import urllib.request
 import sys
 import shutil
 
-from counterpartylib.lib import config
+from unopartylib.lib import config
 
 CURRENT_VERSION = config.VERSION_STRING
 APSW_VERSION = "3.24.0-r1"
@@ -81,15 +81,15 @@ class move_old_db(Command):
     def run(self):
         import appdirs
 
-        old_data_dir = appdirs.user_config_dir(appauthor='Counterparty', appname='counterpartyd', roaming=True)
-        old_database = os.path.join(old_data_dir, 'counterpartyd.9.db')
-        old_database_testnet = os.path.join(old_data_dir, 'counterpartyd.9.testnet.db')
+        old_data_dir = appdirs.user_config_dir(appauthor='Unoparty', appname='unopartyd', roaming=True)
+        old_database = os.path.join(old_data_dir, 'unopartyd.9.db')
+        old_database_testnet = os.path.join(old_data_dir, 'unopartyd.9.testnet.db')
 
         new_data_dir = appdirs.user_data_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME, roaming=True)
         new_database = os.path.join(new_data_dir, '{}.db'.format(config.APP_NAME))
         new_database_testnet = os.path.join(new_data_dir, '{}.testnet.db'.format(config.APP_NAME))
 
-        # User have an old version of `counterpartyd`
+        # User have an old version of `unopartyd`
         if os.path.exists(old_data_dir):
             # Move database
             if not os.path.exists(new_data_dir):
@@ -169,6 +169,7 @@ required_packages = [
     'Flask-HTTPAuth==3.1.2',
     'Flask==0.11.1',
     'colorlog==2.7.0',
+    'python-altcoinlib==0.9.1',
     'json-rpc==1.10.3',
     'pycoin==0.77',
     'pycrypto==2.6.1',
@@ -184,16 +185,16 @@ required_packages = [
 ]
 
 setup_options = {
-    'name': 'counterparty-lib',
+    'name': 'unoparty-lib',
     'version': CURRENT_VERSION,
-    'author': 'Counterparty Developers',
-    'author_email': 'dev@counterparty.io',
-    'maintainer': 'Counterparty Developers',
-    'maintainer_email': 'dev@counterparty.io',
-    'url': 'http://counterparty.io',
+    'author': 'Unoparty Developers',
+    'author_email': 'dev@unoparty.io',
+    'maintainer': 'Unoparty Developers',
+    'maintainer_email': 'dev@unoparty.io',
+    'url': 'http://unoparty.io',
     'license': 'MIT',
-    'description': 'Counterparty Protocol Reference Implementation',
-    'keywords': 'counterparty, bitcoin',
+    'description': 'Unoparty Protocol Reference Implementation',
+    'keywords': 'unoparty, unobtanium, XUP',
     'classifiers': [
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -207,8 +208,8 @@ setup_options = {
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Distributed Computing"
     ],
-    'download_url': 'https://github.com/CounterpartyXCP/counterparty-lib/releases/tag/' + CURRENT_VERSION,
-    'provides': ['counterpartylib'],
+    'download_url': 'https://github.com/terhnt/UnopartyXUP/unoparty-lib/releases/tag/' + CURRENT_VERSION,
+    'provides': ['unopartylib'],
     'packages': find_packages(),
     'zip_safe': False,
     'setup_requires': ['appdirs', 'setuptools-markdown'],

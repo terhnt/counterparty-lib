@@ -4,12 +4,12 @@
 * v9.59.0 (2021-01-11)
     * Empty address dispensers
     * Added addrindexrs and removed indexd
-    * Added support for xcp-proxy
+    * Added support for xup-proxy
     * Several bug fixes
 * v9.56.0 (2018-09-16)
     * Segwit support!
     * Several changes related to CIP19
-    (https://github.com/CounterpartyXCP/cips/blob/master/cip-0019.md) (protocol change: 557236)
+    (https://github.com/terhnt/UnopartyXUP/cips/blob/master/cip-0019.md) (protocol change: 557236)
     * Usage of estimatesmartfee due to deprecation of the estimatefee method
     * Use Bitcoin 0.16.3 with indexd as a transaction index
     * allow multisig encoding method as the bytespersigop DoS protection was changed in Bitcoin Core v0.13.0
@@ -26,20 +26,20 @@
     * Upgrade SQLite/APSW to v3.12.2
         * Run `python3 setup.py install_apsw` to upgrade your installed version.
         * Run `./tools/upgradesqlitepagesize.py <PATHTOYOURDB>` while your node is OFFLINE to upgrade.
-          Most likely the path to your DB is `~/.local/share/counterparty/counterparty.db`.
+          Most likely the path to your DB is `~/.local/share/unoparty/unoparty.db`.
 * v9.55.4 (2017-10-31)
     * Fix for uncaught exception in short asset name issuances
 * v9.55.3 (2017-09-26)
-    * Implemented CIP-9 Enhanced Send (https://github.com/CounterpartyXCP/cips/blob/master/cip-0009.md) (protocol change: 489956)
-    * Implemented CIP-11 Shorten Transaction Type ID Namespace (https://github.com/CounterpartyXCP/cips/blob/master/cip-0011.md) (protocol change: 489956)
-    * Implemented CIP-12 Memo Requirement through Broadcasts (https://github.com/CounterpartyXCP/cips/blob/master/cip-0012.md) (protocol change: 489956)
-    * Fixes locked issuance workaround (https://github.com/CounterpartyXCP/counterparty-lib/pull/999)
+    * Implemented CIP-9 Enhanced Send (https://github.com/terhnt/UnopartyXUP/cips/blob/master/cip-0009.md) (protocol change: 489956)
+    * Implemented CIP-11 Shorten Transaction Type ID Namespace (https://github.com/terhnt/UnopartyXUP/cips/blob/master/cip-0011.md) (protocol change: 489956)
+    * Implemented CIP-12 Memo Requirement through Broadcasts (https://github.com/terhnt/UnopartyXUP/cips/blob/master/cip-0012.md) (protocol change: 489956)
+    * Fixes locked issuance workaround (https://github.com/terhnt/UnopartyXUP/unoparty-lib/pull/999)
     * Updated python-bitcoinlib library for handling blocks that include transactions with segwit outputs
     * Test suite and services updates
     * Remove rpcthreads recommendation
 * v9.55.2 (2017-05-01)
-    * Implemented CIP-4 subassets (https://github.com/CounterpartyXCP/cips/blob/master/cip-0004.md) (protocol change: 467417)
-    * Moved to bitcoind 0.13.2-addrindex (please use at least 0.13.2 with this version of counterparty-lib)
+    * Implemented CIP-4 subassets (https://github.com/terhnt/UnopartyXUP/cips/blob/master/cip-0004.md) (protocol change: 467417)
+    * Moved to unobtaniumd 0.13.2-addrindex (please use at least 0.13.2 with this version of unoparty-lib)
 * v9.55.1 (2016-12-02)
     * Hotfix for integer overflow bug that caused a crash on mainnet block #441563
 * v9.55.0 (2016-07-11)
@@ -48,19 +48,19 @@
     * Only use first usable input for source (protocol change: 423888)
     * Fixed issue with broadcasts of exactly 52 chars, by always adding a varint to specify the length (protocol change: 423888)
     * Cleanup destroy.parse and add unit tests for it (protocol change: 423888)
-    * Added Docker image building (counterparty/counterparty-server on Dockerhub)
+    * Added Docker image building (unoparty/unoparty-server on Dockerhub)
     * Enhanced Travis to run test suite inside Docker image, and push image if testsuite passes
     * UTXO "locking" used to construct a transaction for 3 seconds to avoid a user double spending against himself
     * Improved APSW install routine to downgrade when newer version is installed
-    * Tweaked CORS headers so that web clients may authenticate directly against counterparty-server
+    * Tweaked CORS headers so that web clients may authenticate directly against unoparty-server
     * Numerous logging fixes to make logging more robust
-    * Further performance enhancements when fetching raw transactions from bitcoind
+    * Further performance enhancements when fetching raw transactions from unobtaniumd
     * Peg dependencies at specific versions!
     * Added debug_config method to print config to CLI
     * Mask username/password in backend URL when logging
     * Updated python-bitcoinlib to newest version
     * No longer ceil the size of a transaction to KBs when calculating fees
-    * Use dynamic estimated fee (from bitcoind)
+    * Use dynamic estimated fee (from unobtaniumd)
     * Fix for bytespersigop DoS protection in Bitcoin Core v0.12.1
     * Test suite:
         * Reorganization of the test suite at numerous points for more robustness and capabilities
@@ -80,15 +80,15 @@
 * v9.53.0 (2016-01-18)
     * Remove `messages` table from being covered by "undolog" functionality added in `v9.52.0`.
     * Add `min_message_index` to `get_blocks` API call.
-    * Retry more than once with `getrawtransaction_batch` if a specific txhash is not found in `bitcoind`'s addrindex.
+    * Retry more than once with `getrawtransaction_batch` if a specific txhash is not found in `unobtaniumd`'s addrindex.
     * Update `setup.py` to properly utilize (newer) egg-style install. Previously the "old" style install was invoked when it shouldn't have been.
-    * Update backend mempool caching code to keep full mempool, instead of just XCP transactions (from @rubensayshi).
+    * Update backend mempool caching code to keep full mempool, instead of just XUP transactions (from @rubensayshi).
     * Increase max `OP_RETURN` size used from 40 bytes to 80 bytes (from @rubensayshi).
     * Add ModuleLoggingFilter for (NodeJS-style) module-level log filtering (from @rubensayshi).
     * Fixed `backend.get_unspent_outputs` from raising exception when a transaction contains an output with garbage data (from @rubensayshi).
     * `base58_check_decode` padding byte used should be `x00`, not the `version` (from @rubensayshi).
     * Require `sudo` for non-container `travis` builds, due to our `serpent` dependency (from @rubensayshi).
-    * Made `getrawtransaction_batch` deal better with missing raw transactions from `bitcoind`.
+    * Made `getrawtransaction_batch` deal better with missing raw transactions from `unobtaniumd`.
     * A number of other small bug fixes, logging tweaks, etc.
     * NOTE: This versions mhash (message hash) will be different than that of nodes running `9.52.0`, but the other hashes should continue to match.
 * v9.52.0 (2015-10-31)
@@ -96,9 +96,9 @@
     * Removed use of `tornado` library in the API module. We use `flask`'s threaded server instead
     * Added `getrawtransaction` and `getrawtransaction_batch` methods to the API
     * Added optional `custom_inputs` parameter to API calls, which allows for controlling the exact UTXOs to use in transactions (thanks, tokenly)
-    * Added `message_hash`, derived from changes to the `counterparty-lib` database. Displayed on each new block, makes checking for DB-level consensus easier
+    * Added `message_hash`, derived from changes to the `unoparty-lib` database. Displayed on each new block, makes checking for DB-level consensus easier
 * v9.51.4 (2015-09-26)
-    * Significant performance and caching optimizations around bitcoind addrindex interaction
+    * Significant performance and caching optimizations around unobtaniumd addrindex interaction
     * Fixed issues around responsiveness with larger mempool sizes
     * Mempool refresh period changed from 2 seconds to .5 seconds
     * Bug fixes with coinbase transaction processing
@@ -113,7 +113,7 @@
 * v9.51.2 (2015-04-23)
     * miscellaneous bug fixes
     * dramatically reduced default batch size (from 5000 to 20)
-    * renamed repository to `counterparty-lib`
+    * renamed repository to `unoparty-lib`
 * v9.51.1 (2015-04-20)
     * rename `server.api.log` to `server.access.log`
     * add `requests_timeout` parameter
@@ -125,7 +125,7 @@
     * check for null data chunks (protocol change: 352000)
     * disable rock‐paper‐scissors (protocol change: 352000)
     * deprecate `get_asset_info(assets)` API method
-    * deprecate `get_xcp_supply()` API method in favor of `get_supply(asset)`
+    * deprecate `get_xup_supply()` API method in favor of `get_supply(asset)`
     * `get_unspent_txouts` API method parameter and return values changed
     * authentication on JSON‐RPC API is off by default
     * `rpc_password` configuration parameter is no longer mandatory
@@ -136,7 +136,7 @@
     * hotfix: global integer overflow
 * v9.49.4 (2015-02-05)
     * reconceived this package as a libary
-    * moved CLI to new repository: `counterparty-cli`
+    * moved CLI to new repository: `unoparty-cli`
     * remove signing and broadcast functionality from API (`do_*`, `sign_tx`, `broadcast_tx` calls)
     * created `setup.py` build script
     * return to using `requests` for handling connections to backend
@@ -144,14 +144,14 @@
     * renamed configuration parameter: `jmcorgan` -> `addrindex`
     * renamed configuration parameter: `BACKEND_RPC_*` -> `BACKEND_*`
     * renamed configuration parameter: `BLOCKCHAIN_SERVICE_NAME` -> `BACKEND_NAME`
-    * prepared version check for repository rename to `counterparty-lib`
+    * prepared version check for repository rename to `unoparty-lib`
     * moved API docs to wiki
     * improved test coverage
     * miscellaneous bug fixes
     * improved docstring coverage
     * removed option to use Insight, Blockr and SoChain as a backend
     * tweaked Coveralls configuration
-    * Rename the database file name from `counterpartyd.9.db` to `counterparty.db`
+    * Rename the database file name from `unopartyd.9.db` to `unoparty.db`
     * Add BTCD support
 * v9.49.3 (2014-12-28)
     * better logging when handling `SIGTERM`, `SIGKILL`
@@ -210,7 +210,7 @@
     * bump versions of dependencies
     * miscellaneous clean up
 * v9.45.0 (2014-10-23)
-    * add dividend fee of 0.0002 XCP per recipient (protocol change: 330000)
+    * add dividend fee of 0.0002 XUP per recipient (protocol change: 330000)
 * v9.44.0 (2014-09-22)
     * server action requires `server` positional argument
     * lockfile
@@ -220,12 +220,12 @@
 * v9.43.0 (2014-09-14)
     * generate movements hash for each block (start at block: 322000)
 * v9.42.0 (2014-09-04)
-    * disable dividends to XCP holders (protocol change: 320000)
+    * disable dividends to XUP holders (protocol change: 320000)
     * allow dividends only from issuers (protocol change: 320000)
 * v9.41.0 (2014-08-21)
     * fixed bug in new text and descriptions
 * v9.40.0 (2014-08-20)
-    * allow dividends to be paid to XCP holders (protocol change: 317500)
+    * allow dividends to be paid to XUP holders (protocol change: 317500)
     * fixed bug in BTCpay validation
     * allow null expirations (protocol change: 317500)
     * assert first block in database is BLOCK_FIRST
@@ -313,7 +313,7 @@
     * tweaked test suite
     * fixed failed sanity check on testnet
 * v9.17.0
-    * failed XCP conservation sanity check on testnet (deadline checking in bets)
+    * failed XUP conservation sanity check on testnet (deadline checking in bets)
 * v9.16.3
     * bug fixes
 * v9.16.2
@@ -377,7 +377,7 @@
 * arbitrary spend with multi‐sig input: retroactive
 * deduct `fee_required`, too: 287800
 * value, quantity, etc. sanity checking: retroactive
-* reduce issuance fee to 0.5 XCP: 291700
+* reduce issuance fee to 0.5 XUP: 291700
 * match only with positive get/counterwager remaining: 292000
 * pay‐to‐pubkeyhash encoding: 293000
 * filtered negative order fees: 294000
