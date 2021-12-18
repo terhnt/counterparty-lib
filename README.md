@@ -21,8 +21,8 @@ For a simple Docker-based install of the Unoparty software stack, see [this guid
 
 # Manual installation
 
-Download the latest [Unobtanium Core](https://github.com/unobtanium/unobtanium/releases) and create
-a `bitcoin.conf` file with the following options:
+Download the latest [Unobtanium Core](https://github.com/unobtanium-official/unobtanium/releases) and create
+a `unobtanium.conf` file with the following options:
 
 ```
 rpcuser=unobtaniumrpc
@@ -30,8 +30,8 @@ rpcpassword=rpc
 server=1
 txindex=1
 rpctimeout=300
-zmqpubhashblock=tcp://127.0.0.1:28832
-zmqpubhashtx=tcp://127.0.0.1:28832
+zmqpubhashblock=tcp://127.0.0.1:28120
+zmqpubhashtx=tcp://127.0.0.1:28120
 addresstype=legacy
 ```
 **Note:** you can and should replace the RPC credentials. Remember to use the changed RPC credentials throughout this document.
