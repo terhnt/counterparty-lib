@@ -374,7 +374,7 @@ def debit (db, address, asset, quantity, action=None, event=None):
     if quantity > config.MAX_INT:
         raise DebitError('Quantity can\'t be higher than MAX_INT.')
     if asset == config.BTC:
-        raise DebitError('Cannot debit bitcoins.')
+        raise DebitError('Cannot debit unobtaniums.')
 
     debit_cursor = db.cursor()
 
@@ -384,7 +384,7 @@ def debit (db, address, asset, quantity, action=None, event=None):
             assert asset == config.XCP
 
     if asset == config.BTC:
-        raise exceptions.BalanceError('Cannot debit bitcoins from a {} address!'.format(config.XCP_NAME))
+        raise exceptions.BalanceError('Cannot debit unobtaniums from a {} address!'.format(config.XCP_NAME))
 
     debit_cursor.execute('''SELECT * FROM balances \
                             WHERE (address = ? AND asset = ?)''', (address, asset))
@@ -436,7 +436,7 @@ def credit (db, address, asset, quantity, action=None, event=None):
     if quantity > config.MAX_INT:
         raise CreditError('Quantity can\'t be higher than MAX_INT.')
     if asset == config.BTC:
-        raise CreditError('Cannot debit bitcoins.')
+        raise CreditError('Cannot debit unobtaniums.')
 
     credit_cursor = db.cursor()
 

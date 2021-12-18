@@ -11,8 +11,8 @@
     * Several changes related to CIP19
     (https://github.com/terhnt/UnopartyXUP/cips/blob/master/cip-0019.md) (protocol change: 557236)
     * Usage of estimatesmartfee due to deprecation of the estimatefee method
-    * Use Bitcoin 0.16.3 with indexd as a transaction index
-    * allow multisig encoding method as the bytespersigop DoS protection was changed in Bitcoin Core v0.13.0
+    * Use Unobtanium 0.16.3 with indexd as a transaction index
+    * allow multisig encoding method as the bytespersigop DoS protection was changed in Unobtanium Core v0.13.0
     * API change (backwards compatible): adds extended_tx_info parameter to create methods
     * Breaking API change. The result of get_unspent_txouts has changed and now looks like this: [{
                 "amount": 0.001,
@@ -61,7 +61,7 @@
     * Updated python-bitcoinlib to newest version
     * No longer ceil the size of a transaction to KBs when calculating fees
     * Use dynamic estimated fee (from unobtaniumd)
-    * Fix for bytespersigop DoS protection in Bitcoin Core v0.12.1
+    * Fix for bytespersigop DoS protection in Unobtanium Core v0.12.1
     * Test suite:
         * Reorganization of the test suite at numerous points for more robustness and capabilities
         * Added ability to mock protocol changes to allow for testing of certain changes on or off
@@ -196,7 +196,7 @@
     * improvements to documentation
     * graceful shutdown of processes
     * faster server startup
-    * support for jmcorgan Bitcoin Core fork for block explorer
+    * support for jmcorgan Unobtanium Core fork for block explorer
     * change first testnet block to 281000
     * make protocol changes always retroactive on testnet
 * v9.46.0 (2014-11-03)
@@ -324,7 +324,7 @@
     * improved algorithm for choosing unspent txouts in transaction construction
     * allow the unconfirmed inputs CLI option
 * v9.16
-    * regular version, database, Bitcoind checking in API
+    * regular version, database, Unobtaniumd checking in API
     * better testcoin support
     * simplify version checking (combined DB and client versions), which necessitates skipping versions
     * simplify betting fees: just deduct from pot at settlement (protocol change: retroactive)
@@ -335,12 +335,12 @@
     * fully floating transaction fees
     * lots of miscellaneous bug fixes
     * replenish fee_required_remaining on order match expiration (protocol change: 297000)
-    * transaction signing for source addresses not in Bitcoin Core wallet
+    * transaction signing for source addresses not in Unobtanium Core wallet
     * tweaks to API
 * v6.13
     * miscellaneous bug fixes
     * add some sanity checks
-    * partially allow for CLI input of private keys (to bypass Bitcoind wallet)
+    * partially allow for CLI input of private keys (to bypass Unobtaniumd wallet)
     * tweak the API
     * fill out the test suite a bit
     * temporarily double the default fee to .0002 BTC

@@ -1,5 +1,5 @@
 """
-Construct and serialize the Bitcoin transactions that are Unoparty transactions.
+Construct and serialize the Unobtanium transactions that are Unoparty transactions.
 
 This module contains no consensus‐critical code.
 """
@@ -18,7 +18,7 @@ import requests
 import bitcoin as bitcoinlib
 from bitcoin.core import Hash160
 from bitcoin.core.script import CScript
-from bitcoin.wallet import P2PKHBitcoinAddress, P2SHBitcoinAddress
+from bitcoin.wallet import P2PKHBitcoinAddress, P2SHUnobtaniumAddress
 import cachetools
 
 from unopartylib.lib import config

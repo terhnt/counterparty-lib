@@ -96,7 +96,7 @@ def check_backend_state():
     cblock = backend.getblock(block_hash)
     time_behind = time.time() - cblock.nTime   # TODO: Block times are not very reliable.
     if time_behind > 60 * 60 * 2:   # Two hours.
-        raise BackendError('Bitcoind is running about {} hours behind.'.format(round(time_behind / 3600)))
+        raise BackendError('Unobtaniumd is running about {} hours behind.'.format(round(time_behind / 3600)))
 
     # check backend index
     blocks_behind = backend.getindexblocksbehind()
@@ -757,7 +757,7 @@ class APIServer(threading.Thread):
             return {
                 'server_ready': server_ready,
                 'db_caught_up': caught_up,
-                'bitcoin_block_count': latestBlockIndex,
+                'unobtanium_block_count': latestBlockIndex,
                 'last_block': last_block,
                 'indexd_caught_up': indexd_caught_up,
                 'indexd_blocks_behind': indexd_blocks_behind,

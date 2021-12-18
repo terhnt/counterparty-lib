@@ -318,12 +318,12 @@ def getrawtransaction(db, txid, verbose=False):
     cursor.close()
 
     if verbose:
-        return mock_bitcoind_verbose_tx_output(tx_hex, txid, confirmations)
+        return mock_unobtaniumd_verbose_tx_output(tx_hex, txid, confirmations)
     else:
         return tx_hex
 
 
-def mock_bitcoind_verbose_tx_output(tx, txid, confirmations):
+def mock_unobtaniumd_verbose_tx_output(tx, txid, confirmations):
     if isinstance(tx, bitcoinlib.core.CTransaction):
         ctx = tx
     else:
@@ -627,7 +627,7 @@ def check_outputs(tx_name, method, inputs, outputs, error, records, comment, moc
                     'encoding': 'multisig'
                 }
                 if tx_name == 'order' and inputs[1]=='UNO':
-                    print('give btc')
+                    print('give uno')
                     tx_params['fee_provided'] = DP['fee_provided']
                 unsigned_tx_hex = transaction.construct(server_db, test_outputs, **tx_params)
                 print(tx_name)

@@ -130,7 +130,7 @@ def parse (db, tx, message):
         # BTC must be paid all at once.
         if tx['btc_amount'] >= btc_quantity:
 
-            # Credit source address for the currency that he bought with the bitcoins.
+            # Credit source address for the currency that he bought with the unobtaniums.
             util.credit(db, tx['source'], escrowed_asset, escrowed_quantity, action='btcpay', event=tx['tx_hash'])
             status = 'valid'
 
@@ -154,7 +154,7 @@ def parse (db, tx, message):
                 cursor.execute(sql, bindings)
                 order_matches = cursor.fetchall()
                 if len(order_matches) == 0:
-                    # mark both btc get and give orders as filled when order_match is completed and give or get remaining = 0
+                    # mark both uno get and give orders as filled when order_match is completed and give or get remaining = 0
                     bindings = {
                         'status': 'filled',
                         'tx0_hash': tx0_hash,
@@ -163,7 +163,7 @@ def parse (db, tx, message):
                     sql='update orders set status = :status where ((tx_hash in (:tx0_hash, :tx1_hash)) and ((give_remaining = 0) or (get_remaining = 0)))'
                     cursor.execute(sql, bindings)
                 else:
-                    # always mark btc get order as filled when order_match is completed and give or get remaining = 0
+                    # always mark uno get order as filled when order_match is completed and give or get remaining = 0
                     bindings = {
                         'status': 'filled',
                         'source': tx['destination'],

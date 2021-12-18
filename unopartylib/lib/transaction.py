@@ -1,5 +1,5 @@
 """
-Construct and serialize the Bitcoin transactions that are Unoparty transactions.
+Construct and serialize the Unobtanium transactions that are Unoparty transactions.
 
 This module contains no consensus‐critical code.
 """

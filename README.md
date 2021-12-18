@@ -21,7 +21,7 @@ For a simple Docker-based install of the Unoparty software stack, see [this guid
 
 # Manual installation
 
-Download the latest [Bitcoin Core](https://github.com/bitcoin/bitcoin/releases) and create
+Download the latest [Unobtanium Core](https://github.com/unobtanium/unobtanium/releases) and create
 a `bitcoin.conf` file with the following options:
 
 ```
@@ -46,7 +46,7 @@ $ cargo check
   - ADDRINDEXRS_TXID_LIMIT=15000
   - ADDRINDEXRS_COOKIE=user:password
   - ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8432
-  - ADDRINDEXRS_DAEMON_RPC_ADDR=bitcoin:8332
+  - ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:8332
  --
 $ cargo build --release
 $ cargo run --release
@@ -136,7 +136,7 @@ Unoparty database files are by default named `unoparty.[testnet.]db` and located
 
 ## Configuration File Format
 
-Manual configuration is not necessary for most use cases. "back-end" and "wallet" are used to access Bitcoin server RPC.
+Manual configuration is not necessary for most use cases. "back-end" and "wallet" are used to access Unobtanium server RPC.
 
 A `unoparty-server` configuration file looks like this:
 
@@ -155,7 +155,7 @@ The ``force`` argument can be used either in the server configuration file or pa
 A `unoparty-client` configuration file looks like this:
 
 	[Default]
-	wallet-name = bitcoincore
+	wallet-name = unobtaniumcore
 	wallet-connect = localhost
 	wallet-user = <user>
 	wallet-password = <password>

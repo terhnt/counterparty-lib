@@ -439,9 +439,9 @@ def parse (db, tx, message):
 
             if (give_asset == config.BTC and give_quantity < min_btc_quantity) or (get_asset == config.BTC and get_quantity < min_btc_quantity):
                 if problems:
-                    status += '; btc order below minimum'
+                    status += '; uno order below minimum'
                 else:
-                    status = 'invalid: btc order below minimum'
+                    status = 'invalid: uno order below minimum'
 
     # Debit give quantity. (Escrow.)
     if status == 'open':
@@ -648,7 +648,7 @@ def match (db, tx, block_index=None):
                 util.credit(db, tx0['source'], tx0['get_asset'],
                                     backward_quantity, action='order match', event=order_match_id)
 
-            # Debit the order, even if it involves giving bitcoins, and so one
+            # Debit the order, even if it involves giving unobtaniums, and so one
             # can't debit the sending account.
             # Get remainings may be negative.
             tx0_give_remaining -= forward_quantity
@@ -749,7 +749,7 @@ def expire (db, block_index):
     for order_match in order_matches:
         cancel_order_match(db, order_match, 'expired', block_index)
 
-        # Expire btc sell order if match expires
+        # Expire uno sell order if match expires
         if util.enabled('btc_sell_expire_on_match_expire'):
             # Check for other pending order matches involving either tx0_hash or tx1_hash
             bindings = {

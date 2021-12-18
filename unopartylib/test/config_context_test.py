@@ -14,7 +14,7 @@ FIXTURE_DB = tempfile.gettempdir() + '/fixtures.parseblock_unittest_fixture.db'
 
 
 def test_config_context(cp_server):
-    assert config.BTC_NAME == "Bitcoin"
+    assert config.BTC_NAME == "Unobtanium"
 
     with util_test.ConfigContext(BTC_NAME="Unobtanium Testing"):
         assert config.BTC_NAME == "Unobtanium Testing"

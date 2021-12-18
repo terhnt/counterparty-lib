@@ -14,7 +14,7 @@ def address_scriptpubkey(address):
 
 def pack(address):
     """
-    Converts a base58 bitcoin address into a 21 byte bytes object
+    Converts a base58 unobtanium address into a 21 byte bytes object
     """
     from .util import enabled # Here to account for test mock changes
 
@@ -42,7 +42,7 @@ def pack(address):
 # retuns both the message type id and the remainder of the message data
 def unpack(short_address_bytes):
     """
-    Converts a 21 byte prefix and public key hash into a full base58 bitcoin address
+    Converts a 21 byte prefix and public key hash into a full base58 unobtanium address
     """
     from .util import enabled # Here to account for test mock changes
 
