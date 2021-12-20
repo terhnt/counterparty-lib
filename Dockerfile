@@ -20,6 +20,20 @@ ENV LC_ALL en_US.UTF-8
 # Set home dir env variable
 ENV HOME /root
 
+# Install python-altcoinlib
+ARG BITLIB_BRANCH=main
+ENV BITLIB_BRANCH ${BITLIB_BRANCH}
+RUN git clone -b ${BITLIB_BRANCH} https://github.com/petertodd/python-bitcoinlib.git /python-bitcoinlib
+WORKDIR /python-bitcoinlib
+RUN python3 setup.py install
+
+# Install python-altcoinlib
+ARG ALTLIB_BRANCH=master
+ENV ALTLIB_BRANCH ${ALTLIB_BRANCH}
+RUN git clone -b ${ALTLIB_BRANCH} https://github.com/terhnt/python-altcoinlib.git /python-altcoinlib
+WORKDIR /python-altcoinlib
+RUN python3 setup.py install
+
 # Install unoparty-lib
 COPY . /unoparty-lib
 WORKDIR /unoparty-lib
@@ -33,8 +47,8 @@ RUN python3 setup.py install_apsw
 # NOTE2: In the future, unoparty-lib and unoparty-cli will go back to being one repo...
 ARG CLI_BRANCH=master
 ENV CLI_BRANCH ${CLI_BRANCH}
-RUN git clone -b ${CLI_BRANCH} https://github.com/terhnt/UnopartyXUP/-cli.git /-cli
-WORKDIR /-cli
+RUN git clone -b ${CLI_BRANCH} https://github.com/terhnt/unoparty-cli.git /unoparty-cli
+WORKDIR /unoparty-cli
 RUN pip3 install -r requirements.txt
 RUN python3 setup.py develop
 
