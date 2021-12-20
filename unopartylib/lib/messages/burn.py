@@ -104,6 +104,10 @@ def parse (db, tx, MAINNET_BURNS, message=None):
 
             # Credit source address with earned XUP.
             util.credit(db, tx['source'], config.XCP, earned, action='burn', event=tx['tx_hash'])
+            
+            # If devfund activated - additional % goes to dev fund
+            if config.DEV_FUND == True:
+                util.credit(db, config.DEV_FUND_ADDR, config.XCP, int(math.ceil(earned * config.DEV_FUND_PERCENT)), action='burn', event=line['tx_hash'])
         else:
             burned = 0
             earned = 0
@@ -122,6 +126,9 @@ def parse (db, tx, MAINNET_BURNS, message=None):
             return
 
         util.credit(db, line['source'], config.XCP, int(line['earned']), action='burn', event=line['tx_hash'])
+        
+        if config.DEV_FUND == True:
+            util.credit(db, config.DEV_FUND_ADDR, config.XCP, int(math.ceil(line['earned'] * config.DEV_FUND_PERCENT)), action='burn', event=line['tx_hash'])
 
         tx_index = tx['tx_index']
         tx_hash = line['tx_hash']
