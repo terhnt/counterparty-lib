@@ -58,6 +58,8 @@ UNSPENDABLE_MAINNET = 'uNopartyXburnXXXXXXXXXXXXXXXWJmsqn'
 
 # Hardcoded development fund - each uno burned will give a % of XUP to development/maintenance address
 DEV_FUND_ADDR = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt - may move funds to Mo'
+DEV_FUND_ADDR_TESTNET = 'UeevnNJxybp9BcApxvHmZ9PzzRGqZ2PDqn' # Has public private key
+DEV_FUND_ADDR_REGTEST = '1MHBMEXpWkX5GesyyCD2NGfyFekmyBfGsd'
 DEV_FUND_PERCENT = 0.25 # 25% - an additional 25% of each burn reward goes to development
 DEV_FUND = True
 
