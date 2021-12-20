@@ -169,7 +169,7 @@ required_packages = [
     'Flask-HTTPAuth==3.1.2',
     'Flask==0.12.2',
     'colorlog==2.7.0',
-    'python-altcoinlib==0.9.1',
+    'python-altcoinlib==0.8.0-SNAPSHOT',
     'json-rpc==1.10.3',
     'pycoin==0.77',
     'pycrypto==2.6.1',
