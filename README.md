@@ -36,6 +36,20 @@ addresstype=legacy
 ```
 **Note:** you can and should replace the RPC credentials. Remember to use the changed RPC credentials throughout this document.
 
+Download and install **python-bitcoinlib** and **python-altcoinlib**:
+
+_Unobtanium uses a custom version of python-altcoinlib that requires a manual install_
+
+```
+git clone https://github.com/petertodd/python-bitcoinlib.git
+cd python-bitcoinlib
+sudo python3 ./setup.py install
+
+git clone https://github.com/terhnt/python-altcoinlib.git
+cd python-altcoinlib
+sudo python3 ./setup.py install
+```
+
 Download and install latest addrindexrs:
 ```
 $ git clone https://github.com/terhnt/addrindexrs.git
