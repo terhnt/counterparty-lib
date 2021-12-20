@@ -20,7 +20,7 @@ ENV LC_ALL en_US.UTF-8
 # Set home dir env variable
 ENV HOME /root
 
-# Install python-altcoinlib
+# Install python-bitcoinlib
 ARG BITLIB_BRANCH=main
 ENV BITLIB_BRANCH ${BITLIB_BRANCH}
 RUN git clone -b ${BITLIB_BRANCH} https://github.com/petertodd/python-bitcoinlib.git /python-bitcoinlib
