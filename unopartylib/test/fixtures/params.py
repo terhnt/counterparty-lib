@@ -25,11 +25,11 @@ DEFAULT_PARAMS = {
     'fee_provided': 1000000,
     'fee_multiplier': .05,
     'unspendable': 'UUnoPartyXburnTestnetXXXXXXXXFEeN4',
-    'burn_start': 310000,
-    'burn_end': 4017708,
+    'burn_start': 2000,
+    'burn_end': 400000,
     'burn_quantity': int(.62 * UNIT),
     'burn_verysmall_quantity': int(.0001 * UNIT),
-    'default_block_index': 310000 + 501,
+    'default_block_index': 2000 + 501,
     'default_block_hash': '2d62095b10a709084b1854b262de77cb9f4f7cd76ba569657df8803990ffbfc6c12bca3c18a44edae9498e1f0f054072e16eef32dfa5e3dd4be149009115b4b8' #TODO: need to update this value
 }
 #pubkeyhash - removed from lines 36/37
