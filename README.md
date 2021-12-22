@@ -38,7 +38,7 @@ addresstype=legacy
 
 Download and install **python-bitcoinlib** and **python-altcoinlib**:
 
-_Unobtanium uses a custom version of python-altcoinlib that requires a manual install_
+_Unoparty-lib uses a custom version of python-altcoinlib that requires a manual install_
 
 ```
 git clone https://github.com/petertodd/python-bitcoinlib.git
