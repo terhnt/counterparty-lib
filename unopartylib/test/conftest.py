@@ -37,11 +37,11 @@ MOCK_PROTOCOL_CHANGES = {
     'bytespersigop': False,    # default to False to avoid all old vectors breaking
 }
 MOCK_PROTOCOL_CHANGES_AT_BLOCK = {
-    'subassets': {'block_index': 310495, 'allow_always_latest': True},  # override to be true only at block 310495
-    'short_tx_type_id': {'block_index': 310502, 'allow_always_latest': False},  # override to be true only at block 310502
-    'enhanced_sends': {'block_index': 310999, 'allow_always_latest': False},  # override to be true only at block 310999
-    'issuance_lock_fix': {'block_index': 310502, 'allow_always_latest': False},  # override to be true only at block 310502
-    'segwit_support': {'block_index': 0, 'allow_always_latest': False},  # override to be true only at block 310999,
+    'subassets': {'block_index': 2495, 'allow_always_latest': True},  # override to be true only at block 310495
+    'short_tx_type_id': {'block_index': 2502, 'allow_always_latest': False},  # override to be true only at block 310502
+    'enhanced_sends': {'block_index': 2999, 'allow_always_latest': False},  # override to be true only at block 310999
+    'issuance_lock_fix': {'block_index': 2502, 'allow_always_latest': False},  # override to be true only at block 310502
+    #'segwit_support': {'block_index': 0, 'allow_always_latest': False},  # override to be true only at block 310999,
     'dispensers': {'block_index': 0, 'allow_always_latest': True}
 }
 DISABLE_ALL_MOCK_PROTOCOL_CHANGES_AT_BLOCK = False # if true, never look at MOCK_PROTOCOL_CHANGES_AT_BLOCK
