@@ -216,7 +216,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
 
     try:
         config.BACKEND_PORT = int(config.BACKEND_PORT)
-        if not (int(config.BACKEND_PORT) > 1 and int(config.BACKEND_PORT) < 65535):
+        if not (int(config.BACKEND_PORT) > 1 and int(config.BACKEND_PORT) <= 65535):
             raise ConfigurationError('invalid backend API port number')
     except:
         raise ConfigurationError("Please specific a valid port number backend-port configuration parameter")
@@ -282,7 +282,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
 
     try:
         config.INDEXD_PORT = int(config.INDEXD_PORT)
-        if not (int(config.INDEXD_PORT) > 1 and int(config.INDEXD_PORT) < 65535):
+        if not (int(config.INDEXD_PORT) > 1 and int(config.INDEXD_PORT) <= 65535):
             raise ConfigurationError('invalid Indexd API port number')
     except:
         raise ConfigurationError("Please specific a valid port number indexd-port configuration parameter")
@@ -323,7 +323,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
                 config.RPC_PORT = config.DEFAULT_RPC_PORT
     try:
         config.RPC_PORT = int(config.RPC_PORT)
-        if not (int(config.RPC_PORT) > 1 and int(config.RPC_PORT) < 65535):
+        if not (int(config.RPC_PORT) > 1 and int(config.RPC_PORT) <= 65535):
             raise ConfigurationError('invalid server API port number')
     except:
         raise ConfigurationError("Please specific a valid port number rpc-port configuration parameter")
@@ -361,7 +361,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
     if config.TESTCOIN:
         config.PREFIX = b'XX'                   # 2 bytes (possibly accidentally created)
     else:
-        config.PREFIX = b'CNTRPRTY'             # 8 bytes
+        config.PREFIX = b'CNTRPRTY'             # 8 bytes - TODO: maybe change to UNOPARTY
 
     # (more) Testnet
     if config.TESTNET:
