@@ -36,6 +36,13 @@ addresstype=legacy
 ```
 **Note:** you can and should replace the RPC credentials. Remember to use the changed RPC credentials throughout this document.
 
+**Requirements:**
+To install addrindex you will need;
+```
+sudo apt install cargo g++
+sudo apt-get install libclang-dev
+```
+
 Download and install **python-bitcoinlib** and **python-altcoinlib**:
 
 _Unoparty-lib uses a custom version of python-altcoinlib that requires a manual install_
@@ -44,6 +51,8 @@ _Unoparty-lib uses a custom version of python-altcoinlib that requires a manual 
 git clone https://github.com/petertodd/python-bitcoinlib.git
 cd python-bitcoinlib
 sudo python3 ./setup.py install
+
+cd ..
 
 git clone https://github.com/terhnt/python-altcoinlib.git
 cd python-altcoinlib
@@ -75,6 +84,11 @@ $ git clone https://github.com/terhnt/unoparty-lib.git
 $ cd unoparty-lib
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install
+```
+
+CD back to previous directory
+```
+cd ..
 ```
 
 Followed by `unoparty-cli`:
