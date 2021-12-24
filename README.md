@@ -37,10 +37,10 @@ addresstype=legacy
 **Note:** you can and should replace the RPC credentials. Remember to use the changed RPC credentials throughout this document.
 
 **Requirements:**
-To install addrindex you will need;
+To install the below you will need;
 ```
 sudo apt install cargo g++
-sudo apt-get install libclang-dev
+sudo apt-get -y install libclang-dev python3-pip
 ```
 
 Download and install **python-bitcoinlib** and **python-altcoinlib**:
