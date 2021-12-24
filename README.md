@@ -30,8 +30,8 @@ rpcpassword=rpc
 server=1
 txindex=1
 rpctimeout=300
-zmqpubhashblock=tcp://127.0.0.1:28120
-zmqpubhashtx=tcp://127.0.0.1:28120
+zmqpubhashblock=tcp://127.0.0.1:18445
+zmqpubhashtx=tcp://127.0.0.1:18445
 addresstype=legacy
 ```
 **Note:** you can and should replace the RPC credentials. Remember to use the changed RPC credentials throughout this document.
@@ -60,7 +60,7 @@ $ cargo check
   - ADDRINDEXRS_TXID_LIMIT=15000
   - ADDRINDEXRS_COOKIE=user:password
   - ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8122
-  - ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:8120
+  - ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:65535
  --
 $ cargo build --release
 $ cargo run --release
