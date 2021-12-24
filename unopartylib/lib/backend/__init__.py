@@ -53,7 +53,7 @@ def getblockhash(blockcount):
 
 def getblock(block_hash):
     block_hex = BACKEND().getblock(block_hash)
-   return CAltcoinBlock.deserialize(util.unhexlify(block_hex))
+    return CAltcoinBlock.deserialize(util.unhexlify(block_hex))
 
 def cache_pretx(txid, rawtx):
     PRETX_CACHE[binascii.hexlify(txid).decode('utf8')] = binascii.hexlify(rawtx).decode('utf8')
