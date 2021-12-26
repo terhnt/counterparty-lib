@@ -60,12 +60,12 @@ def compose (db, source, quantity, overburn=False):
     problems = validate(db, source, destination, quantity, util.CURRENT_BLOCK_INDEX, overburn=overburn)
     if problems: raise exceptions.ComposeError(problems)
 
-    # Check that a maximum of 1 BTC total is burned per address.
+    # Check that a maximum of MAX_BURN(5 default) UNO total is burned per address.
     burns = list(cursor.execute('''SELECT * FROM burns WHERE (status = ? AND source = ?)''', ('valid', source)))
     already_burned = sum([burn['burned'] for burn in burns])
 
-    if quantity > (1 * config.UNIT - already_burned) and not overburn:
-        raise exceptions.ComposeError('1 {} may be burned per address'.format(config.BTC))
+    if quantity > (config.MAX_BURN * config.UNIT - already_burned) and not overburn:
+        raise exceptions.ComposeError('{} {} may be burned per address'.format(config.MAX_BURN, config.BTC))
 
     cursor.close()
     return (source, [(destination, quantity)], None)
@@ -87,19 +87,19 @@ def parse (db, tx, MAINNET_BURNS, message=None):
                 sent = 0
 
         if status == 'valid':
-            # Calculate quantity of XUP earned. (Maximum 1 BTC in total, ever.)
+            # Calculate quantity of XUP earned. (Maximum MAX_BURN(5 as default) UNO in total, ever.)
             cursor = db.cursor()
             cursor.execute('''SELECT * FROM burns WHERE (status = ? AND source = ?)''', ('valid', tx['source']))
             burns = cursor.fetchall()
             already_burned = sum([burn['burned'] for burn in burns])
-            ONE = 1 * config.UNIT
-            max_burn = ONE - already_burned
-            if sent > max_burn: burned = max_burn   # Exceeded maximum burn; earn what you can.
+            ONE = config.MAX_BURN * config.UNIT
+            max_burned = ONE - already_burned
+            if sent > max_burned: burned = max_burned   # Exceeded maximum burn; earn what you can.
             else: burned = sent
 
             total_time = config.BURN_END - config.BURN_START
             partial_time = config.BURN_END - tx['block_index']
-            multiplier = (1000 + (500 * Fraction(partial_time, total_time)))
+            multiplier = (config.REWARD_RATE + (500 * Fraction(partial_time, total_time)))
             earned = round(burned * multiplier)
 
             # Credit source address with earned XUP.
