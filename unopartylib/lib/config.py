@@ -63,6 +63,9 @@ DEV_FUND_ADDR_REGTEST = '1MHBMEXpWkX5GesyyCD2NGfyFekmyBfGsd'
 DEV_FUND_PERCENT = 0.25 # 25% - an additional 25% of each burn reward goes to development
 DEV_FUND = True
 
+MAX_BURN = 5 # Maximum amount of UNO that one address can burn
+REWARD_RATE = 2000 # base reward of XUP for burning unobtanium
+
 ADDRESSVERSION_TESTNET = b'\x44'
 P2SH_ADDRESSVERSION_TESTNET = b'\x30'
 PRIVATEKEY_VERSION_TESTNET = b'\xef'
