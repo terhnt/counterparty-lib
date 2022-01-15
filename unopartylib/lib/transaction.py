@@ -200,7 +200,7 @@ def construct_coin_selection(encoding, data_array, source, allow_unconfirmed_inp
         # Check if good.
         btc_out = destination_btc_out + data_btc_out
         change_quantity = btc_in - (btc_out + final_fee)
-        logger.debug('Size: {} Fee: {:.8f} Change quantity: {:.8f} BTC'.format(size, final_fee / config.UNIT, change_quantity / config.UNIT))
+        logger.debug('Size: {} Fee: {:.8f} Change quantity: {:.8f} UNO'.format(size, final_fee / config.UNIT, change_quantity / config.UNIT))
         # If change is necessary, must not be a dust output.
         if change_quantity == 0 or change_quantity >= regular_dust_size:
             sufficient_funds = True
