@@ -5,18 +5,18 @@ This is a collection of default transaction data used to test various components
 UNIT = 100000000
 
 """This structure is used throughout the test suite to populate transactions with standardized and tested data."""
-#removed pubkey hash, may need to be re-added. these are also Prototanium adresses
+#removed pubkey hash, may need to be re-added.
 DEFAULT_PARAMS = {
     'addresses': [
-        ['UYyyYsKsdw48H5edicJvFatDQS8N8oRH5P', 'cVxmsemyry3ahoEcRiQndmpoG4YDEDM9WrjC2pP8NDMgjUz2vVGz', '031004F9AD4765CBE04179EAEC4D9E6316C0406C3FBD5A9D88E7AFE6A914AA811C'],
-        ['Uho8WpgwNpis4LzREdvESRbXToc7qFeXCN', 'cSoZgZaDK5b3nwXG6ffY1VXqxVVp89ptakYkJkEj3wLJQT7svwVm', '03AC92735260A85B4BA1ABF6826CD9CCEEFCA674DE13C73F553623B22E8799391E'],
-        ['URmVGUPMCTjPAeqVdVfRznCDQGq7cqNNGj', 'cVpBjdfFVikyYqcQdbMvwqRop8WiKJPyTcDdfRpr5P7oDKrWnQnx', '034A638981190CAEE6FD2EE5E244097F940FCBED3F3EFBD1EE683D256C268A8549'],
-        ['UdcgfBkMHzDVZFpMAUou6mm6ux7ns6Y9AH', 'cRFVY5sdKxAwnfsXV5eRAjdFUFJbffQjPtuzj1H17t5X1x2xwmLT', '0333C34964B125D95EC10438D7F677F1DB74C2256F5DB287116A09316D5477DFA4'],
-        ['UX6e4ougRNzqbL7FHfkwCaqqDUToPkn89Y', 'cMkHcBjHovpjz64pgubsaGtNK4Ss6BZyeD1VY8pWpWNkh3XrtiTy', '036FE4D43604326C6D87A5F9FB445A4FB097D77AA49A4984EAAF97365DA0BFC333'],
-        ['UeevnNJxybp9BcApxvHmZ9PzzRGqZ2PDqn', 'cPjmjcCxRQ1Q5oVAbSfwRtxKjhSyDZBcWW7w9Cs4DxF1wyxYREWr', '025E306D859A5E24064D0B3C089C78F3AD809B7AC5A5A69073C6D93FFE20BCBBC8'],
-        ['UU7iwGSuqRRnJicS75778Tgm3Sb2jU8HR6', 'cUpzJ5eKopGshczwGVwYFUSGGvaJ3BS3fwHYh77mHWTxtqxj1oxY', '03BE592AC709AEA7633ABF1CD72AFA81727966C698B73F01FC044ED3199B386A5E'],
-        ['UR8mnGmHMfdpsDZomn5QJzphLAM7AtWQ7o', '', ''], # Empty address for testing purposes
-        ['UV4YXZegX1Ltp7ZXJ4zu3PpqQPDdtApuYq', 'cNgtc9fyMVC53r8RPuseNzMwQ2R4HUrEtSVKCxMXdgyPUC8VcP9W', '03E81051579073A84AFAF68FB7CEE29798B58CEFB75DC6C4AF4FABB6A236E64757']
+        ['Ukn3L4dgG13R3dSdxLvAAJizeiaW7cyUFz', 'cUuSAEXmiYMpu2Eu8QR52NzpsYB5MayhaX312ERZA5sUFQrMcaPY', '02cc8d98faf3bbe40b552be2d6dee21c54f14d7bbaf8e8b5867c9809658b85877d'],
+        ['Ubq467qkiW2UvjD5Uhi23XKKyo7UcKAZTJ', 'cVprLzpeu5GdpjS8QkjB28YV2Hws3GK5eYmTtehDvY8ca4wjseVU', '02d577d18c9e2ac72c9bf7f5315e8eb579da19932e1a1c2d0a41524cb1b1109b0d'],
+        ['UXJo7MANGsCfJM8LwRdkRsWWBxw6Tdshxt', 'cUsVQA8ZLtXottTgX1UpkmA4LyTNRdPtMW77uo8efXxNRmWuUYSR', '0312aa06fe0e0921369dd139ca6afd016ff9e0b5aad875730f7363ab8ac41cc6de'],
+        ['UZ1XAmDF6Br2JKxahJWhuHzGawK7zxPtYW', 'cR93X24nNQwmXFBP1M1LRCr1qzy3ntQ4dhivBMtcwv5CnDwAb8c3', '029b9ea7a174c83e3a19038be991c61704ee325a451c1088bd5ee20f25b4ab9778'],
+        ['UghGAbjYf5PoPcT5qFbxZ7VQb4MmvoPJeb', 'cNZd35p5P28urNGbJxDWeio1Az4Ubf2PtW4EPwjoVgPwgdUkqctC', '031a1cb595dd1c82a133c95331ceadc8fb6a67f087be67918a105743ea8f963b52'],
+        ['UWskqPBEfw5sX5h6VKcTqqzBtiVBj2xBcQ', 'cQc5jyEuB4UvP4cUKALdKQTXB2HQXxRXcc2yrxYQUr8QLk8rzdHV', '028bc039d11b0f0a011ac13a58d8358e20b2e94a5f83045d64884ed996aa2e461e'],
+        ['UWhVEVTAxrWsSMRPioQCqscAoUKhq42WQf', 'cV8ZpATSSkFF8rdsUepti5WotDj4bqGcVYXb82xTYuTscK95Rt5j', '03ea7e6a32ebe34979ad3c2be4f8ff2fe71316899f5cb134c94acd945e23edc223'],
+        ['UShuxcmo5nojGPYqmsi6wbab81NZocdhtg', '', ''], # Empty address for testing purposes [ 'cVM1qQSP2exM9mHrsinN7wKZXZUvog56dhcWzanfXzmscNbHVPMd', '02c3ec578a7ff69a91756b63a47269294afd28113c5762fca9f95e60fdc49050e8']
+        ['UkUTb6dHLNZstq27N4eJBkurpMXFRuv2M8', 'cW3nKqAPmmjJbrjqAdCk1SLSGAzyhWEoDXQ1fK6pV9xajKbgCfne', '02d980ad0429af8f575a4935fb1d210ceeb3d75d36510c0d6788142700d066f6a5']
     ],
     'quantity': UNIT,
     'small': round(UNIT / 2),
@@ -57,10 +57,10 @@ MULTISIGADDR = [
 ]
 
 #TODO: GET Pay to script / segwit testnet addresses
-#P2SH_ADDR = [
-#    '2MyJHMUenMWonC35Yi6PHC7i2tkS7PuomCy', # 2of2 mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns
-#    '2N6P6d3iypnnud4YJDfHZ6kc513N8ezWmPx', # 2of3 mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns mnfAHmddVibnZNSkh8DvKaQoiEfNsxjXzH
-#]
+P2SH_ADDR = [
+    'DEyXVRPjTKZVP7nkcHkXCHJyZb78wLvVJC'  # 2of2 Ukn3L4dgG13R3dSdxLvAAJizeiaW7cyUFz Ubq467qkiW2UvjD5Uhi23XKKyo7UcKAZTJ
+    'D9xjPTUFrNPUTNKPnS3UXnMSLd6sNgR7Jf', # 2of3 Ukn3L4dgG13R3dSdxLvAAJizeiaW7cyUFz Ubq467qkiW2UvjD5Uhi23XKKyo7UcKAZTJ UXJo7MANGsCfJM8LwRdkRsWWBxw6Tdshxt
+]
 
 #P2WPKH_ADDR = [
 #    'tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx'

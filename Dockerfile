@@ -23,7 +23,7 @@ ENV HOME /root
 # Install python-bitcoinlib
 ARG BITLIB_BRANCH=main
 ENV BITLIB_BRANCH ${BITLIB_BRANCH}
-RUN git clone -b ${BITLIB_BRANCH} https://github.com/petertodd/python-bitcoinlib.git /python-bitcoinlib
+RUN git clone -b ${BITLIB_BRANCH} https://github.com/terhnt/python-bitcoinlib.git /python-bitcoinlib
 WORKDIR /python-bitcoinlib
 RUN python3 setup.py install
 
@@ -53,7 +53,7 @@ RUN pip3 install -r requirements.txt
 RUN python3 setup.py develop
 
 # Additional setup
-COPY docker/server.conf /root/.config//server.conf
+COPY docker/server.conf /root/.config/server.conf
 COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod a+x /usr/local/bin/start.sh
 WORKDIR /
