@@ -89,13 +89,13 @@ def test_p2sh_encoding(server_db):
         # change output
         assert pretx.vout[1].nValue == sumvin - expected_datatx_fee - fee
 
-        assert pretxhex == "0100000001c1d8c075936c3495f6d653c50f73d987f75448d97a750249b1eb83bee71b24ae000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788acffffffff02f65400000000000017a9148042727755cf6254a0b8f7f4c82de93c23b507d687febbe90b000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac00000000"
+        assert pretxhex == "0100000001c1d8c075936c3495f6d653c50f73d987f75448d97a750249b1eb83bee71b24ae000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288acffffffff02f65400000000000017a9148042727755cf6254a0b8f7f4c82de93c23b507d687febbe90b000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac00000000"
         # 01000000                                                          | version
         # 01                                                                | inputs
         # c1d8c075936c3495f6d653c50f73d987f75448d97a750249b1eb83bee71b24ae  | txout hash
         # 00000000                                                          | txout index
         # 19                                                                | script length
-        # 76a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac                | tx_script
+        # 76a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac                | tx_script
         # ffffffff                                                          | Sequence
         # 02                                                                | number of outputs
         # f654000000000000                                                  | output 1 value (21750)
@@ -103,7 +103,7 @@ def test_p2sh_encoding(server_db):
         # a9147698101f9b9e5cdf0a0e11c2972dbc4860f374bf87                    | output 1 script
         # febbe90b00000000                                                  | output 2 value (199867390)
         # 19                                                                | output 2 length (25 bytes)
-        # 76a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac                | output 2 script
+        # 76a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac                | output 2 script
         # 00000000                                                          | locktime
 
         # first transaction should be considered BTC only
@@ -235,13 +235,13 @@ def test_p2sh_encoding_long_data(server_db):
         # change output
         assert pretx.vout[2].nValue == sumvin - expected_datatx_fee_rounded - pretx_fee
 
-        assert pretxhex == "0100000001c1d8c075936c3495f6d653c50f73d987f75448d97a750249b1eb83bee71b24ae000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788acffffffff03e47000000000000017a914329d3940a8c28df82bee71bf1d5b16d35e864a8487e47000000000000017a91443b7fefe3d188e409575f9ad5f446b2fcbcf4d6a87b64ae90b000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac00000000"
+        assert pretxhex == "0100000001c1d8c075936c3495f6d653c50f73d987f75448d97a750249b1eb83bee71b24ae000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288acffffffff03e47000000000000017a914329d3940a8c28df82bee71bf1d5b16d35e864a8487e47000000000000017a91443b7fefe3d188e409575f9ad5f446b2fcbcf4d6a87b64ae90b000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac00000000"
         # 00000001                                                         | version
         # 01                                                               | inputs
         # c1d8c075936c3495f6d653c50f73d987f75448d97a750249b1eb83bee71b24ae | txout hash
         # 00000000                                                         | txout index
         # 19                                                               | script length
-        # 76a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac               | tx_script
+        # 76a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac               | tx_script
         # ffffffff                                                         | Sequence
         # 03                                                               | number of outputs (3)
         # e470000000000000                                                 | output 1 value (28900)
@@ -252,7 +252,7 @@ def test_p2sh_encoding_long_data(server_db):
         # a914676d587edf25cf01d3b153ff0b71f5e9b622386387                   | output 2 script
         # b64ae90b00000000                                                 | output 3 value (199838390)
         # 19                                                               | output 3 length (25 bytes)
-        # 76a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac               | output 3 script
+        # 76a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac               | output 3 script
         # 00000000                                                         | locktime
 
 
@@ -473,7 +473,7 @@ def test_benchmark_outkey_vin():
 
     t = time.time()
     for n in range(m):
-        tx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify("0100000002eff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b000000006c493046022100ec6fa8316a4f5cfd69816e31011022acce0933bd3b01248caa8b49e60de1b98a022100987ba974b2a4f9976a8d61d94009cb7f7986a827dc5730e999de1fb748d2046c01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffffeff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b010000006a47304402201f8fb2d62df22592cb8d37c68ab26563dbb8e270f7f8409ac0f6d7b24ddb5c940220314e5c767fd12b20116528c028eab2bfbad30eb963bd849993410049cf14a83d01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffff02145fea0b000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac0000000000000000346a32544553540000000a00000000000000010000000005f5e1000000000000000000000000000bebc2000032000000000000271000000000"))
+        tx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify("0100000002eff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b000000006c493046022100ec6fa8316a4f5cfd69816e31011022acce0933bd3b01248caa8b49e60de1b98a022100987ba974b2a4f9976a8d61d94009cb7f7986a827dc5730e999de1fb748d2046c01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffffeff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b010000006a47304402201f8fb2d62df22592cb8d37c68ab26563dbb8e270f7f8409ac0f6d7b24ddb5c940220314e5c767fd12b20116528c028eab2bfbad30eb963bd849993410049cf14a83d01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffff02145fea0b000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac0000000000000000346a32544553540000000a00000000000000010000000005f5e1000000000000000000000000000bebc2000032000000000000271000000000"))
 
     tt = time.time()
     ttn1 = ((tt - t) / m)
@@ -482,7 +482,7 @@ def test_benchmark_outkey_vin():
 
     t = time.time()
     for n in range(m):
-        tx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify("0100000002eff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b000000006c493046022100ec6fa8316a4f5cfd69816e31011022acce0933bd3b01248caa8b49e60de1b98a022100987ba974b2a4f9976a8d61d94009cb7f7986a827dc5730e999de1fb748d2046c01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffffeff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b010000006a47304402201f8fb2d62df22592cb8d37c68ab26563dbb8e270f7f8409ac0f6d7b24ddb5c940220314e5c767fd12b20116528c028eab2bfbad30eb963bd849993410049cf14a83d01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffff02145fea0b000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac0000000000000000346a32544553540000000a00000000000000010000000005f5e1000000000000000000000000000bebc2000032000000000000271000000000"))
+        tx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify("0100000002eff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b000000006c493046022100ec6fa8316a4f5cfd69816e31011022acce0933bd3b01248caa8b49e60de1b98a022100987ba974b2a4f9976a8d61d94009cb7f7986a827dc5730e999de1fb748d2046c01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffffeff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b010000006a47304402201f8fb2d62df22592cb8d37c68ab26563dbb8e270f7f8409ac0f6d7b24ddb5c940220314e5c767fd12b20116528c028eab2bfbad30eb963bd849993410049cf14a83d01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffff02145fea0b000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac0000000000000000346a32544553540000000a00000000000000010000000005f5e1000000000000000000000000000bebc2000032000000000000271000000000"))
         outkey = [(vin.prevout.hash, vin.prevout.n) for vin in tx.vin]
 
 
@@ -493,7 +493,7 @@ def test_benchmark_outkey_vin():
 
     t = time.time()
     for n in range(m):
-        tx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify("0100000002eff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b000000006c493046022100ec6fa8316a4f5cfd69816e31011022acce0933bd3b01248caa8b49e60de1b98a022100987ba974b2a4f9976a8d61d94009cb7f7986a827dc5730e999de1fb748d2046c01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffffeff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b010000006a47304402201f8fb2d62df22592cb8d37c68ab26563dbb8e270f7f8409ac0f6d7b24ddb5c940220314e5c767fd12b20116528c028eab2bfbad30eb963bd849993410049cf14a83d01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffff02145fea0b000000001976a9144838d8b3588c4c7ba7c1d06f866e9b3739c6303788ac0000000000000000346a32544553540000000a00000000000000010000000005f5e1000000000000000000000000000bebc2000032000000000000271000000000"))
+        tx = bitcoinlib.core.CTransaction.deserialize(binascii.unhexlify("0100000002eff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b000000006c493046022100ec6fa8316a4f5cfd69816e31011022acce0933bd3b01248caa8b49e60de1b98a022100987ba974b2a4f9976a8d61d94009cb7f7986a827dc5730e999de1fb748d2046c01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffffeff195acdf2bbd215daa8aca24eb667b563a731d34a9ab75c8d8df5df08be29b010000006a47304402201f8fb2d62df22592cb8d37c68ab26563dbb8e270f7f8409ac0f6d7b24ddb5c940220314e5c767fd12b20116528c028eab2bfbad30eb963bd849993410049cf14a83d01210282b886c087eb37dc8182f14ba6cc3e9485ed618b95804d44aecc17c300b585b0ffffffff02145fea0b000000001976a914fa070c5a305ef456144e8fdfbb7622efe29cc10288ac0000000000000000346a32544553540000000a00000000000000010000000005f5e1000000000000000000000000000bebc2000032000000000000271000000000"))
         outkey = [(vin.prevout.hash, vin.prevout.n) for vin in tx.vin]
         outkey = hashlib.sha256(str(outkey).encode('ascii')).digest()
 

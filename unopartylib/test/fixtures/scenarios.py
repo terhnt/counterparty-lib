@@ -27,7 +27,7 @@ Here's a list of unit tests that will fail and need to be updated:
 - util.get_balance
 """
 
-from .params import ADDR, MULTISIGADDR, DEFAULT_PARAMS as DP
+from .params import ADDR, MULTISIGADDR, P2SH_ADDR, DEFAULT_PARAMS as DP
 
 UNITTEST_FIXTURE = [
     ['burn', (ADDR[0], DP['burn_quantity']), {'encoding': 'multisig'}],  # 310000
@@ -62,18 +62,19 @@ UNITTEST_FIXTURE = [
 
     ['dispenser', (ADDR[5], 'XUP', 100, 100, 100, 0), {'encoding': 'opreturn'}],
 
-    ['burn', (P2SH_ADDR[0], int(DP['burn_quantity'] / 2)), {'encoding': 'opreturn'}],
-    ['issuance', (P2SH_ADDR[0], None, 'PAYTOSCRIPT', 1000, False, 'PSH issued asset'), {'encoding': 'multisig', 'dust_return_pubkey': False}],
-    ['send', (ADDR[0], P2SH_ADDR[0], 'DIVISIBLE', DP['quantity']), {'encoding': 'multisig'}, None],
-    ['broadcast', (P2SH_ADDR[0], 1388000002, 1, DP['fee_multiplier'], 'Unit Test'), {'encoding': 'opreturn'}],
-    ['bet', (P2SH_ADDR[0], P2SH_ADDR[0], 3, 1388000200, 10, 10, 0.0, 5040, 1000), {'encoding': 'opreturn'}],
+     ['burn', (P2SH_ADDR[0], int(DP['burn_quantity'] / 2)), {'encoding': 'opreturn'}],
+     ['issuance', (P2SH_ADDR[0], None, 'PAYTOSCRIPT', 1000, False, 'PSH issued asset'), {'encoding': 'multisig', 'dust_return_pubkey': False}],
+     ['send', (ADDR[0], P2SH_ADDR[0], 'DIVISIBLE', DP['quantity']), {'encoding': 'multisig'}, None],
+     ['broadcast', (P2SH_ADDR[0], 1388000002, 1, DP['fee_multiplier'], 'Unit Test'), {'encoding': 'opreturn'}],
+     ['bet', (P2SH_ADDR[0], P2SH_ADDR[0], 3, 1388000200, 10, 10, 0.0, 5040, 1000), {'encoding': 'opreturn'}],
 
     # locked with an issuance after lock
     ['issuance', (ADDR[6], None, 'LOCKEDPREV', 1000, True, 'Locked asset'), {'encoding': 'multisig'}],
     ['issuance', (ADDR[6], None, 'LOCKEDPREV', 0, True, 'LOCK'), {'encoding': 'multisig'}],
     ['issuance', (ADDR[6], None, 'LOCKEDPREV', 0, True, 'changed'), {'encoding': 'multisig'}],
 
-    ['burn', (P2WPKH_ADDR[0], DP['burn_quantity']), {'encoding': 'opreturn'}],
+    # Don't use Segwit
+    # ['burn', (P2WPKH_ADDR[0], DP['burn_quantity']), {'encoding': 'opreturn'}],
 
     ['create_next_block', 480],
 
