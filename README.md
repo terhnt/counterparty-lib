@@ -21,7 +21,7 @@ For a simple Docker-based install of the Unoparty software stack, see [this guid
 
 # Manual installation
 
-Download the latest [Unobtanium Core](https://github.com/unobtanium-official/unobtanium/releases) and create
+Download the latest [Unobtanium Core v0.11.6](https://github.com/unobtanium-official/unobtanium/releases) and create
 a `unobtanium.conf` file with the following options:
 
 ```
@@ -45,10 +45,10 @@ sudo apt-get -y install libclang-dev python3-pip
 
 Download and install **python-bitcoinlib** and **python-altcoinlib**:
 
-_Unoparty-lib uses a custom version of python-altcoinlib that requires a manual install_
+_Unoparty-lib uses a custom version of python-bitcoinlib + python-altcoinlib that requires a manual install_
 
 ```
-git clone https://github.com/petertodd/python-bitcoinlib.git
+git clone https://github.com/terhnt/python-bitcoinlib.git
 cd python-bitcoinlib
 sudo python3 ./setup.py install
 
@@ -65,11 +65,11 @@ $ git clone https://github.com/terhnt/addrindexrs.git
 $ cd addrindexrs
 $ cargo check
  -- Setup the appropiate environment variables --
-  - ADDRINDEXRS_JSONRPC_IMPORT=1
-  - ADDRINDEXRS_TXID_LIMIT=15000
-  - ADDRINDEXRS_COOKIE=user:password
-  - ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8122
-  - ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:65535
+  - export ADDRINDEXRS_JSONRPC_IMPORT=1
+  - export ADDRINDEXRS_TXID_LIMIT=15000
+  - export ADDRINDEXRS_COOKIE=user:password
+  - export ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8122
+  - export ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:65535
  --
 $ cargo build --release
 $ cargo run --release

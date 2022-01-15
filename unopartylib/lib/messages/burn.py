@@ -3,7 +3,7 @@ import json
 import struct
 import decimal
 import logging
-import math
+# import math # Temporarily Disable DEV FUNDS
 logger = logging.getLogger(__name__)
 
 D = decimal.Decimal
@@ -106,10 +106,11 @@ def parse (db, tx, MAINNET_BURNS, message=None):
             # Credit source address with earned XUP.
             util.credit(db, tx['source'], config.XCP, earned, action='burn', event=tx['tx_hash'])
 
-            if config.DEV_FUND and config.TESTNET:
-                util.credit(db, config.DEV_FUND_ADDR_TESTNET, config.XCP, int(math.ceil(earned * config.DEV_FUND_PERCENT)), action='burn', event=tx['tx_hash'])
-            elif config.DEV_FUND and config.REGTEST:
-                util.credit(db, config.DEV_FUND_ADDR_REGTEST, config.XCP, int(math.ceil(earned * config.DEV_FUND_PERCENT)), action='burn', event=tx['tx_hash'])
+            # Temporarily Disable DEV FUNDS
+            # if config.DEV_FUND and config.TESTNET:
+            #    util.credit(db, config.DEV_FUND_ADDR_TESTNET, config.XCP, int(math.ceil(earned * config.DEV_FUND_PERCENT)), action='burn', event=tx['tx_hash'])
+            # elif config.DEV_FUND and config.REGTEST:
+            #    util.credit(db, config.DEV_FUND_ADDR_REGTEST, config.XCP, int(math.ceil(earned * config.DEV_FUND_PERCENT)), action='burn', event=tx['tx_hash'])
         else:
             burned = 0
             earned = 0
@@ -129,8 +130,9 @@ def parse (db, tx, MAINNET_BURNS, message=None):
 
         util.credit(db, line['source'], config.XCP, int(line['earned']), action='burn', event=line['tx_hash'])
 
-        if config.DEV_FUND:
-            util.credit(db, config.DEV_FUND_ADDR, config.XCP, int(math.ceil(line['earned'] * config.DEV_FUND_PERCENT)), action='burn', event=line['tx_hash'])
+        # Temporarily Disable DEV FUNDS
+        # if config.DEV_FUND:
+        #    util.credit(db, config.DEV_FUND_ADDR, config.XCP, int(math.ceil(line['earned'] * config.DEV_FUND_PERCENT)), action='burn', event=line['tx_hash'])
 
         tx_index = tx['tx_index']
         tx_hash = line['tx_hash']
