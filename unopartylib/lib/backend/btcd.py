@@ -13,7 +13,7 @@ import json
 
 from functools import lru_cache
 
-bitcoin_rpc_session = None
+unobtanium_rpc_session = None
 
 class BackendRPCError(Exception):
     pass
@@ -22,14 +22,14 @@ def rpc_call(payload):
     url = config.BACKEND_URL
     headers = {'content-type': 'application/json'}
 
-    global bitcoin_rpc_session
-    if not bitcoin_rpc_session:
-        bitcoin_rpc_session = requests.Session()
+    global unobtanium_rpc_session
+    if not unobtanium_rpc_session:
+        unobtanium_rpc_session = requests.Session()
     response = None
     TRIES = 12
     for i in range(TRIES):
         try:
-            response = bitcoin_rpc_session.post(url, data=json.dumps(payload), headers=headers, verify=(not config.BACKEND_SSL_NO_VERIFY), timeout=config.REQUESTS_TIMEOUT)
+            response = unobtanium_rpc_session.post(url, data=json.dumps(payload), headers=headers, verify=(not config.BACKEND_SSL_NO_VERIFY), timeout=config.REQUESTS_TIMEOUT)
             if i > 0:
                 logger.debug('Successfully connected.')
             break

@@ -1,10 +1,3 @@
-# you need a bitcoind instance and set the below vars properly
-# if you don't have a local bitcoind you can use mine (ask me to open it up)
-export BITCOIN_RPC_HOST="0.tcp.ngrok.io"
-export BITCOIN_RPC_PORT="15419"
-export BITCOIN_RPC_USER="bitcoin"
-export BITCOIN_RPC_PASSWORD="fsJoJupAXx"
-
 sudo apt-get -y install python3 python3-pip python3.4-venv
 
 # from http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/building-from-source/linux-ubuntu.html
@@ -60,26 +53,26 @@ cd ../unoparty-lib && pip install --upgrade -r requirements.txt && python setup.
 python setup.py install
 
 
-# below values should be your bitcoind RPC
+# below values should be your unobtaniumd RPC
 echo "
 [Default]
-backend-connect=${BITCOIN_RPC_HOST}
-backend-port=${BITCOIN_RPC_PORT}
-backend-user=${BITCOIN_RPC_USER}
-backend-password=${BITCOIN_RPC_PASSWORD}
+backend-connect=${UNOBTANIUM_RPC_HOST}
+backend-port=${UNOBTANIUM_RPC_PORT}
+backend-user=${UNOBTANIUM_RPC_USER}
+backend-password=${UNOBTANIUM_RPC_PASSWORD}
 " > ~/.config/unoparty/server.conf
 
 # same
 echo "
 [Default]
-wallet-connect=${BITCOIN_RPC_HOST}
-wallet-port=${BITCOIN_RPC_PORT}
-wallet-user=${BITCOIN_RPC_USER}
-wallet-password=${BITCOIN_RPC_PASSWORD}
+wallet-connect=${UNOBTANIUM_RPC_HOST}
+wallet-port=${UNOBTANIUM_RPC_PORT}
+wallet-user=${UNOBTANIUM_RPC_USER}
+wallet-password=${UNOBTANIUM_RPC_PASSWORD}
 " > ~/.config/unoparty/client.conf
 
-# you need an address that is in bitcoind and preloaded with some BTC / XCP
-# change if you're using your own bitcoind, create an address (`bitcoin-cli -testnet getnewaddress`), send it some BTC and XCP from your TESTNET Unowallet ;)
+# you need an address that is in unobtaniumd and preloaded with some BTC / XCP
+# change if you're using your own unobtaniumd, create an address (`unobtanium-cli -testnet getnewaddress`), send it some BTC and XCP from your TESTNET Unowallet ;)
 SOURCE="miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB"
 
 unoparty-server --verbose --testnet bootstrap  # download bootstrap image

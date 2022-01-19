@@ -25,7 +25,7 @@ MEMPOOL_BLOCK_INDEX = 9999999
 MAX_INT = 2**63 - 1
 
 
-# Bitcoin Core
+# Unobtanium Core
 OP_RETURN_MAX_SIZE = 80  # bytes
 
 
@@ -33,7 +33,7 @@ OP_RETURN_MAX_SIZE = 80  # bytes
 BTC = 'BTC'
 XCP = 'XCP'
 
-BTC_NAME = 'Bitcoin'
+BTC_NAME = 'Unobtanium'
 XCP_NAME = 'Unoparty'
 APP_NAME = XCP_NAME.lower()
 
@@ -83,10 +83,10 @@ BURN_END_MAINNET = 283810
     # TODO: This should be updated, given their new configurability.
 # TODO: The dust values should be lowered by 90%, once transactions with smaller outputs start confirming faster: <https://github.com/mastercoin-MSC/spec/issues/192>
 DEFAULT_REGULAR_DUST_SIZE = 5430         # TODO: This is just a guess. I got it down to 5530 satoshis.
-DEFAULT_MULTISIG_DUST_SIZE = 7800        # <https://bitcointalk.org/index.php?topic=528023.msg7469941#msg7469941>
+DEFAULT_MULTISIG_DUST_SIZE = 7800        # <https://unobtaniumtalk.org/index.php?topic=528023.msg7469941#msg7469941>
 DEFAULT_OP_RETURN_VALUE = 0
 DEFAULT_FEE_PER_KB = 25000               # sane/low default, also used as minimum when estimated fee is used
-ESTIMATE_FEE_PER_KB = True               # when True will use `estimatefee` from bitcoind instead of DEFAULT_FEE_PER_KB
+ESTIMATE_FEE_PER_KB = True               # when True will use `estimatefee` from unobtaniumd instead of DEFAULT_FEE_PER_KB
 ESTIMATE_FEE_NBLOCKS = 3
 
 # UI defaults

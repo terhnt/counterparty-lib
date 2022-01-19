@@ -628,7 +628,7 @@ def match (db, tx, block_index=None):
                 util.credit(db, tx0['source'], tx0['get_asset'],
                                     backward_quantity, action='order match', event=order_match_id)
 
-            # Debit the order, even if it involves giving bitcoins, and so one
+            # Debit the order, even if it involves giving unobtaniums, and so one
             # can't debit the sending account.
             # Get remainings may be negative.
             tx0_give_remaining -= forward_quantity

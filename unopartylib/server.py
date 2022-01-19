@@ -175,13 +175,13 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
     if config.BACKEND_NAME == 'jmcorgan':
         config.BACKEND_NAME = 'addrindex'
 
-    # Backend RPC host (Bitcoin Core)
+    # Backend RPC host (Unobtanium Core)
     if backend_connect:
         config.BACKEND_CONNECT = backend_connect
     else:
         config.BACKEND_CONNECT = 'localhost'
 
-    # Backend Core RPC port (Bitcoin Core)
+    # Backend Core RPC port (Unobtanium Core)
     if backend_port:
         config.BACKEND_PORT = backend_port
     else:
@@ -203,13 +203,13 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
     except:
         raise ConfigurationError("Please specific a valid port number backend-port configuration parameter")
 
-    # Backend Core RPC user (Bitcoin Core)
+    # Backend Core RPC user (Unobtanium Core)
     if backend_user:
         config.BACKEND_USER = backend_user
     else:
-        config.BACKEND_USER = 'bitcoinrpc'
+        config.BACKEND_USER = 'unobtaniumrpc'
 
-    # Backend Core RPC password (Bitcoin Core)
+    # Backend Core RPC password (Unobtanium Core)
     if backend_password:
         config.BACKEND_PASSWORD = backend_password
     else:
@@ -422,8 +422,8 @@ def reparse(db, block_index=None):
     blocks.reparse(db, block_index=block_index)
 
 
-def kickstart(db, bitcoind_dir):
-    blocks.kickstart(db, bitcoind_dir=bitcoind_dir)
+def kickstart(db, unobtaniumd_dir):
+    blocks.kickstart(db, unobtaniumd_dir=unobtaniumd_dir)
 
 
 def debug_config():

@@ -20,11 +20,11 @@ For a simple Docker-based install of the Unoparty software stack, see [this guid
 
 # Manual installation
 
-Download the newest [patched Bitcoin Core](https://github.com/btcdrak/bitcoin/releases) and create
-a `bitcoin.conf` file with the following options:
+Download the newest [patched Unobtanium Core](https://github.com/unobtanium-official/unobtanium/releases) and create
+a `unobtanium.conf` file with the following options:
 
 ```
-rpcuser=bitcoinrpc
+rpcuser=unobtaniumrpc
 rpcpassword=rpc
 server=1
 txindex=1
@@ -60,7 +60,7 @@ $ unoparty-server --backend-password=rpc start
 
 # Basic Usage
 
-## Via command-line 
+## Via command-line
 
 (Requires `unoparty-cli` to be installed.)
 
@@ -127,7 +127,7 @@ A `unoparty-server` configuration file looks like this:
 A `unoparty-client` configuration file looks like this:
 
 	[Default]
-	wallet-name = bitcoincore
+	wallet-name = unobtaniumcore
 	wallet-connect = localhost
 	wallet-user = <user>
 	wallet-password = <password>

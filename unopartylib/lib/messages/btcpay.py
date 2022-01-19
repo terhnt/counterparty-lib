@@ -128,7 +128,7 @@ def parse (db, tx, message):
         # BTC must be paid all at once.
         if tx['btc_amount'] >= btc_quantity:
 
-            # Credit source address for the currency that he bought with the bitcoins.
+            # Credit source address for the currency that he bought with the unobtaniums.
             util.credit(db, tx['source'], escrowed_asset, escrowed_quantity, action='btcpay', event=tx['tx_hash'])
             status = 'valid'
 

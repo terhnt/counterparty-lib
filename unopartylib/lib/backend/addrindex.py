@@ -60,7 +60,7 @@ def rpc_call(payload):
     elif response_json['error']['code'] in [-28, -8, -2]:  
         # “Verifying blocks...” or “Block height out of range” or “The network does not appear to fully agree!“ 
         logger.debug('Backend not ready. Sleeping for ten seconds.')
-        # If Bitcoin Core takes more than `sys.getrecursionlimit() * 10 = 9970`
+        # If Unobtanium Core takes more than `sys.getrecursionlimit() * 10 = 9970`
         # seconds to start, this’ll hit the maximum recursion depth limit.
         time.sleep(10)
         return rpc_call(payload)
@@ -80,9 +80,9 @@ def rpc_batch(request_list):
     responses = collections.deque()
 
     def make_call(chunk):
-        #send a list of requests to bitcoind to be executed
-        #note that this is list executed serially, in the same thread in bitcoind
-        #e.g. see: https://github.com/bitcoin/bitcoin/blob/master/src/rpcserver.cpp#L939
+        #send a list of requests to unobtaniumd to be executed
+        #note that this is list executed serially, in the same thread in unobtaniumd
+        #e.g. see: https://github.com/unobtanium/unobtanium/blob/master/src/rpcserver.cpp#L939
         responses.extend(rpc_call(chunk))
  
     chunks = util.chunkify(request_list, config.RPC_BATCH_SIZE)
@@ -240,7 +240,7 @@ def fee_per_kb(nblocks):
     :return: fee_per_kb in satoshis, or None when unable to determine
     """
 
-    # we need to loop because sometimes bitcoind can't estimate a certain nblocks
+    # we need to loop because sometimes unobtaniumd can't estimate a certain nblocks
     feeperkb = -1
     while feeperkb == -1:
         feeperkb = rpc('estimatefee', [nblocks])

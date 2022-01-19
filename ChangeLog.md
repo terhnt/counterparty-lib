@@ -11,14 +11,14 @@
     * Improved APSW install routine to downgrade when newer version is installed
     * Tweaked CORS headers so that web clients may authenticate directly against unoparty-server
     * Numerous logging fixes to make logging more robust
-    * Further performance enhancements when fetching raw transactions from bitcoind
+    * Further performance enhancements when fetching raw transactions from unobtaniumd
     * Peg dependencies at specific versions!
     * Added debug_config method to print config to CLI
     * Mask username/password in backend URL when logging
     * Updated python-bitcoinlib to newest version
     * No longer ceil the size of a transaction to KBs when calculating fees
-    * Use dynamic estimated fee (from bitcoind)
-    * Fix for bytespersigop DoS protection in Bitcoin Core v0.12.1
+    * Use dynamic estimated fee (from unobtaniumd)
+    * Fix for bytespersigop DoS protection in Unobtanium Core v0.12.1
     * Test suite:
         * Reorganization of the test suite at numerous points for more robustness and capabilities
         * Added ability to mock protocol changes to allow for testing of certain changes on or off
@@ -37,7 +37,7 @@
 * v9.53.0 (2016-01-18)
     * Remove `messages` table from being covered by "undolog" functionality added in `v9.52.0`.
     * Add `min_message_index` to `get_blocks` API call.
-    * Retry more than once with `getrawtransaction_batch` if a specific txhash is not found in `bitcoind`'s addrindex.
+    * Retry more than once with `getrawtransaction_batch` if a specific txhash is not found in `unobtaniumd`'s addrindex.
     * Update `setup.py` to properly utilize (newer) egg-style install. Previously the "old" style install was invoked when it shouldn't have been.
     * Update backend mempool caching code to keep full mempool, instead of just XCP transactions (from @rubensayshi).
     * Increase max `OP_RETURN` size used from 40 bytes to 80 bytes (from @rubensayshi).
@@ -45,7 +45,7 @@
     * Fixed `backend.get_unspent_outputs` from raising exception when a transaction contains an output with garbage data (from @rubensayshi).
     * `base58_check_decode` padding byte used should be `x00`, not the `version` (from @rubensayshi).
     * Require `sudo` for non-container `travis` builds, due to our `serpent` dependency (from @rubensayshi).
-    * Made `getrawtransaction_batch` deal better with missing raw transactions from `bitcoind`.
+    * Made `getrawtransaction_batch` deal better with missing raw transactions from `unobtaniumd`.
     * A number of other small bug fixes, logging tweaks, etc.
     * NOTE: This versions mhash (message hash) will be different than that of nodes running `9.52.0`, but the other hashes should continue to match.
 * v9.52.0 (2015-10-31)
@@ -55,7 +55,7 @@
     * Added optional `custom_inputs` parameter to API calls, which allows for controlling the exact UTXOs to use in transactions (thanks, tokenly)
     * Added `message_hash`, derived from changes to the `unoparty-lib` database. Displayed on each new block, makes checking for DB-level consensus easier
 * v9.51.4 (2015-09-26)
-    * Significant performance and caching optimizations around bitcoind addrindex interaction
+    * Significant performance and caching optimizations around unobtaniumd addrindex interaction
     * Fixed issues around responsiveness with larger mempool sizes
     * Mempool refresh period changed from 2 seconds to .5 seconds
     * Bug fixes with coinbase transaction processing
@@ -153,7 +153,7 @@
     * improvements to documentation
     * graceful shutdown of processes
     * faster server startup
-    * support for jmcorgan Bitcoin Core fork for block explorer
+    * support for jmcorgan Unobtanium Core fork for block explorer
     * change first testnet block to 281000
     * make protocol changes always retroactive on testnet
 * v9.46.0 (2014-11-03)
@@ -281,7 +281,7 @@
     * improved algorithm for choosing unspent txouts in transaction construction
     * allow the unconfirmed inputs CLI option
 * v9.16
-    * regular version, database, Bitcoind checking in API
+    * regular version, database, Unobtaniumd checking in API
     * better testcoin support
     * simplify version checking (combined DB and client versions), which necessitates skipping versions
     * simplify betting fees: just deduct from pot at settlement (protocol change: retroactive)
@@ -292,12 +292,12 @@
     * fully floating transaction fees
     * lots of miscellaneous bug fixes
     * replenish fee_required_remaining on order match expiration (protocol change: 297000)
-    * transaction signing for source addresses not in Bitcoin Core wallet
+    * transaction signing for source addresses not in Unobtanium Core wallet
     * tweaks to API
 * v6.13
     * miscellaneous bug fixes
     * add some sanity checks
-    * partially allow for CLI input of private keys (to bypass Bitcoind wallet)
+    * partially allow for CLI input of private keys (to bypass Unobtaniumd wallet)
     * tweak the API
     * fill out the test suite a bit
     * temporarily double the default fee to .0002 BTC

@@ -1384,7 +1384,7 @@ UNITTEST_VECTOR = {
             'out': ([])
         }, {
             'in': (ADDR[0], ADDR[1], 'BTC', DP['quantity'], 1),
-            'out': (['cannot send bitcoins'])
+            'out': (['cannot send unobtaniums'])
         }, {
             'in': (ADDR[0], ADDR[1], 'XCP', DP['quantity'] / 3, 1),
             'out': (['quantity must be in satoshis'])
@@ -2913,7 +2913,7 @@ UNITTEST_VECTOR = {
             'comment': 'send with multisig encoding and bytespersigop enabled',
             'mock_protocol_changes': {'bytespersigop': True},
             'in': (('mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc', [('mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns', None)], b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x02\xfa\xf0\x80'), {'encoding': 'multisig'}),
-            'error': (exceptions.EncodingError, 'multisig will be rejected by Bitcoin Core >= v0.12.1, you should use `encoding=auto` or `encoding=pubkeyhash`')
+            'error': (exceptions.EncodingError, 'multisig will be rejected by Unobtanium Core >= v0.12.1, you should use `encoding=auto` or `encoding=pubkeyhash`')
         }, {
             'comment': 'send with multisig encoding and bytespersigop enabled for address with multiple UTXOs',
             'mock_protocol_changes': {'bytespersigop': True},
@@ -3077,15 +3077,15 @@ UNITTEST_VECTOR = {
     },
     'script': {
         'validate': [{
-            'comment': 'valid bitcoin address',
+            'comment': 'valid unobtanium address',
             'in': ('mnMrocns5kBjPZxRxXb5A1gx7gAoRZWPP6',),
             'out': None
         }, {
-            'comment': 'valid bitcoin P2SH address',
+            'comment': 'valid unobtanium P2SH address',
             'in': (P2SH_ADDR[0],),
             'out': None
         }, {
-            'comment': 'invalid bitcoin address: bad checksum',
+            'comment': 'invalid unobtanium address: bad checksum',
             'in': ('mnMrocns5kBjPZxRxXb5A1gx7gAoRZWPP7',),
             'error': (script.Base58ChecksumError, 'Checksum mismatch: 0x00285aa2 ≠ 0x00285aa1')
         }, {
@@ -3149,36 +3149,36 @@ UNITTEST_VECTOR = {
             'out': 'qb3y62fmEEVTPySXPQ77WXok6H'
         }],
         'base58_check_encode': [{
-            'comment': 'valid mainnet bitcoin address',
+            'comment': 'valid mainnet unobtanium address',
             'in': ('010966776006953d5567439e5e39f86a0d273bee', b'\x00'),
             'out': '16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM'
         }, {
-            'comment': 'valid mainnet bitcoin P2SH address',
+            'comment': 'valid mainnet unobtanium P2SH address',
             'in': ('010966776006953d5567439e5e39f86a0d273bee', b'\x05'),
             'out': '31nVrspaydBz8aMpxH9WkS2DuhgqS1fCuG'
         # TODO }, {
-        #    'invalid mainnet bitcoin address: leading zero byte,
+        #    'invalid mainnet unobtanium address: leading zero byte,
         #    'in': ('SOMETHING', b'\x00'),
         #    'error': (script.AddressError, 'encoded address does not decode properly')
         }],
         'base58_check_decode': [{
-            'comment': 'valid mainnet bitcoin address',
+            'comment': 'valid mainnet unobtanium address',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM', b'\x00'),
             'out': b"\x01\tfw`\x06\x95=UgC\x9e^9\xf8j\r';\xee"
         }, {
-            'comment': 'valid mainnet bitcoin address that contains a padding byte',
+            'comment': 'valid mainnet unobtanium address that contains a padding byte',
             'in': ('13PGb7v3nmTDugLDStRJWXw6TzsNLUKJKC', b'\x00'),
             'out': b'\x1a&jGxV\xea\xd2\x9e\xcb\xe6\xaeQ\xad:,\x8dG<\xf4'
         }, {
-            'comment': 'valid mainnet bitcoin P2SH address',
+            'comment': 'valid mainnet unobtanium P2SH address',
             'in': ('31nVrspaydBz8aMpxH9WkS2DuhgqS1fCuG', b'\x05'),
             'out': b"\x01\tfw`\x06\x95=UgC\x9e^9\xf8j\r';\xee"
         }, {
-            'comment': 'valid mainnet bitcoin address that contains a padding byte, checked against incorrect version byte',
+            'comment': 'valid mainnet unobtanium address that contains a padding byte, checked against incorrect version byte',
             'in': ('13PGb7v3nmTDugLDStRJWXw6TzsNLUKJKC', b'\x05'),
             'error': (script.VersionByteError, 'incorrect version byte')
         }, {
-            'comment': 'valid mainnet bitcoin P2SH address, checked against incorrect version byte',
+            'comment': 'valid mainnet unobtanium P2SH address, checked against incorrect version byte',
             'in': ('31nVrspaydBz8aMpxH9WkS2DuhgqS1fCuG', b'\x00'),
             'error': (script.VersionByteError, 'incorrect version byte')
         }, {
@@ -3186,25 +3186,25 @@ UNITTEST_VECTOR = {
             'in': ('26UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM', b'\x00'),
             'error': (script.VersionByteError, 'incorrect version byte')
         }, {
-            'comment': 'invalid mainnet bitcoin address: bad checksum',
+            'comment': 'invalid mainnet unobtanium address: bad checksum',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvN', b'\x00'),
             'error': (script.Base58ChecksumError, 'Checksum mismatch: 0xd61967f7 ≠ 0xd61967f6')
         }, {
-            'comment': 'valid testnet bitcoin address that we use in many tests',
+            'comment': 'valid testnet unobtanium address that we use in many tests',
             'in': (ADDR[0], b'\x6f'),
             'out': b'H8\xd8\xb3X\x8cL{\xa7\xc1\xd0o\x86n\x9b79\xc607'
         }, {
-            'comment': 'invalid mainnet bitcoin address: invalid character',
+            'comment': 'invalid mainnet unobtanium address: invalid character',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjv0', b'\x00'),
             'error': (script.Base58Error, "Not a valid Base58 character: ‘0’")
         }],
         # base58_decode is the raw decoding, we use the test cases from base58_check_decode
         'base58_decode': [{
-            'comment': 'valid mainnet bitcoin address',
+            'comment': 'valid mainnet unobtanium address',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM', ),
             'out': b"\x00\x01\tfw`\x06\x95=UgC\x9e^9\xf8j\r';\xee\xd6\x19g\xf6"
         }, {
-            'comment': 'valid mainnet bitcoin address that contains a padding byte',
+            'comment': 'valid mainnet unobtanium address that contains a padding byte',
             'in': ('13PGb7v3nmTDugLDStRJWXw6TzsNLUKJKC', ),
             'out': b'\x00\x1a&jGxV\xea\xd2\x9e\xcb\xe6\xaeQ\xad:,\x8dG<\xf4\x07eG#'
         }, {
@@ -3212,25 +3212,25 @@ UNITTEST_VECTOR = {
             'in': ('26UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM', ),
             'out': b'\x0c\x01\x86\xaa\xbd\xa1\xd2\xdaJ\xf2\xd4\xbb\xe5=N\xe2\x08\xa6\x8eo\xd6\x19g\xf6'
         }, {
-            'comment': 'invalid mainnet bitcoin address: bad checksum',
+            'comment': 'invalid mainnet unobtanium address: bad checksum',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvN', ),
             'out': b"\x00\x01\tfw`\x06\x95=UgC\x9e^9\xf8j\r';\xee\xd6\x19g\xf7"
         }, {
-            'comment': 'valid testnet bitcoin address that we use in many tests',
+            'comment': 'valid testnet unobtanium address that we use in many tests',
             'in': (ADDR[0], ),
             'out': b'oH8\xd8\xb3X\x8cL{\xa7\xc1\xd0o\x86n\x9b79\xc607\x98!\xc4U'
         }, {
-            'comment': 'invalid mainnet bitcoin address: invalid character',
+            'comment': 'invalid mainnet unobtanium address: invalid character',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjv0', ),
             'error': (script.Base58Error, "Not a valid Base58 character: ‘0’")
         }],
         # base58_check_decode_parts is the raw decoding and splitting, we use the test cases from base58_check_decode
         'base58_check_decode_parts': [{
-            'comment': 'valid mainnet bitcoin address',
+            'comment': 'valid mainnet unobtanium address',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM', ),
             'out': (b'\x00', b"\x01\tfw`\x06\x95=UgC\x9e^9\xf8j\r';\xee", b'\xd6\x19g\xf6')
         }, {
-            'comment': 'valid mainnet bitcoin address that contains a padding byte',
+            'comment': 'valid mainnet unobtanium address that contains a padding byte',
             'in': ('13PGb7v3nmTDugLDStRJWXw6TzsNLUKJKC', ),
             'out': (b'\x00', b'\x1a&jGxV\xea\xd2\x9e\xcb\xe6\xaeQ\xad:,\x8dG<\xf4', b'\x07eG#')
         }, {
@@ -3238,15 +3238,15 @@ UNITTEST_VECTOR = {
             'in': ('26UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM', ),
             'out': (b'\x0c', b'\x01\x86\xaa\xbd\xa1\xd2\xdaJ\xf2\xd4\xbb\xe5=N\xe2\x08\xa6\x8eo', b'\xd6\x19g\xf6')
         }, {
-            'comment': 'invalid mainnet bitcoin address: bad checksum',
+            'comment': 'invalid mainnet unobtanium address: bad checksum',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvN', ),
             'out': (b'\x00', b"\x01\tfw`\x06\x95=UgC\x9e^9\xf8j\r';\xee", b'\xd6\x19g\xf7')
         }, {
-            'comment': 'valid testnet bitcoin address that we use in many tests',
+            'comment': 'valid testnet unobtanium address that we use in many tests',
             'in': (ADDR[0], ),
             'out':  (b'o', b'H8\xd8\xb3X\x8cL{\xa7\xc1\xd0o\x86n\x9b79\xc607', b'\x98!\xc4U')
         }, {
-            'comment': 'invalid mainnet bitcoin address: invalid character',
+            'comment': 'invalid mainnet unobtanium address: invalid character',
             'in': ('16UwLL9Risc3QfPqBUvKofHmBQ7wMtjv0', ),
             'error': (script.Base58Error, "Not a valid Base58 character: ‘0’")
         }],
@@ -3334,11 +3334,11 @@ UNITTEST_VECTOR = {
             'out': ['mn6q3dS2EnDUx3bmyWc6D4szJNVGtaR7zc', 'mtQheFaSfWELRB2MyMBaiWjdDm6ux9Ezns']
         }],
         'is_pubkeyhash': [{
-            'comment': 'valid bitcoin address',
+            'comment': 'valid unobtanium address',
             'in': ('mnMrocns5kBjPZxRxXb5A1gx7gAoRZWPP6',),
             'out': True
         }, {
-            'comment': 'valid P2SH bitcoin address, but is_pubkeyhash specifically checks for valid P2PKH address',
+            'comment': 'valid P2SH unobtanium address, but is_pubkeyhash specifically checks for valid P2PKH address',
             'in': (P2SH_ADDR[0],),
             'out': False
         }, {
@@ -3539,7 +3539,7 @@ UNITTEST_VECTOR = {
             'out': None
         }, {
             'in': (ADDR[0], 'BTC', DP['quantity']),
-            'error': (DebitError, 'Cannot debit bitcoins.')
+            'error': (DebitError, 'Cannot debit unobtaniums.')
         }, {
             'in': (ADDR[0], 'BTC', -1 * DP['quantity']),
             'error': (DebitError, 'Negative quantity.')
@@ -3555,7 +3555,7 @@ UNITTEST_VECTOR = {
             'out': None
         }, {
             'in': (ADDR[0], 'BTC', DP['quantity']),
-            'error': (CreditError, 'Cannot debit bitcoins.')
+            'error': (CreditError, 'Cannot debit unobtaniums.')
         }, {
             'in': (ADDR[0], 'BTC', -1 * DP['quantity']),
             'error': (CreditError, 'Negative quantity.')

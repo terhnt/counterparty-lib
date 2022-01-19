@@ -908,22 +908,22 @@ def list_tx(db, block_hash, block_index, block_time, tx_hash, tx_index, tx_hex=N
 
     return tx_index
 
-def kickstart(db, bitcoind_dir):
-    if bitcoind_dir is None:
+def kickstart(db, unobtaniumd_dir):
+    if unobtaniumd_dir is None:
         if platform.system() == 'Darwin':
-            bitcoind_dir = os.path.expanduser('~/Library/Application Support/Bitcoin/')
+            unobtaniumd_dir = os.path.expanduser('~/Library/Application Support/Unobtanium/')
         elif platform.system() == 'Windows':
-            bitcoind_dir = os.path.join(os.environ['APPDATA'], 'Bitcoin')
+            unobtaniumd_dir = os.path.join(os.environ['APPDATA'], 'Unobtanium')
         else:
-            bitcoind_dir = os.path.expanduser('~/.bitcoin')
-    if not os.path.isdir(bitcoind_dir):
-        raise Exception('Bitcoin Core data directory not found at {}. Use --bitcoind-dir parameter.'.format(bitcoind_dir))
+            unobtaniumd_dir = os.path.expanduser('~/.unobtanium')
+    if not os.path.isdir(unobtaniumd_dir):
+        raise Exception('Unobtanium Core data directory not found at {}. Use --unobtaniumd-dir parameter.'.format(unobtaniumd_dir))
 
     cursor = db.cursor()
 
     logger.warning('''Warning:
-- Ensure that bitcoind is stopped.
-- You must reindex bitcoind after the initialization is complete (restart with `-reindex=1`)
+- Ensure that unobtaniumd is stopped.
+- You must reindex unobtaniumd after the initialization is complete (restart with `-reindex=1`)
 - The initialization may take a while.''')
     if input('Proceed with the initialization? (y/N) : ') != 'y':
         return
@@ -932,12 +932,12 @@ def kickstart(db, bitcoind_dir):
     start_time_total = time.time()
 
     # Get hash of last known block.
-    chain_parser = ChainstateParser(os.path.join(bitcoind_dir, 'chainstate'))
+    chain_parser = ChainstateParser(os.path.join(unobtaniumd_dir, 'chainstate'))
     last_hash = chain_parser.get_last_block_hash()
     chain_parser.close()
 
     # Start block parser.
-    block_parser = BlockchainParser(os.path.join(bitcoind_dir, 'blocks'), os.path.join(bitcoind_dir, 'blocks/index'))
+    block_parser = BlockchainParser(os.path.join(unobtaniumd_dir, 'blocks'), os.path.join(unobtaniumd_dir, 'blocks/index'))
 
     current_hash = last_hash
     tx_index = 0
@@ -1221,7 +1221,7 @@ def follow(db, stop_at_block_index=None):
             xcp_mempool = []
             raw_mempool = backend.getrawmempool()
 
-            # For each transaction in Bitcoin Core mempool, if it’s new, create
+            # For each transaction in Unobtanium Core mempool, if it’s new, create
             # a fake block, a fake transaction, capture the generated messages,
             # and then save those messages.
             # Every transaction in mempool is parsed independently. (DB is rolled back after each one.)
@@ -1244,7 +1244,7 @@ def follow(db, stop_at_block_index=None):
 
             # fetch raw for all transactions that need to be parsed
             # Sometimes the transactions can’t be found: `{'code': -5, 'message': 'No information available about transaction'}`
-            #  - is txindex enabled in Bitcoind?
+            #  - is txindex enabled in Unobtaniumd?
             #  - or was there a block found while batch feting the raw txs
             #  - or was there a double spend for w/e reason accepted into the mempool (replace-by-fee?)
             try:
@@ -1308,7 +1308,7 @@ def follow(db, stop_at_block_index=None):
             refresh_start_time = time.time()
             # let the backend refresh it's mempool stored data
             # Sometimes the transactions can’t be found: `{'code': -5, 'message': 'No information available about transaction'}`
-            #  - is txindex enabled in Bitcoind?
+            #  - is txindex enabled in Unobtaniumd?
             #  - or was there a block found while batch feting the raw txs
             #  - or was there a double spend for w/e reason accepted into the mempool (replace-by-fee?)
             try:

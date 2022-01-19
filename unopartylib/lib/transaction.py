@@ -1,5 +1,5 @@
 """
-Construct and serialize the Bitcoin transactions that are Unoparty transactions.
+Construct and serialize the Unobtanium transactions that are Unoparty transactions.
 
 This module contains no consensus‐critical code.
 """
@@ -451,7 +451,7 @@ def construct (db, tx_info, encoding='auto',
     # Get inputs.
     multisig_inputs = not data
 
-    # Array of UTXOs, as retrieved by listunspent function from bitcoind
+    # Array of UTXOs, as retrieved by listunspent function from unobtaniumd
     if custom_inputs:
         use_inputs = unspent = custom_inputs
     else:
@@ -532,7 +532,7 @@ def construct (db, tx_info, encoding='auto',
     else:
         change_output = None
 
-    # in bitcoin core v0.12.1 a -bytespersigop was added that messes with bare multisig transactions,
+    # in unobtanium core v0.12.1 a -bytespersigop was added that messes with bare multisig transactions,
     #  as a safeguard we fall back to pubkeyhash encoding when unsure
     # when len(inputs) > len(data_outputs) there's more bytes:sigops ratio and we can safely continue
     if encoding == 'multisig' and inputs and data_output and len(inputs) < len(data_array) * 2 and util.enabled('bytespersigop'):
@@ -548,7 +548,7 @@ def construct (db, tx_info, encoding='auto',
                              allow_unconfirmed_inputs=allow_unconfirmed_inputs, unspent_tx_hash=unspent_tx_hash, custom_inputs=custom_inputs)
         # otherwise raise exception
         else:
-            raise exceptions.EncodingError("multisig will be rejected by Bitcoin Core >= v0.12.1, you should use `encoding=auto` or `encoding=pubkeyhash`")
+            raise exceptions.EncodingError("multisig will be rejected by Unobtanium Core >= v0.12.1, you should use `encoding=auto` or `encoding=pubkeyhash`")
 
     # Lock the source's inputs (UTXOs) chosen for this transaction
     if UTXO_LOCKS is not None and not disable_utxo_locks:

@@ -90,7 +90,7 @@ def check_backend_state():
     cblock = backend.getblock(block_hash)
     time_behind = time.time() - cblock.nTime   # TODO: Block times are not very reliable.
     if time_behind > 60 * 60 * 2:   # Two hours.
-        raise BackendError('Bitcoind is running about {} hours behind.'.format(round(time_behind / 3600)))
+        raise BackendError('Unobtaniumd is running about {} hours behind.'.format(round(time_behind / 3600)))
     logger.debug('Backend state check passed.')
 
 class DatabaseError(Exception):
@@ -445,7 +445,7 @@ class APIStatusPoller(threading.Thread):
         while self.stop_event.is_set() != True:
             try:
                 # Check that backend is running, communicable, and caught up with the blockchain.
-                # Check that the database has caught up with bitcoind.
+                # Check that the database has caught up with unobtaniumd.
                 if time.time() - self.last_database_check > 10 * 60: # Ten minutes since last check.
                     if not config.FORCE:
                         code = 11
@@ -761,7 +761,7 @@ ORDER BY tx_index ASC""", (contract_id, contract_id, )))
 
             return {
                 'db_caught_up': caught_up,
-                'bitcoin_block_count': latestBlockIndex,
+                'unobtanium_block_count': latestBlockIndex,
                 'last_block': last_block,
                 'last_message_index': last_message['message_index'] if last_message else -1,
                 'running_testnet': config.TESTNET,

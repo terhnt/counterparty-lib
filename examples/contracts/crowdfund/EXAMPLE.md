@@ -24,8 +24,8 @@ Please install `jq >= v1.5`, it's a command line JSON parser and makes it easier
 
 ##### Your Wallet
 Please export the address of the wallet you're using,
-for easiest usage this can just be an address from your bitcoind wallet,
-that way we can also let bitcoind sign the transactions.
+for easiest usage this can just be an address from your unobtaniumd wallet,
+that way we can also let unobtaniumd sign the transactions.
 
 You should preload the address with some testnet ~0.01 BTC and ~200 XCP!
 
@@ -175,7 +175,7 @@ Transaction (unsigned): 01000000...........................
 Sign and broadcast? (y/N)
 ```
 
-Asuming you've used an address from your bitcoind wallet you can choose `y`, otherwise copy the unsigned hex and go sign it somehow (Unowallet, w/e).
+Asuming you've used an address from your unobtaniumd wallet you can choose `y`, otherwise copy the unsigned hex and go sign it somehow (Unowallet, w/e).
 
 And the result:
 ```
