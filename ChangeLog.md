@@ -5,11 +5,11 @@
     * Only use first usable input for source (protocol change: 423888)
     * Fixed issue with broadcasts of exactly 52 chars, by always adding a varint to specify the length (protocol change: 423888)
     * Cleanup destroy.parse and add unit tests for it (protocol change: 423888)
-    * Added Docker image building (counterparty/counterparty-server on Dockerhub)
+    * Added Docker image building (unoparty/unoparty-server on Dockerhub)
     * Enhanced Travis to run test suite inside Docker image, and push image if testsuite passes
     * UTXO "locking" used to construct a transaction for 3 seconds to avoid a user double spending against himself
     * Improved APSW install routine to downgrade when newer version is installed
-    * Tweaked CORS headers so that web clients may authenticate directly against counterparty-server
+    * Tweaked CORS headers so that web clients may authenticate directly against unoparty-server
     * Numerous logging fixes to make logging more robust
     * Further performance enhancements when fetching raw transactions from bitcoind
     * Peg dependencies at specific versions!
@@ -53,7 +53,7 @@
     * Removed use of `tornado` library in the API module. We use `flask`'s threaded server instead
     * Added `getrawtransaction` and `getrawtransaction_batch` methods to the API
     * Added optional `custom_inputs` parameter to API calls, which allows for controlling the exact UTXOs to use in transactions (thanks, tokenly)
-    * Added `message_hash`, derived from changes to the `counterparty-lib` database. Displayed on each new block, makes checking for DB-level consensus easier
+    * Added `message_hash`, derived from changes to the `unoparty-lib` database. Displayed on each new block, makes checking for DB-level consensus easier
 * v9.51.4 (2015-09-26)
     * Significant performance and caching optimizations around bitcoind addrindex interaction
     * Fixed issues around responsiveness with larger mempool sizes
@@ -70,7 +70,7 @@
 * v9.51.2 (2015-04-23)
     * miscellaneous bug fixes
     * dramatically reduced default batch size (from 5000 to 20)
-    * renamed repository to `counterparty-lib`
+    * renamed repository to `unoparty-lib`
 * v9.51.1 (2015-04-20)
     * rename `server.api.log` to `server.access.log`
     * add `requests_timeout` parameter
@@ -93,7 +93,7 @@
     * hotfix: global integer overflow
 * v9.49.4 (2015-02-05)
     * reconceived this package as a libary
-    * moved CLI to new repository: `counterparty-cli`
+    * moved CLI to new repository: `unoparty-cli`
     * remove signing and broadcast functionality from API (`do_*`, `sign_tx`, `broadcast_tx` calls)
     * created `setup.py` build script
     * return to using `requests` for handling connections to backend
@@ -101,14 +101,14 @@
     * renamed configuration parameter: `jmcorgan` -> `addrindex`
     * renamed configuration parameter: `BACKEND_RPC_*` -> `BACKEND_*`
     * renamed configuration parameter: `BLOCKCHAIN_SERVICE_NAME` -> `BACKEND_NAME`
-    * prepared version check for repository rename to `counterparty-lib`
+    * prepared version check for repository rename to `unoparty-lib`
     * moved API docs to wiki
     * improved test coverage
     * miscellaneous bug fixes
     * improved docstring coverage
     * removed option to use Insight, Blockr and SoChain as a backend
     * tweaked Coveralls configuration
-    * Rename the database file name from `counterpartyd.9.db` to `counterparty.db`
+    * Rename the database file name from `unopartyd.9.db` to `unoparty.db`
     * Add BTCD support
 * v9.49.3 (2014-12-28)
     * better logging when handling `SIGTERM`, `SIGKILL`
@@ -201,7 +201,7 @@
 * v9.34.0 (2014-07-24)
     * CFDs temporarily disabled
 * v9.33.1 (2014-07-23)
-    * moved Armory support to Counterwallet (allow use of uncompressed keys)
+    * moved Armory support to Unowallet (allow use of uncompressed keys)
     * improved performance of mempool population
     * new ‘blockchain’ backend
 * v9.33.0 (2014-07-18)

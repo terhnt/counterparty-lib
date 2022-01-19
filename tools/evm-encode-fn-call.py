@@ -6,9 +6,9 @@ import argparse
 
 import binascii
 
-from counterpartylib import server
-from counterpartylib.lib import config
-from counterpartylib.lib.evm import abi, ethutils
+from unopartylib import server
+from unopartylib.lib import config
+from unopartylib.lib.evm import abi, ethutils
 
 
 def main():

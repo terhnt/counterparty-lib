@@ -1,4 +1,4 @@
-[submodule "counterpartylib/test/evm/pyethfixtures"]
-	path = counterpartylib/test/evm/pyethfixtures
+[submodule "unopartylib/test/evm/pyethfixtures"]
+	path = unopartylib/test/evm/pyethfixtures
 	url = git://github.com/ethereum/tests.git
 	branch = develop

@@ -1,14 +1,14 @@
 ### Preperation
 
-##### Counterparty rootdir
-To make the commands easy to copy paste you should set the `COUNTERPARTYROOT` ENVVAR, copy one of the below 2 lines;
+##### Unoparty rootdir
+To make the commands easy to copy paste you should set the `UNOPARTYROOT` ENVVAR, copy one of the below 2 lines;
 ```bash
-COUNTERPARTYROOT=`pwd`  # set it to current directory, which works if you're atm in the `counterparty-lib` dir
-COUNTERPARTYROOT="~/projects/counterparty-lib"  # example, replace with you path, without trailing /
+UNOPARTYROOT=`pwd`  # set it to current directory, which works if you're atm in the `unoparty-lib` dir
+UNOPARTYROOT="~/projects/unoparty-lib"  # example, replace with you path, without trailing /
 ```
 You can check if it's set correctly if the following command lists `setup.py`:
 ```bash
-ls $COUNTERPARTYROOT/setup.py
+ls $UNOPARTYROOT/setup.py
 ```
 
 ##### JQ
@@ -17,8 +17,8 @@ Please install `jq >= v1.5`, it's a command line JSON parser and makes it easier
  - Install somewhere;
     - Either `/usr/bin` (`sudo cp ~/Downloads/jq-linux64 /usr/bin/jq; sudo chmod +x /usr/bin/jq`)
       And set `JQ="jq"` so we can use
-    - Or put it in the `./bin` directory of Counterparty (`CP ~/Downloads/jq-linux64 $COUNTERPARTYROOT/bin/jq; chmod +x $COUNTERPARTYROOT/bin/jq`)
-      And set `JQ="$COUNTERPARTYROOT/bin/jq"` so we can use
+    - Or put it in the `./bin` directory of Unoparty (`CP ~/Downloads/jq-linux64 $UNOPARTYROOT/bin/jq; chmod +x $UNOPARTYROOT/bin/jq`)
+      And set `JQ="$UNOPARTYROOT/bin/jq"` so we can use
 
  - Make sure to repeat the `export JQ=....` step when you come back later ;)
 
@@ -39,7 +39,7 @@ During the example we'll have to wait for a new block a few times, paste the cop
 
 ```bash
 function WAITFORBLOCK {
-    HEIGHT=$(counterparty-client --testnet getinfo 2> /dev/null | $JQ '.last_block.block_index'); NEWHEIGHT=$HEIGHT; while [ $NEWHEIGHT -le $HEIGHT ]; do NEWHEIGHT=$(counterparty-client --testnet getinfo 2> /dev/null | $JQ '.last_block.block_index'); echo $NEWHEIGHT; sleep 5; done
+    HEIGHT=$(unoparty-client --testnet getinfo 2> /dev/null | $JQ '.last_block.block_index'); NEWHEIGHT=$HEIGHT; while [ $NEWHEIGHT -le $HEIGHT ]; do NEWHEIGHT=$(unoparty-client --testnet getinfo 2> /dev/null | $JQ '.last_block.block_index'); echo $NEWHEIGHT; sleep 5; done
 }
 ```
 
@@ -59,7 +59,7 @@ First we need to compile the contract using the `solc` command, to avoid conflic
 
 We can compile it to it's ABI (Application Binary Interface):
 ```bash
-$COUNTERPARTYROOT/bin/solc --optimize --combined-json abi $COUNTERPARTYROOT/examples/contracts/crowdfund/crowdfund.sol | $JQ '.contracts.crowdfund.abi | fromjson'
+$UNOPARTYROOT/bin/solc --optimize --combined-json abi $UNOPARTYROOT/examples/contracts/crowdfund/crowdfund.sol | $JQ '.contracts.crowdfund.abi | fromjson'
 ```
 
 Which should output, this is the interface of the contract:
@@ -155,18 +155,18 @@ Which should output, this is the interface of the contract:
 
 We're gonna capture the ABI in a var so we can use it later;
 ```bash
-CONTRACTABI=$($COUNTERPARTYROOT/bin/solc --optimize --combined-json abi $COUNTERPARTYROOT/examples/contracts/crowdfund/crowdfund.sol | $JQ '.contracts.crowdfund.abi | fromjson')
+CONTRACTABI=$($UNOPARTYROOT/bin/solc --optimize --combined-json abi $UNOPARTYROOT/examples/contracts/crowdfund/crowdfund.sol | $JQ '.contracts.crowdfund.abi | fromjson')
 echo $CONTRACTABI
 ```
 And we're gonna capture the compiled binary (hex) of the contract;
 ```bash
-CONTRACTHEX=$($COUNTERPARTYROOT/bin/solc --optimize --combined-json bin $COUNTERPARTYROOT/examples/contracts/crowdfund/crowdfund.sol | $JQ -r '.contracts.crowdfund.bin')
+CONTRACTHEX=$($UNOPARTYROOT/bin/solc --optimize --combined-json bin $UNOPARTYROOT/examples/contracts/crowdfund/crowdfund.sol | $JQ -r '.contracts.crowdfund.bin')
 echo $CONTRACTHEX
 ```
 
 Now we're ready to publish our contract to the blockchain;
 ```bash
-counterparty-client --testnet publish --source $SOURCE --endowment 0 --code-hex $CONTRACTHEX --startgas 1000000 --gasprice 1
+unoparty-client --testnet publish --source $SOURCE --endowment 0 --code-hex $CONTRACTHEX --startgas 1000000 --gasprice 1
 ```
 
 Which will prompt:
@@ -175,7 +175,7 @@ Transaction (unsigned): 01000000...........................
 Sign and broadcast? (y/N)
 ```
 
-Asuming you've used an address from your bitcoind wallet you can choose `y`, otherwise copy the unsigned hex and go sign it somehow (counterwallet, w/e).
+Asuming you've used an address from your bitcoind wallet you can choose `y`, otherwise copy the unsigned hex and go sign it somehow (Unowallet, w/e).
 
 And the result:
 ```
@@ -195,7 +195,7 @@ WAITFORBLOCK
 
 Now that the TX has been mined we can check what the address of the created contract is (note; better tooling to get the address when broadcasting would be nice):
 ```bash
-counterparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CREATIONTXID
+unoparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CREATIONTXID
 ```
 
 Which will give you the contract address somewhere:
@@ -225,7 +225,7 @@ Now let's say we want to make a campaign for; recipient=your own address, title=
 
 There's a small tool to encode the payload:
 ```bash
-CREATE_CAMPAIGN_PAYLOAD_HEX=$(python $COUNTERPARTYROOT/tools/evm-encode-fn-call.py --abi "$CONTRACTABI" create_campaign $SOURCE "FEED ME" 100 86400)
+CREATE_CAMPAIGN_PAYLOAD_HEX=$(python $UNOPARTYROOT/tools/evm-encode-fn-call.py --abi "$CONTRACTABI" create_campaign $SOURCE "FEED ME" 100 86400)
 echo $CREATE_CAMPAIGN_PAYLOAD_HEX
 ```
 
@@ -236,7 +236,7 @@ bc2fc8e100000000000000000000006f1d8b2a9927b3973e84f6879d85d8adbffbcd979500000000
 
 Now we can execute that:
 ```bash
-counterparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value 0 --payload-hex $CREATE_CAMPAIGN_PAYLOAD_HEX --startgas 1000000 --gasprice 1
+unoparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value 0 --payload-hex $CREATE_CAMPAIGN_PAYLOAD_HEX --startgas 1000000 --gasprice 1
 ```
 
 We'll again get the `Sign and broadcast (y/N)` step, gogo and then wait for a block again (use the earlier function again)...
@@ -275,7 +275,7 @@ Now to see the output of the campaign creation we'll use the same debug tool aga
  1. specify the txId again
  2. specify the contract address and it will list all the TXs for that contract in the order of execution:
 ```bash
-counterparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
+unoparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
 ```
 
 Your campaign creation should be the last one:
@@ -306,7 +306,7 @@ All XCP send along to the `contribute` will be added to the campaign.
 
 There's a small tool to encode the payload:
 ```bash
-CONTRIBUTE_PAYLOAD_HEX=$(python $COUNTERPARTYROOT/tools/evm-encode-fn-call.py --abi "$CONTRACTABI" contribute $CAMPAIGNID)
+CONTRIBUTE_PAYLOAD_HEX=$(python $UNOPARTYROOT/tools/evm-encode-fn-call.py --abi "$CONTRACTABI" contribute $CAMPAIGNID)
 echo $CONTRIBUTE_PAYLOAD_HEX
 ```
 
@@ -318,7 +318,7 @@ c1cbbca70000000000000000000000000000000000000000000000000000000000000001
 Now we can execute that with, and send 99 XCP along as the `value`:
 ```bash
 CONTRIBUTE_VALUE=99
-counterparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value $CONTRIBUTE_VALUE --payload-hex $CONTRIBUTE_PAYLOAD_HEX --startgas 1000000 --gasprice 1
+unoparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value $CONTRIBUTE_VALUE --payload-hex $CONTRIBUTE_PAYLOAD_HEX --startgas 1000000 --gasprice 1
 ```
 
 Once a block has been found (use the function... again... zzz...)
@@ -329,7 +329,7 @@ WAITFORBLOCK
 we can debug the output again:
 
 ```bash
-counterparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
+unoparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
 ```
 ```
 ----------------------------- EXECUTION INFO ----------------------------
@@ -364,7 +364,7 @@ which as the ABI show takes the following arguments:
 
 There's a small tool to encode the payload:
 ```bash
-PROGRESS_REPORT_PAYLOAD_HEX=$(python $COUNTERPARTYROOT/tools/evm-encode-fn-call.py --abi "$CONTRACTABI" progress_report $CAMPAIGNID)
+PROGRESS_REPORT_PAYLOAD_HEX=$(python $UNOPARTYROOT/tools/evm-encode-fn-call.py --abi "$CONTRACTABI" progress_report $CAMPAIGNID)
 echo $PROGRESS_REPORT_PAYLOAD_HEX
 ```
 
@@ -375,7 +375,7 @@ Which should result in:
 
 Now we can execute that:
 ```bash
-counterparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value 0 --payload-hex $PROGRESS_REPORT_PAYLOAD_HEX --startgas 1000000 --gasprice 1
+unoparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value 0 --payload-hex $PROGRESS_REPORT_PAYLOAD_HEX --startgas 1000000 --gasprice 1
 ```
 
 Again waiting for a block (if you don't know what do do by now...) ...
@@ -385,7 +385,7 @@ WAITFORBLOCK
 
 And then run the debug tool:
 ```bash
-counterparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
+unoparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
 ```
 ```
 ----------------------------- EXECUTION INFO ----------------------------
@@ -405,7 +405,7 @@ So to trigger the payout we need to contribute 1 XCP more and then it will reach
 You can check the balances prior to doing this if you don't trust the DEBIT/CREDIT list of the debug tool xD:
 
 ```bash
-counterparty-client --testnet getrows --table balances --filter "address" "==" $CONTRACTID --filter-op OR --filter "address" "==" $SOURCE
+unoparty-client --testnet getrows --table balances --filter "address" "==" $CONTRACTID --filter-op OR --filter "address" "==" $SOURCE
 ```
 
 ```
@@ -422,7 +422,7 @@ And then do a contribute with sending 1 XCP along as `value`:
 
 ```bash
 CONTRIBUTE_VALUE=1
-counterparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value $CONTRIBUTE_VALUE --payload-hex $CONTRIBUTE_PAYLOAD_HEX --startgas 1000000 --gasprice 1
+unoparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value $CONTRIBUTE_VALUE --payload-hex $CONTRIBUTE_PAYLOAD_HEX --startgas 1000000 --gasprice 1
 ```
 
 Waiting for a block again (seriously? you forgot about that 1liner?)...
@@ -432,7 +432,7 @@ WAITFORBLOCK
 
 Then running the debug tool we should see the contribute:
 ```bash
-counterparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
+unoparty-client --testnet evm_info --debug-output --abi "$CONTRACTABI" $CONTRACTID
 ```
 ```
 ----------------------------- EXECUTION INFO ----------------------------

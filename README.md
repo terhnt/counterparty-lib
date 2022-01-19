@@ -1,21 +1,21 @@
-[![Build Status Travis](https://travis-ci.org/CounterpartyXCP/counterparty-lib.svg?branch=develop)](https://travis-ci.org/CounterpartyXCP/counterparty-lib)
-[![Build Status Circle](https://circleci.com/gh/CounterpartyXCP/counterparty-lib.svg?&style=shield)](https://circleci.com/gh/CounterpartyXCP/counterparty-lib)
-[![Coverage Status](https://coveralls.io/repos/CounterpartyXCP/counterparty-lib/badge.png?branch=develop)](https://coveralls.io/r/CounterpartyXCP/counterparty-lib?branch=develop)
-[![Latest Version](https://pypip.in/version/counterparty-lib/badge.svg)](https://pypi.python.org/pypi/counterparty-lib/)
-[![License](https://pypip.in/license/counterparty-lib/badge.svg)](https://pypi.python.org/pypi/counterparty-lib/)
-[![Slack Status](http://slack.counterparty.io/badge.svg)](http://slack.counterparty.io)
-[![Docker Pulls](https://img.shields.io/docker/pulls/counterparty/counterparty-server.svg?maxAge=2592000)](https://hub.docker.com/r/counterparty/counterparty-server/)
+[![Build Status Travis](https://travis-ci.org/terhnt/unoparty-lib.svg?branch=develop)](https://travis-ci.org/terhnt/unoparty-lib)
+[![Build Status Circle](https://circleci.com/gh/terhnt/unoparty-lib.svg?&style=shield)](https://circleci.com/gh/terhnt/unoparty-lib)
+[![Coverage Status](https://coveralls.io/repos/terhnt/unoparty-lib/badge.png?branch=develop)](https://coveralls.io/r/terhnt/unoparty-lib?branch=develop)
+[![Latest Version](https://pypip.in/version/unoparty-lib/badge.svg)](https://pypi.python.org/pypi/unoparty-lib/)
+[![License](https://pypip.in/license/unoparty-lib/badge.svg)](https://pypi.python.org/pypi/unoparty-lib/)
+[![Slack Status](http://slack.unoparty.io/badge.svg)](http://slack.unoparty.io)
+[![Docker Pulls](https://img.shields.io/docker/pulls/unoparty/unoparty-server.svg?maxAge=2592000)](https://hub.docker.com/r/unoparty/unoparty-server/)
 
 
 # Description
-`counterparty-lib` is the reference implementation of the [Counterparty Protocol](https://counterparty.io).
+`unoparty-lib` is the reference implementation of the [Unoparty Protocol](https://unoparty.io).
 
-**Note:** for the command-line interface to `counterparty-lib`, see [`counterparty-cli`](https://github.com/CounterpartyXCP/counterparty-cli).
+**Note:** for the command-line interface to `unoparty-lib`, see [`unoparty-cli`](https://github.com/terhnt/unoparty-cli).
 
 
 # Installation
 
-For a simple Docker-based install of the Counterparty software stack, see [this guide](http://counterparty.io/docs/federated_node/).
+For a simple Docker-based install of the Unoparty software stack, see [this guide](http://unoparty.io/docs/federated_node/).
 
 
 # Manual installation
@@ -33,20 +33,20 @@ rpcthreads=100
 rpctimeout=300
 ```
 
-Then, download and install `counterparty-lib`:
+Then, download and install `unoparty-lib`:
 
 ```
-$ git clone https://github.com/CounterpartyXCP/counterparty-lib.git
-$ cd counterparty-lib
+$ git clone https://github.com/terhnt/unoparty-lib.git
+$ cd unoparty-lib
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install
 ```
 
-Followed by `counterparty-cli`:
+Followed by `unoparty-cli`:
 
 ```
-$ git clone https://github.com/CounterpartyXCP/counterparty-cli.git
-$ cd counterparty-cli
+$ git clone https://github.com/terhnt/unoparty-cli.git
+$ cd unoparty-cli
 $ sudo pip3 install --upgrade -r requirements.txt
 $ sudo python3 setup.py install
 ```
@@ -54,36 +54,36 @@ $ sudo python3 setup.py install
 Then, launch the daemon via:
 
 ```
-$ counterparty-server bootstrap
-$ counterparty-server --backend-password=rpc start
+$ unoparty-server bootstrap
+$ unoparty-server --backend-password=rpc start
 ```
 
 # Basic Usage
 
 ## Via command-line 
 
-(Requires `counterparty-cli` to be installed.)
+(Requires `unoparty-cli` to be installed.)
 
 * The first time you run the server, you may bootstrap the local database with:
-	`$ counterparty-server bootstrap`
+	`$ unoparty-server bootstrap`
 
 * Start the server with:
-	`$ counterparty-server start`
+	`$ unoparty-server start`
 
 * Check the status of the server with:
-	`$ counterparty-client getinfo`
+	`$ unoparty-client getinfo`
 
 * For additional command-line arguments and options:
-	`$ counterparty-server --help`
-	`$ counterparty-client --help`
+	`$ unoparty-server --help`
+	`$ unoparty-client --help`
 
 ## Via Python
 
-Bare usage from Python is also possible, without installing `counterparty-cli`:
+Bare usage from Python is also possible, without installing `unoparty-cli`:
 
 ```
 $ python3
->>> from counterpartylib import server
+>>> from unopartylib import server
 >>> db = server.initialise(<options>)
 >>> server.start_all(db)
 ```
@@ -91,30 +91,30 @@ $ python3
 # Configuration and Operation
 
 The paths to the **configuration** files, **log** files and **database** files are printed to the screen when starting the server in ‘verbose’ mode:
-	`$ counterparty-server --verbose start`
+	`$ unoparty-server --verbose start`
 
 By default, the **configuration files** are named `server.conf` and `client.conf` and located in the following directories:
 
-* Linux: `~/.config/counterparty/`
-* Windows: `%APPDATA%\Counterparty\`
+* Linux: `~/.config/unoparty/`
+* Windows: `%APPDATA%\Unoparty\`
 
-Client and Server log files are named `counterparty.client.[testnet.]log` and `counterparty.server.[testnet.]log`, and located in the following directories:
+Client and Server log files are named `unoparty.client.[testnet.]log` and `unoparty.server.[testnet.]log`, and located in the following directories:
 
-* Linux: `~/.cache/counterparty/log/`
-* Windows: `%APPDATA%\Local\Counterparty\counterparty\Logs`
+* Linux: `~/.cache/unoparty/log/`
+* Windows: `%APPDATA%\Local\Unoparty\unoparty\Logs`
 
-Counterparty API activity is logged in `server.[testnet.]api.log` and `client.[testnet.]api.log`.
+Unoparty API activity is logged in `server.[testnet.]api.log` and `client.[testnet.]api.log`.
 
-Counterparty database files are by default named `counterparty.[testnet.]db` and located in the following directories:
+Unoparty database files are by default named `unoparty.[testnet.]db` and located in the following directories:
 
-* Linux: `~/.local/share/counterparty`
-* Windows: `%APPDATA%\Roaming\Counterparty\counterparty`
+* Linux: `~/.local/share/unoparty`
+* Windows: `%APPDATA%\Roaming\Unoparty\unoparty`
 
 ## Configuration File Format
 
 Manual configuration is not necessary for most use cases.
 
-A `counterparty-server` configuration file looks like this:
+A `unoparty-server` configuration file looks like this:
 
 	[Default]
 	backend-name = addrindex
@@ -124,16 +124,16 @@ A `counterparty-server` configuration file looks like this:
 	rpc-user = <rpcuser>
 	rpc-password = <rpcpassword>
 
-A `counterparty-client` configuration file looks like this:
+A `unoparty-client` configuration file looks like this:
 
 	[Default]
 	wallet-name = bitcoincore
 	wallet-connect = localhost
 	wallet-user = <user>
 	wallet-password = <password>
-	counterparty-rpc-connect = localhost
-	counterparty-rpc-user = <rpcuser>
-	counterparty-rpc-password = <password>
+	unoparty-rpc-connect = localhost
+	unoparty-rpc-user = <rpcuser>
+	unoparty-rpc-password = <password>
 
 
 # Developer notes
@@ -153,4 +153,4 @@ A `counterparty-client` configuration file looks like this:
 
 # Further Reading
 
-* [Official Project Documentation](http://counterparty.io/docs/)
+* [Official Project Documentation](http://unoparty.io/docs/)

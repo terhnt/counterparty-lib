@@ -10,7 +10,7 @@ import urllib.request
 import sys
 import shutil
 
-from counterpartylib.lib import config
+from unopartylib.lib import config
 
 CURRENT_VERSION = config.VERSION_STRING
 APSW_VERSION = "3.8.7.3-r1"
@@ -86,7 +86,7 @@ class install_serpent(Command):
 
     def run(self):
         repo = "rubensayshi"
-        branch = "counterparty"
+        branch = "unoparty"
 
         # In Windows Serpent should be installed manually
         if os.name == 'nt':
@@ -161,7 +161,7 @@ class install_solc(_install):
 
         SOLIDITY_REPO = "rubensayshi"
         SOLIDITY_REPO_URL = "git://github.com/%s/solidity.git" % SOLIDITY_REPO
-        SOLIDITY_BRANCH = "counterparty"
+        SOLIDITY_BRANCH = "unoparty"
 
         PARAMS = dict(
             WEBTHREE_REPO=WEBTHREE_REPO,
@@ -189,12 +189,12 @@ class install_solc(_install):
             os.system('git clone --recursive --branch {WEBTHREE_BRANCH} {WEBTHREE_REPO_URL} {WEBTHREE_DIR}'.format(**PARAMS))
 
             os.system('cd {WEBTHREE_DIR}/solidity && '
-                      'git remote add counterparty {SOLIDITY_REPO_URL}'.format(**PARAMS))
+                      'git remote add unoparty {SOLIDITY_REPO_URL}'.format(**PARAMS))
 
             os.system('cd {WEBTHREE_DIR}/solidity && '
-                      'git fetch counterparty && '
+                      'git fetch unoparty && '
                       'git checkout -f {SOLIDITY_BRANCH} &&'
-                      'git reset --hard counterparty/{SOLIDITY_BRANCH}'.format(**PARAMS))
+                      'git reset --hard unoparty/{SOLIDITY_BRANCH}'.format(**PARAMS))
 
             print("building.")
             os.system('cd {WEBTHREE_DIR} && ./webthree-helpers/scripts/ethbuild.sh --no-git --project solidity --cores 4 -DEVMJIT=0 -DETHASHCL=0 -DGUI=0'.format(**PARAMS))
@@ -234,15 +234,15 @@ class move_old_db(Command):
     def run(self):
         import appdirs
 
-        old_data_dir = appdirs.user_config_dir(appauthor='Counterparty', appname='counterpartyd', roaming=True)
-        old_database = os.path.join(old_data_dir, 'counterpartyd.9.db')
-        old_database_testnet = os.path.join(old_data_dir, 'counterpartyd.9.testnet.db')
+        old_data_dir = appdirs.user_config_dir(appauthor='Unoparty', appname='unopartyd', roaming=True)
+        old_database = os.path.join(old_data_dir, 'unopartyd.9.db')
+        old_database_testnet = os.path.join(old_data_dir, 'unopartyd.9.testnet.db')
 
         new_data_dir = appdirs.user_data_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME, roaming=True)
         new_database = os.path.join(new_data_dir, '{}.db'.format(config.APP_NAME))
         new_database_testnet = os.path.join(new_data_dir, '{}.testnet.db'.format(config.APP_NAME))
 
-        # User have an old version of `counterpartyd`
+        # User have an old version of `unopartyd`
         if os.path.exists(old_data_dir):
             # Move database
             if not os.path.exists(new_data_dir):
@@ -306,7 +306,7 @@ class install(_install):
             caller_module == 'distutils.dist'
             and info.function == 'run_commands'
         )
-        
+
     def run(self):
         try:
             import zlib
@@ -343,7 +343,8 @@ required_packages = [
     'pysha3==0.3',
     'pytest==2.9.1',
     'pytest-cov==2.2.1',
-    'python-bitcoinlib==0.5.1',
+    # 'python-bitcoinlib==0.10.1', <-- restore this when python-bitcoinlib 0.10.x with bech32 support is released
+    'python-altcoinlib==0.8.0-SNAPSHOT',
     'requests==2.10.0',
     'tendo==0.2.8',
     'xmltodict==0.10.1',
@@ -353,16 +354,16 @@ required_packages = [
 ]
 
 setup_options = {
-    'name': 'counterparty-lib',
+    'name': 'unoparty-lib',
     'version': CURRENT_VERSION,
-    'author': 'Counterparty Developers',
-    'author_email': 'dev@counterparty.io',
-    'maintainer': 'Counterparty Developers',
-    'maintainer_email': 'dev@counterparty.io',
-    'url': 'http://counterparty.io',
+    'author': 'Counterparty Developers / Unoparty Developers',
+    'author_email': 'dev@unoparty.io',
+    'maintainer': 'Counterparty Developers / Unoparty Developers',
+    'maintainer_email': 'dev@unoparty.io',
+    'url': 'http://unoparty.io',
     'license': 'MIT',
-    'description': 'Counterparty Protocol Reference Implementation',
-    'keywords': 'counterparty, bitcoin',
+    'description': 'Unoparty Protocol Reference Implementation',
+    'keywords': 'unoparty, unobtanium',
     'classifiers': [
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -376,8 +377,8 @@ setup_options = {
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: System :: Distributed Computing"
     ],
-    'download_url': 'https://github.com/CounterpartyXCP/counterparty-lib/releases/tag/v' + CURRENT_VERSION,
-    'provides': ['counterpartylib'],
+    'download_url': 'https://github.com/terhnt/unoparty-lib/releases/tag/v' + CURRENT_VERSION,
+    'provides': ['unopartylib'],
     'packages': find_packages(),
     'zip_safe': False,
     'setup_requires': ['appdirs'],

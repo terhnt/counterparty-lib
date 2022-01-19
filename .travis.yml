@@ -33,17 +33,17 @@ before_install:
     if [ "$BRANCH" == "evmparty" ]; then export DOCKER_TAG="evmparty"; fi
   fi
 - echo $DOCKER_TAG
-# try to check out the same branch for counterparty-lib (if it exists), and fallback to the develop branch if not
-- if curl --output /dev/null --silent --head --fail "https://github.com/CounterpartyXCP/counterparty-cli/tree/$BRANCH"; then export DOCKERFILE_CLI_BRANCH="$BRANCH"; else export DOCKERFILE_CLI_BRANCH="develop"; fi
+# try to check out the same branch for unoparty-lib (if it exists), and fallback to the develop branch if not
+- if curl --output /dev/null --silent --head --fail "https://github.com/terhnt/unoparty-cli/tree/$BRANCH"; then export DOCKERFILE_CLI_BRANCH="$BRANCH"; else export DOCKERFILE_CLI_BRANCH="develop"; fi
 - echo $DOCKERFILE_CLI_BRANCH
 # build docker image
-- docker build -t counterparty/counterparty-server:$DOCKER_TAG --build-arg CLI_BRANCH="$DOCKERFILE_CLI_BRANCH" .
-- docker run --entrypoint=/bin/bash counterparty/counterparty-server:$DOCKER_TAG -c "cd /counterparty-lib; git submodule update --init"
+- docker build -t unoparty/unoparty-server:$DOCKER_TAG --build-arg CLI_BRANCH="$DOCKERFILE_CLI_BRANCH" .
+- docker run --entrypoint=/bin/bash unoparty/unoparty-server:$DOCKER_TAG -c "cd /unoparty-lib; git submodule update --init"
 
 script:
 # run the test suite in the docker container we just made
-- docker run --entrypoint=/bin/bash counterparty/counterparty-server:$DOCKER_TAG -c \
-  "cd /counterparty-lib; ls -la ./bin/; ./bin/solc --version; py.test -x --vmtests=quick --skiptestbook=all --cov-config=./.coveragerc --cov-report=term-missing --cov=./counterpartylib ./counterpartylib"
+- docker run --entrypoint=/bin/bash unoparty/unoparty-server:$DOCKER_TAG -c \
+  "cd /unoparty-lib; ls -la ./bin/; ./bin/solc --version; py.test -x --vmtests=quick --skiptestbook=all --cov-config=./.coveragerc --cov-report=term-missing --cov=./unopartylib ./unopartylib"
 
 after_success:
 - coveralls
@@ -51,7 +51,7 @@ after_success:
 - |
   if [ "$DOCKER_TAG" != "nopush" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker push counterparty/counterparty-server:$DOCKER_TAG;
+    docker push unoparty/unoparty-server:$DOCKER_TAG;
   fi
 
 notifications:
