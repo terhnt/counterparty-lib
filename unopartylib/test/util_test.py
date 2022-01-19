@@ -43,7 +43,7 @@ UNOPARTYD_OPTIONS = {
     'testcoin': False,
     'rpc_port': 9999,
     'rpc_password': 'pass',
-    'backend_port': 18332,
+    'backend_port': 65531,
     'backend_password': 'pass',
     'backend_ssl_no_verify': True,
     'p2sh_dust_return_pubkey': '11' * 33,

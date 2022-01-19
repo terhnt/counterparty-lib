@@ -198,7 +198,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
 
     try:
         config.BACKEND_PORT = int(config.BACKEND_PORT)
-        if not (int(config.BACKEND_PORT) > 1 and int(config.BACKEND_PORT) < 65535):
+        if not (int(config.BACKEND_PORT) > 1 and int(config.BACKEND_PORT) <= 65535):
             raise ConfigurationError('invalid backend API port number')
     except:
         raise ConfigurationError("Please specific a valid port number backend-port configuration parameter")
@@ -278,7 +278,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
                 config.RPC_PORT = config.DEFAULT_RPC_PORT
     try:
         config.RPC_PORT = int(config.RPC_PORT)
-        if not (int(config.RPC_PORT) > 1 and int(config.RPC_PORT) < 65535):
+        if not (int(config.RPC_PORT) > 1 and int(config.RPC_PORT) <= 65535):
             raise ConfigurationError('invalid server API port number')
     except:
         raise ConfigurationError("Please specific a valid port number rpc-port configuration parameter")
