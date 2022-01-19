@@ -31,7 +31,7 @@ def unpack(db, message, block_index):
 def validate (db, source, destination, asset, quantity, block_index):
     problems = []
 
-    if asset == config.BTC: problems.append('cannot send unobtaniums')  # Only for parsing.
+    if asset == config.MAINCOIN: problems.append('cannot send unobtaniums')  # Only for parsing.
 
     if not isinstance(quantity, int):
         problems.append('quantity must be in satoshis')
@@ -48,8 +48,8 @@ def validate (db, source, destination, asset, quantity, block_index):
 def compose (db, source, destination, asset, quantity):
     cursor = db.cursor()
 
-    # Just send BTC?
-    if asset == config.BTC:
+    # Just send UNO?
+    if asset == config.MAINCOIN:
         return (source, [(destination, quantity)], None)
 
     #quantity must be in int satoshi (not float, string, etc)

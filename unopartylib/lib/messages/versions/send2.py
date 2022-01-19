@@ -56,8 +56,8 @@ def validate(db, source, destination, asset, quantity, block_index):
     except AddressError:
         raise ValidateError('destination address invalid')
 
-    if asset == config.BTC:
-        raise ValidateError('cannot send {}'.format(config.BTC))
+    if asset == config.MAINCOIN:
+        raise ValidateError('cannot send {}'.format(config.MAINCOIN))
 
     if type(quantity) != int:
         raise ValidateError('quantity not integer')
@@ -73,7 +73,7 @@ def validate(db, source, destination, asset, quantity, block_index):
 
 def compose(db, source, destination, asset, quantity):
 
-    if asset == config.BTC:
+    if asset == config.MAINCOIN:
         return (source, [(destination, quantity)], None)
 
     validate(db, source, destination, asset, quantity, util.CURRENT_BLOCK_INDEX)

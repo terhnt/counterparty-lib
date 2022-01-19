@@ -238,7 +238,7 @@ class move_old_db(Command):
         old_database = os.path.join(old_data_dir, 'unopartyd.9.db')
         old_database_testnet = os.path.join(old_data_dir, 'unopartyd.9.testnet.db')
 
-        new_data_dir = appdirs.user_data_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME, roaming=True)
+        new_data_dir = appdirs.user_data_dir(appauthor=config.TOKEN_NAME, appname=config.APP_NAME, roaming=True)
         new_database = os.path.join(new_data_dir, '{}.db'.format(config.APP_NAME))
         new_database_testnet = os.path.join(new_data_dir, '{}.testnet.db'.format(config.APP_NAME))
 

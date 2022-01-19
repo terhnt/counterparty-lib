@@ -71,8 +71,8 @@ def validate (db, source, destination, asset, quantity):
     if destination:
         raise ValidateError('destination exists')
 
-    if asset == config.BTC:
-        raise ValidateError('cannot destroy {}'.format(config.BTC))
+    if asset == config.MAINCOIN:
+        raise ValidateError('cannot destroy {}'.format(config.MAINCOIN))
 
     if type(quantity) != int:
         raise ValidateError('quantity not integer')

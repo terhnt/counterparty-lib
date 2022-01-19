@@ -74,11 +74,11 @@ def test_calldata():
     s = state()
 
     message_gas = tester.DEFAULT_STARTGAS
-    to, value, asset,  = 'n4NdDG7mAJAESJ8E2E1fwmi6bnZMx1DV54', 100, 'XCP'
+    to, value, asset,  = 'n4NdDG7mAJAESJ8E2E1fwmi6bnZMx1DV54', 100, 'XUP'
 
     todata = ethutils.zpad(address.Address.normalize(to).bytes32(), 32)
     valuedata = ethutils.zpad(ethutils.int_to_big_endian(value), 32)
-    assetdata = ethutils.zpad(bytes('XCP', 'utf-8'), 32)
+    assetdata = ethutils.zpad(bytes('XUP', 'utf-8'), 32)
     message_data = todata + valuedata + assetdata
 
     _, tx, block = s.mock_tx(tester.a0, tester.a0, 0, message_data, message_gas)  # need to mock a TX to create a VMExt
@@ -137,10 +137,10 @@ def test_message():
     s = state()
 
     message_gas = tester.DEFAULT_STARTGAS
-    to, value, asset,  = 'n4NdDG7mAJAESJ8E2E1fwmi6bnZMx1DV54', 100, 'XCP'
+    to, value, asset,  = 'n4NdDG7mAJAESJ8E2E1fwmi6bnZMx1DV54', 100, 'XUP'
     message_data = ethutils.zpad(address.Address.normalize(to).bytes32(), 32) + \
                    ethutils.zpad(ethutils.int_to_big_endian(value), 32) + \
-                   ethutils.zpad(bytes('XCP', 'utf-8'), 32)
+                   ethutils.zpad(bytes('XUP', 'utf-8'), 32)
 
     _, tx, block = s.mock_tx(tester.a0, tester.a0, 0, message_data, message_gas)  # need to mock a TX to create a VMExt
 

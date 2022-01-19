@@ -493,7 +493,7 @@ def test_hedge():
     # create contract
     c2 = s.abi_contract(hedge_code, sender=tester.k0, language='serpent')
 
-    # Have the first party register, sending 10000000 XCPtoshi and asking for a hedge using currency code 500
+    # Have the first party register, sending 10000000 XUPtoshi and asking for a hedge using currency code 500
     o1 = c2.main(c.address.int(), 500, value=10000000, sender=tester.k0)
     assert o1 == 1
 

@@ -112,7 +112,7 @@ def proc_sendasset(ext, msg):
 def proc_receivedasset(ext, msg):
     gas_cost = opcodes.GRIPEMD160BASE
 
-    o = ethutils.zpad(ethutils.encode_int(1), 32) + ethutils.zpadright(b'XCP', 32)
+    o = ethutils.zpad(ethutils.encode_int(1), 32) + ethutils.zpadright(b'XUP', 32)
 
     return 1, msg.gas - gas_cost, o
 

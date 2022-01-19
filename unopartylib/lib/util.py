@@ -57,7 +57,7 @@ def api(method, params):
     }
     response = requests.post(config.RPC, data=json.dumps(payload), headers=headers)
     if response == None:
-        raise RPCError('Cannot communicate with {} server.'.format(config.XCP_NAME))
+        raise RPCError('Cannot communicate with {} server.'.format(config.TOKEN_NAME))
     elif response.status_code != 200:
         if response.status_code == 500:
             raise RPCError('Malformed API call.')
@@ -104,8 +104,8 @@ def last_message(db):
 
 def generate_asset_id(asset_name, block_index):
     """Create asset_id from asset_name."""
-    if asset_name == config.BTC: return 0
-    elif asset_name == config.XCP: return 1
+    if asset_name == config.MAINCOIN: return 0
+    elif asset_name == config.TOKEN: return 1
 
     if len(asset_name) < 4:
         raise exceptions.AssetNameError('too short')
@@ -146,8 +146,8 @@ def generate_asset_id(asset_name, block_index):
 
 def generate_asset_name (asset_id, block_index):
     """Create asset_name from asset_id."""
-    if asset_id == 0: return config.BTC
-    elif asset_id == 1: return config.XCP
+    if asset_id == 0: return config.MAINCOIN
+    elif asset_id == 1: return config.TOKEN
 
     if asset_id < 26**3:
         raise exceptions.AssetIDError('too low')
@@ -208,13 +208,13 @@ def debit (db, address, asset, quantity, action=None, event=None):
         raise DebitError('Quantity must be an integer.')
     if quantity < 0:
         raise DebitError('Negative quantity.')
-    if asset == config.BTC:
+    if asset == config.MAINCOIN:
         raise DebitError('Cannot debit unobtaniums.')
 
     debit_cursor = db.cursor()
 
-    if asset == config.BTC:
-        raise exceptions.BalanceError('Cannot debit unobtaniums from a {} address!'.format(config.XCP_NAME))
+    if asset == config.MAINCOIN:
+        raise exceptions.BalanceError('Cannot debit unobtaniums from a {} address!'.format(config.TOKEN_NAME))
 
     debit_cursor.execute('''SELECT * FROM balances \
                             WHERE (address = ? AND asset = ?)''', (address, asset))
@@ -263,7 +263,7 @@ def credit (db, address, asset, quantity, action=None, event=None):
         raise CreditError('Quantity must be an integer.')
     if quantity < 0:
         raise CreditError('Negative quantity.')
-    if asset == config.BTC:
+    if asset == config.MAINCOIN:
         raise CreditError('Cannot debit unobtaniums.')
 
     credit_cursor = db.cursor()
@@ -318,7 +318,7 @@ class QuantityError(Exception): pass
 
 def is_divisible(db, asset):
     """Check if the asset is divisible."""
-    if asset in (config.BTC, config.XCP):
+    if asset in (config.MAINCOIN, config.TOKEN):
         return True
     else:
         cursor = db.cursor()
@@ -410,8 +410,8 @@ def holders(db, asset):
     for order_match in list(cursor):
         holders.append({'address': order_match['tx1_address'], 'address_quantity': order_match['backward_quantity'], 'escrow': order_match['id']})
 
-    # Bets and RPS (and bet/rps matches) only escrow XCP.
-    if asset == config.XCP:
+    # Bets and RPS (and bet/rps matches) only escrow XUP.
+    if asset == config.TOKEN:
         cursor.execute('''SELECT * FROM bets \
                           WHERE status = ?''', ('open',))
         for bet in list(cursor):
@@ -436,7 +436,7 @@ def holders(db, asset):
         for execution in list(cursor):
             holders.append({'address': execution['source'], 'address_quantity': execution['gas_cost'], 'escrow': None})
 
-        # XCP escrowed for not finished executions
+        # XUP escrowed for not finished executions
         cursor.execute('''SELECT * FROM executions WHERE status = ?''', ('out of gas',))
         for execution in list(cursor):
             holders.append({'address': execution['source'], 'address_quantity': execution['gas_remained'], 'escrow': execution['contract_id']})
@@ -445,7 +445,7 @@ def holders(db, asset):
     return holders
 
 def xcp_created (db):
-    """Return number of XCP created thus far."""
+    """Return number of XUP created thus far."""
     cursor = db.cursor()
     cursor.execute('''SELECT SUM(earned) AS total FROM burns \
                       WHERE (status = ?)''', ('valid',))
@@ -454,11 +454,11 @@ def xcp_created (db):
     return total
 
 def xcp_destroyed (db):
-    """Return number of XCP destroyed thus far."""
+    """Return number of XUP destroyed thus far."""
     cursor = db.cursor()
     # Destructions
     cursor.execute('''SELECT SUM(quantity) AS total FROM destructions \
-                      WHERE (status = ? AND asset = ?)''', ('valid', config.XCP))
+                      WHERE (status = ? AND asset = ?)''', ('valid', config.TOKEN))
     destroyed_total = list(cursor)[0]['total'] or 0
     # Subtract issuance fees.
     cursor.execute('''SELECT SUM(fee_paid) AS total FROM issuances\
@@ -472,13 +472,13 @@ def xcp_destroyed (db):
     return destroyed_total + issuance_fee_total + dividend_fee_total
 
 def xcp_supply (db):
-    """Return the XCP supply."""
+    """Return the XUP supply."""
     return xcp_created(db) - xcp_destroyed(db)
 
 def creations (db):
     """Return creations."""
     cursor = db.cursor()
-    creations = {config.XCP: xcp_created(db)}
+    creations = {config.TOKEN: xcp_created(db)}
     cursor.execute('''SELECT asset, SUM(quantity) AS created FROM issuances \
                       WHERE status = ? GROUP BY asset''', ('valid',))
 
@@ -493,9 +493,9 @@ def creations (db):
 def destructions (db):
     """Return destructions."""
     cursor = db.cursor()
-    destructions = {config.XCP: xcp_destroyed(db)}
+    destructions = {config.TOKEN: xcp_destroyed(db)}
     cursor.execute('''SELECT asset, SUM(quantity) AS destroyed FROM destructions \
-                      WHERE (status = ? AND asset != ?) GROUP BY asset''', ('valid', config.XCP))
+                      WHERE (status = ? AND asset != ?) GROUP BY asset''', ('valid', config.TOKEN))
 
     for destruction in cursor:
         asset = destruction['asset']
@@ -529,19 +529,19 @@ def held (db): #TODO: Rename ?
                 UNION ALL
                 SELECT backward_asset AS asset, SUM(backward_quantity) AS total FROM order_matches WHERE status = 'pending' GROUP BY asset
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(wager_remaining) AS total FROM bets WHERE status = 'open'
+                SELECT 'XUP' AS asset, SUM(wager_remaining) AS total FROM bets WHERE status = 'open'
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(forward_quantity) AS total FROM bet_matches WHERE status = 'pending'
+                SELECT 'XUP' AS asset, SUM(forward_quantity) AS total FROM bet_matches WHERE status = 'pending'
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(backward_quantity) AS total FROM bet_matches WHERE status = 'pending'
+                SELECT 'XUP' AS asset, SUM(backward_quantity) AS total FROM bet_matches WHERE status = 'pending'
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(wager) AS total FROM rps WHERE status = 'open'
+                SELECT 'XUP' AS asset, SUM(wager) AS total FROM rps WHERE status = 'open'
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(wager * 2) AS total FROM rps_matches WHERE status IN ('pending', 'pending and resolved', 'resolved and pending')
+                SELECT 'XUP' AS asset, SUM(wager * 2) AS total FROM rps_matches WHERE status IN ('pending', 'pending and resolved', 'resolved and pending')
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(gas_cost) AS total FROM executions WHERE status IN ('valid', 'out of gas')
+                SELECT 'XUP' AS asset, SUM(gas_cost) AS total FROM executions WHERE status IN ('valid', 'out of gas')
                 UNION ALL
-                SELECT 'XCP' AS asset, SUM(gas_remained) AS total FROM executions WHERE status  = 'out of gas'
+                SELECT 'XUP' AS asset, SUM(gas_remained) AS total FROM executions WHERE status  = 'out of gas'
             ) GROUP BY asset;'''
 
     cursor = db.cursor()

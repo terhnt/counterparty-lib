@@ -282,7 +282,7 @@ class state(object):
         # return recorder.pop_records()
 
     def set_balance(self, address, value):
-        util.credit(self.db, address.base58(), 'XCP', value, action='set_balance', event=None)
+        util.credit(self.db, address.base58(), 'XUP', value, action='set_balance', event=None)
 
     def mine(self, n=1, **kwargs):
         assert n > 0

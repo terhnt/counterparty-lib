@@ -27,7 +27,7 @@ Please export the address of the wallet you're using,
 for easiest usage this can just be an address from your unobtaniumd wallet,
 that way we can also let unobtaniumd sign the transactions.
 
-You should preload the address with some testnet ~0.01 BTC and ~200 XCP!
+You should preload the address with some testnet ~0.01 UNO and ~200 XUP!
 
 eg;
 ```bash
@@ -302,7 +302,7 @@ To contribute to a campaign we have to call the `contribute` function of the con
 ]
 ```
 
-All XCP send along to the `contribute` will be added to the campaign.
+All XUP send along to the `contribute` will be added to the campaign.
 
 There's a small tool to encode the payload:
 ```bash
@@ -315,7 +315,7 @@ Which should result in:
 c1cbbca70000000000000000000000000000000000000000000000000000000000000001
 ```
 
-Now we can execute that with, and send 99 XCP along as the `value`:
+Now we can execute that with, and send 99 XUP along as the `value`:
 ```bash
 CONTRIBUTE_VALUE=99
 unoparty-client --testnet execute --source $SOURCE --contract-id $CONTRACTID --value $CONTRIBUTE_VALUE --payload-hex $CONTRIBUTE_PAYLOAD_HEX --startgas 1000000 --gasprice 1
@@ -339,18 +339,18 @@ arguments: [1]
 output types: ['uint256']
 output: [1]
 -------------------------- GAS DEBITS / CREDITS -------------------------
- - DEBIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -1000000 XCP (startgas)
- - CREDIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB 978155 XCP (startgas)
+ - DEBIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -1000000 XUP (startgas)
+ - CREDIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB 978155 XUP (startgas)
 ---------------------------- DEBITS / CREDITS ---------------------------
- - DEBIT; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -99 XCP (transfer value)
- - CREDIT; tgdM7Z9voZfpweZKPXok4UpRNWs2pq4f6s 99 XCP (transfer value)
+ - DEBIT; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -99 XUP (transfer value)
+ - CREDIT; tgdM7Z9voZfpweZKPXok4UpRNWs2pq4f6s 99 XUP (transfer value)
 ```
 
 As you can see the argument given was `1`, which was the campaign ID,
 the output is `1` which if you check the `crowdfund.sol` contract is the return value on a succesful contribution.
 
 You can also see the debits/credits that this transaction triggered, ignoring the GAS ones,
-you can see 99 XCP was debited from our address and credited to the contract.
+you can see 99 XUP was debited from our address and credited to the contract.
 
 ### Progress Report
 To officially get the progress of a campaign (we'll have debugging tools to do this without execution)
@@ -400,7 +400,7 @@ We can see the `99` as output, which is how much we contributed in the previous 
 
 
 ### Trigger payout
-So to trigger the payout we need to contribute 1 XCP more and then it will reach it's goal.
+So to trigger the payout we need to contribute 1 XUP more and then it will reach it's goal.
 
 You can check the balances prior to doing this if you don't trust the DEBIT/CREDIT list of the debug tool xD:
 
@@ -412,13 +412,13 @@ unoparty-client --testnet getrows --table balances --filter "address" "==" $CONT
 +------------------+------------------------------------+---------+
 |     quantity     |              address               |  asset  |
 +------------------+------------------------------------+---------+
-|   13328504735    | miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB |   XCP   |
-|        99        | tnDsEWRcV1YXMWAqRREsgs2qwEDbKSqFdj |   XCP   |
+|   13328504735    | miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB |   XUP   |
+|        99        | tnDsEWRcV1YXMWAqRREsgs2qwEDbKSqFdj |   XUP   |
 +------------------+------------------------------------+---------+
 
 ```
 
-And then do a contribute with sending 1 XCP along as `value`:
+And then do a contribute with sending 1 XUP along as `value`:
 
 ```bash
 CONTRIBUTE_VALUE=1
@@ -442,15 +442,15 @@ arguments: [1]
 output types: ['uint256']
 output: [2]
 -------------------------- GAS DEBITS / CREDITS -------------------------
- - DEBIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -1000000 XCP (startgas)
- - CREDIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB 931803 XCP (startgas)
+ - DEBIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -1000000 XUP (startgas)
+ - CREDIT [GAS]; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB 931803 XUP (startgas)
 ---------------------------- DEBITS / CREDITS ---------------------------
- - DEBIT; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -1 XCP (transfer value)
- - DEBIT; tnDsEWRcV1YXMWAqRREsgs2qwEDbKSqFdj -100 XCP (transfer value)
- - CREDIT; tnDsEWRcV1YXMWAqRREsgs2qwEDbKSqFdj 1 XCP (transfer value)
- - CREDIT; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB 100 XCP (transfer value)
+ - DEBIT; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB -1 XUP (transfer value)
+ - DEBIT; tnDsEWRcV1YXMWAqRREsgs2qwEDbKSqFdj -100 XUP (transfer value)
+ - CREDIT; tnDsEWRcV1YXMWAqRREsgs2qwEDbKSqFdj 1 XUP (transfer value)
+ - CREDIT; miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB 100 XUP (transfer value)
 ```
 
 But the `output` is actually `2` now, which as you can see in the `crowdfund.sol` contract means the payout was triggred.
-You can also see that the `DEBITS / CREDITS` contain your -1 XCP that you contributed,
-AND the 100 XCP that the contract payed out (back to the recipient of the contract, which we set to you).
+You can also see that the `DEBITS / CREDITS` contain your -1 XUP that you contributed,
+AND the 100 XUP that the contract payed out (back to the recipient of the contract, which we set to you).

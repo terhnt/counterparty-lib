@@ -7,7 +7,7 @@ from fractions import Fraction
 
 from unopartylib.lib import (config, exceptions, util)
 
-"""Burn {} to earn {} during a special period of time.""".format(config.BTC, config.XCP)
+"""Burn {} to earn {} during a special period of time.""".format(config.MAINCOIN, config.TOKEN)
 
 ID = 60
 
@@ -57,12 +57,12 @@ def compose (db, source, quantity, overburn=False):
     problems = validate(db, source, destination, quantity, util.CURRENT_BLOCK_INDEX, overburn=overburn)
     if problems: raise exceptions.ComposeError(problems)
 
-    # Check that a maximum of 1 BTC total is burned per address.
+    # Check that a maximum of 1 UNO total is burned per address.
     burns = list(cursor.execute('''SELECT * FROM burns WHERE (status = ? AND source = ?)''', ('valid', source)))
     already_burned = sum([burn['burned'] for burn in burns])
 
     if quantity > (1 * config.UNIT - already_burned) and not overburn:
-        raise exceptions.ComposeError('1 {} may be burned per address'.format(config.BTC))
+        raise exceptions.ComposeError('1 {} may be burned per address'.format(config.MAINCOIN))
 
     cursor.close()
     return (source, [(destination, quantity)], None)
@@ -83,7 +83,7 @@ def parse (db, tx, MAINNET_BURNS, message=None):
                 sent = 0
 
         if status == 'valid':
-            # Calculate quantity of XCP earned. (Maximum 1 BTC in total, ever.)
+            # Calculate quantity of XUP earned. (Maximum 1 UNO in total, ever.)
             cursor = db.cursor()
             cursor.execute('''SELECT * FROM burns WHERE (status = ? AND source = ?)''', ('valid', tx['source']))
             burns = cursor.fetchall()
@@ -98,8 +98,8 @@ def parse (db, tx, MAINNET_BURNS, message=None):
             multiplier = (1000 + (500 * Fraction(partial_time, total_time)))
             earned = round(burned * multiplier)
 
-            # Credit source address with earned XCP.
-            util.credit(db, tx['source'], config.XCP, earned, action='burn', event=tx['tx_hash'])
+            # Credit source address with earned XUP.
+            util.credit(db, tx['source'], config.TOKEN, earned, action='burn', event=tx['tx_hash'])
         else:
             burned = 0
             earned = 0
@@ -117,7 +117,7 @@ def parse (db, tx, MAINNET_BURNS, message=None):
         except KeyError:
             return
 
-        util.credit(db, line['source'], config.XCP, int(line['earned']), action='burn', event=line['tx_hash'])
+        util.credit(db, line['source'], config.TOKEN, int(line['earned']), action='burn', event=line['tx_hash'])
 
         tx_index = tx['tx_index']
         tx_hash = line['tx_hash']

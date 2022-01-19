@@ -84,7 +84,7 @@ class APIError(Exception):
 class BackendError(Exception):
     pass
 def check_backend_state():
-    """Checks blocktime of last block to see if {} Core is running behind.""".format(config.BTC_NAME)
+    """Checks blocktime of last block to see if {} Core is running behind.""".format(config.MAINCOIN_NAME)
     block_count = backend.getblockcount()
     block_hash = backend.getblockhash(block_count)
     cblock = backend.getblock(block_hash)
@@ -96,9 +96,9 @@ def check_backend_state():
 class DatabaseError(Exception):
     pass
 def check_database_state(db, blockcount):
-    """Checks {} database to see if is caught up with backend.""".format(config.XCP_NAME)
+    """Checks {} database to see if is caught up with backend.""".format(config.TOKEN_NAME)
     if util.CURRENT_BLOCK_INDEX + 1 < blockcount:
-        raise DatabaseError('{} database is behind backend.'.format(config.XCP_NAME))
+        raise DatabaseError('{} database is behind backend.'.format(config.TOKEN_NAME))
     logger.debug('Database state check passed.')
     return
 
@@ -231,10 +231,10 @@ def get_rows(db, table, filters=None, filterop='AND', order_by=None, order_dir=N
 
     # legacy filters
     if not show_expired and table == 'orders':
-        #Ignore BTC orders one block early.
+        #Ignore UNO orders one block early.
         expire_index = util.CURRENT_BLOCK_INDEX + 1
         more_conditions.append('''((give_asset == ? AND expire_index > ?) OR give_asset != ?)''')
-        bindings += [config.BTC, expire_index, config.BTC]
+        bindings += [config.MAINCOIN, expire_index, config.MAINCOIN]
 
     if (len(conditions) + len(more_conditions)) > 0:
         statement += ''' WHERE'''
@@ -583,9 +583,9 @@ class APIServer(threading.Thread):
 
         @dispatcher.add_method
         def get_supply(asset):
-            if asset == 'BTC':
+            if asset == 'UNO':
                 return  backend.get_btc_supply(normalize=False)
-            elif asset == 'XCP':
+            elif asset == 'XUP':
                 return util.xcp_supply(db)
             else:
                 return util.asset_supply(db, asset)
@@ -637,9 +637,9 @@ ORDER BY tx_index ASC""", (contract_id, contract_id, )))
             assetsInfo = []
             for asset in assets:
 
-                # BTC and XCP.
-                if asset in [config.BTC, config.XCP]:
-                    if asset == config.BTC:
+                # UNO and XUP.
+                if asset in [config.MAINCOIN, config.TOKEN]:
+                    if asset == config.MAINCOIN:
                         supply = backend.get_btc_supply(normalize=False)
                     else:
                         supply = util.xcp_supply(db)

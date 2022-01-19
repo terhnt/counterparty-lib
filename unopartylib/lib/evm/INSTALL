@@ -71,8 +71,8 @@ wallet-user=${UNOBTANIUM_RPC_USER}
 wallet-password=${UNOBTANIUM_RPC_PASSWORD}
 " > ~/.config/unoparty/client.conf
 
-# you need an address that is in unobtaniumd and preloaded with some BTC / XCP
-# change if you're using your own unobtaniumd, create an address (`unobtanium-cli -testnet getnewaddress`), send it some BTC and XCP from your TESTNET Unowallet ;)
+# you need an address that is in unobtaniumd and preloaded with some UNO / XUP
+# change if you're using your own unobtaniumd, create an address (`unobtanium-cli -testnet getnewaddress`), send it some UNO and XUP from your TESTNET Unowallet ;)
 SOURCE="miJqNkHhC5xsB61gsiSWXeTLnEGSQnWbXB"
 
 unoparty-server --verbose --testnet bootstrap  # download bootstrap image

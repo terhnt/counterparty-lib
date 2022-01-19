@@ -101,7 +101,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
                 verify_stored_hash=None, verify_checkpoints=None):
 
     # Data directory
-    data_dir = appdirs.user_data_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME, roaming=True)
+    data_dir = appdirs.user_data_dir(appauthor=config.TOKEN_NAME, appname=config.APP_NAME, roaming=True)
     if not os.path.isdir(data_dir):
         os.makedirs(data_dir, mode=0o755)
 
@@ -131,7 +131,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
         config.DATABASE = os.path.join(data_dir, filename)
 
     # Log directory
-    log_dir = appdirs.user_log_dir(appauthor=config.XCP_NAME, appname=config.APP_NAME)
+    log_dir = appdirs.user_log_dir(appauthor=config.TOKEN_NAME, appname=config.APP_NAME)
     if not os.path.isdir(log_dir):
         os.makedirs(log_dir, mode=0o755)
 
@@ -187,12 +187,12 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
     else:
         if config.TESTNET:
             if config.BACKEND_NAME == 'btcd':
-                config.BACKEND_PORT = config.DEFAULT_BACKEND_PORT_TESTNET_BTCD
+                config.BACKEND_PORT = config.DEFAULT_BACKEND_PORT_TESTNET_UNOD
             else:
                 config.BACKEND_PORT = config.DEFAULT_BACKEND_PORT_TESTNET
         else:
             if config.BACKEND_NAME == 'btcd':
-                config.BACKEND_PORT = config.DEFAULT_BACKEND_PORT_BTCD
+                config.BACKEND_PORT = config.DEFAULT_BACKEND_PORT_UNOD
             else:
                 config.BACKEND_PORT = config.DEFAULT_BACKEND_PORT
 

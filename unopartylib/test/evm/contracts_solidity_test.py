@@ -183,7 +183,7 @@ def test_sendasset1():
     code = '''
 contract testme {
     function main(address a, uint v) returns (bool) {
-        return sendasset(a, v, 'XCP');
+        return sendasset(a, v, 'XUP');
     }
 }
 '''
@@ -254,7 +254,7 @@ contract testme {
 def test_receivedasset():
     code = '''
 contract testme {
-    bytes32 c = "XCP";
+    bytes32 c = "XUP";
 
     function main1() returns (uint, bytes32) {
         var (v, a) = receivedasset();
@@ -265,7 +265,7 @@ contract testme {
     function main2() returns (bool) {
         var (v, a) = receivedasset();
 
-        return a == "XCP";
+        return a == "XUP";
     }
 }
 '''
@@ -275,7 +275,7 @@ contract testme {
 
     r = c.main1()
     print(r)
-    assert r == [1, ethutils.zpadright(b'XCP', 32)]
+    assert r == [1, ethutils.zpadright(b'XUP', 32)]
 
     r = c.main2()
     print(r)
@@ -801,7 +801,7 @@ contract testme {
     # create contract
     c2 = s.abi_contract(hedge_code, sender=tester.k0, language='solidity')
 
-    # Have the first party register, sending 10000000 XCPtoshi and asking for a hedge using currency code 500
+    # Have the first party register, sending 10000000 XUPtoshi and asking for a hedge using currency code 500
     o1 = c2.main(c.address.int(), 500, value=10000000, sender=tester.k0)
     assert o1 == 1
 

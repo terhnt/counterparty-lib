@@ -33,7 +33,7 @@ class DecodeError(MessageError):
 class PushDataDecodeError(DecodeError):
     pass
 
-class BTCOnlyError(MessageError):
+class UNOOnlyError(MessageError):
     pass
 
 class BalanceError(Exception):

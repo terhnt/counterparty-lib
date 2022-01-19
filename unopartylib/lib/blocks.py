@@ -37,7 +37,7 @@ from unopartylib.lib import evm
 from .kickstart.blocks_parser import BlockchainParser, ChainstateParser
 from .kickstart.utils import ib2h
 
-from .exceptions import DecodeError, BTCOnlyError
+from .exceptions import DecodeError, UNOOnlyError
 
 # Order matters for FOREIGN KEY constraints.
 TABLES = ['credits', 'debits', 'messages'] + \
@@ -338,10 +338,10 @@ def initialise(db):
     cursor.execute('''CREATE INDEX IF NOT EXISTS
                       id_idx ON assets (asset_id)
                    ''')
-    cursor.execute('''SELECT * FROM assets WHERE asset_name = ?''', ('BTC',))
+    cursor.execute('''SELECT * FROM assets WHERE asset_name = ?''', ('UNO',))
     if not list(cursor):
-        cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('0', 'BTC', None))
-        cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('1', 'XCP', None))
+        cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('0', 'UNO', None))
+        cursor.execute('''INSERT INTO assets VALUES (?,?,?)''', ('1', 'XUP', None))
 
     # Consolidated
     send.initialise(db)
@@ -421,10 +421,10 @@ def initialise(db):
     cursor.close()
 
 def get_tx_info(tx_hex, block_parser=None, block_index=None):
-    """Get the transaction info. Returns normalized None data for DecodeError and BTCOnlyError."""
+    """Get the transaction info. Returns normalized None data for DecodeError and UNOOnlyError."""
     try:
         return _get_tx_info(tx_hex, block_parser, block_index)
-    except (DecodeError, BTCOnlyError) as e:
+    except (DecodeError, UNOOnlyError) as e:
         # NOTE: For debugging, logger.debug('Could not decode: ' + str(e))
         return b'', None, None, None, None
 
@@ -524,7 +524,7 @@ def get_tx_info1(tx_hex, block_index, block_parser=None):
 
     # Only look for source if data were found or destination is UNSPENDABLE, for speed.
     if not data and destination != config.UNSPENDABLE:
-        raise BTCOnlyError('no data and not unspendable')
+        raise UNOOnlyError('no data and not unspendable')
 
     # Collect all possible source addresses; ignore coinbase transactions and anything but the simplest Pay‐to‐PubkeyHash inputs.
     source_list = []
@@ -671,7 +671,7 @@ def get_tx_info2(tx_hex, block_parser=None, p2sh_support=False):
     # Only look for source if data were found or destination is `UNSPENDABLE`,
     # for speed.
     if not data and destinations != [config.UNSPENDABLE,]:
-        raise BTCOnlyError('no data and not unspendable')
+        raise UNOOnlyError('no data and not unspendable')
 
     # Collect all (unique) source addresses.
     sources = []
@@ -1234,7 +1234,7 @@ def follow(db, stop_at_block_index=None):
                         if message['tx_hash'] == tx_hash:
                             xcp_mempool.append((tx_hash, message))
 
-                # If not a supported XCP transaction, skip.
+                # If not a supported XUP transaction, skip.
                 elif tx_hash in not_supported:
                     pass
 
@@ -1322,7 +1322,7 @@ def follow(db, stop_at_block_index=None):
             elapsed_time = time.time() - start_time
             sleep_time = config.BACKEND_POLL_INTERVAL - elapsed_time if elapsed_time <= config.BACKEND_POLL_INTERVAL else 0
 
-            logger.getChild('mempool').debug('Refresh mempool: %s XCP txs seen, out of %s total entries (took %ss (%ss was backend refresh), next refresh in %ss)' % (
+            logger.getChild('mempool').debug('Refresh mempool: %s XUP txs seen, out of %s total entries (took %ss (%ss was backend refresh), next refresh in %ss)' % (
                 len(xcp_mempool), len(raw_mempool),
                 "{:.2f}".format(elapsed_time, 3),
                 "{:.2f}".format(refresh_time, 3),

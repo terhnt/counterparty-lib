@@ -306,15 +306,15 @@ class Block(object):
         nonce = self.get_nonce(address)
         self.set_nonce(address, nonce - 1)
 
-    def get_balance(self, address, asset=config.XCP):
+    def get_balance(self, address, asset=config.TOKEN):
         address = Address.normalize(address)
 
         return util.get_balance(self.db, address.base58(), asset)
 
-    def set_balance(self, address, value, asset=config.XCP):
+    def set_balance(self, address, value, asset=config.TOKEN):
         raise NotImplemented
 
-    def delta_balance(self, address, value, asset=config.XCP, tx=None, action='delta balance'):
+    def delta_balance(self, address, value, asset=config.TOKEN, tx=None, action='delta balance'):
         address = Address.normalize(address)
 
         assert tx is not None
@@ -323,7 +323,7 @@ class Block(object):
         elif value < 0:
             util.debit(self.db, address.base58(), asset, -value, action=action, event=tx.tx_hash)
 
-    def transfer_value(self, source, destination, quantity, asset=config.XCP, tx=None, action='transfer value'):
+    def transfer_value(self, source, destination, quantity, asset=config.TOKEN, tx=None, action='transfer value'):
         source = Address.normalize(source)
         destination = Address.normalize(destination)
 

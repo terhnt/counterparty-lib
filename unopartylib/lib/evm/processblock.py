@@ -127,7 +127,7 @@ def apply_transaction(db, block, tx):
 
     # buy startgas
     assert block.get_balance(tx.sender) >= tx.startgas * tx.gasprice
-    block.delta_balance(tx.sender, -tx.startgas * tx.gasprice, config.XCP, tx, action='startgas')
+    block.delta_balance(tx.sender, -tx.startgas * tx.gasprice, config.TOKEN, tx, action='startgas')
     message_gas = tx.startgas - intrinsic_gas
     message_data = vm.CallData([ethutils.safe_ord(x) for x in tx.data], 0, len(tx.data))
 
@@ -169,7 +169,7 @@ def apply_transaction(db, block, tx):
             block.refunds = 0
 
         # sell remaining gas
-        block.delta_balance(tx.sender, tx.gasprice * gas_remained, config.XCP, tx, action='startgas')
+        block.delta_balance(tx.sender, tx.gasprice * gas_remained, config.TOKEN, tx, action='startgas')
         block.gas_used += gas_used
         if tx.to:
             output = b''.join(map(ascii_chr, data))

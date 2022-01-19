@@ -56,7 +56,7 @@ def rpc_call(payload):
     if 'error' not in response_json.keys() or response_json['error'] == None:
         return response_json['result']
     elif response_json['error']['code'] == -5:   # RPC_INVALID_ADDRESS_OR_KEY
-        raise BackendRPCError('{} Is `txindex` enabled in {} Core?'.format(response_json['error'], config.BTC_NAME))
+        raise BackendRPCError('{} Is `txindex` enabled in {} Core?'.format(response_json['error'], config.MAINCOIN_NAME))
     elif response_json['error']['code'] in [-28, -8, -2]:  
         # “Verifying blocks...” or “Block height out of range” or “The network does not appear to fully agree!“ 
         logger.debug('Backend not ready. Sleeping for ten seconds.')
@@ -212,7 +212,7 @@ def searchrawtransactions(address, unconfirmed=False):
         rawtransactions = rpc('searchrawtransactions', [address, 1, 0, 9999999])
     except BackendRPCError as e:
         if str(e) == '404 Not Found':
-            raise BackendRPCError('Unknown RPC command: `searchrawtransactions`. Please use a version of {} Core which supports an address index.'.format(config.BTC_NAME))
+            raise BackendRPCError('Unknown RPC command: `searchrawtransactions`. Please use a version of {} Core which supports an address index.'.format(config.MAINCOIN_NAME))
         else:
             raise BackendRPCError(str(e))
     confirmed = [tx for tx in rawtransactions if 'confirmations' in tx and tx['confirmations'] > 0]

@@ -64,16 +64,16 @@ def validate (db, source, order_match_id, block_index):
         elif order_match['status'] != 'pending':
             raise exceptions.OrderError('unrecognised order match status')
 
-    # Figure out to which address the BTC are being paid.
+    # Figure out to which address the UNO are being paid.
     # Check that source address is correct.
-    if order_match['backward_asset'] == config.BTC:
+    if order_match['backward_asset'] == config.MAINCOIN:
         if source != order_match['tx1_address'] and not (block_index >= 313900 or config.TESTNET):  # Protocol change.
             problems.append('incorrect source address')
         destination = order_match['tx0_address']
         btc_quantity = order_match['backward_quantity']
         escrowed_asset  = order_match['forward_asset']
         escrowed_quantity = order_match['forward_quantity']
-    elif order_match['forward_asset'] == config.BTC:
+    elif order_match['forward_asset'] == config.MAINCOIN:
         if source != order_match['tx0_address'] and not (block_index >= 313900 or config.TESTNET):  # Protocol change.
             problems.append('incorrect source address')
         destination = order_match['tx1_address']
@@ -125,7 +125,7 @@ def parse (db, tx, message):
             status = 'invalid: ' + '; '.join(problems)
 
     if status == 'valid':
-        # BTC must be paid all at once.
+        # UNO must be paid all at once.
         if tx['btc_amount'] >= btc_quantity:
 
             # Credit source address for the currency that he bought with the unobtaniums.

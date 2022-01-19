@@ -78,7 +78,7 @@ def get_dust_return_pubkey(source, provided_pubkeys, encoding):
     This pubkey is used in multi-sig data outputs (as the only real pubkey) to
     make those the outputs spendable. It is derived from the source address, so
     that the dust is spendable by the creator of the transaction.
-    """ 
+    """
     # Get hex dust return pubkey.
     if script.is_multisig(source):
         a, self_pubkeys, b = script.extract_array(backend.multisig_pubkeyhashes_to_pubkeys(source, provided_pubkeys))
@@ -497,7 +497,7 @@ def construct (db, tx_info, encoding='auto',
         necessary_fee = int(size / 1000 * fee_per_kb)
 
         # If exact fee is specified, use that. Otherwise, calculate size of tx
-        # and base fee on that (plus provide a minimum fee for selling BTC).
+        # and base fee on that (plus provide a minimum fee for selling UNO).
         if exact_fee:
             final_fee = exact_fee
         else:
@@ -506,7 +506,7 @@ def construct (db, tx_info, encoding='auto',
         # Check if good.
         btc_out = destination_btc_out + data_btc_out
         change_quantity = btc_in - (btc_out + final_fee)
-        logger.debug('Size: {} Fee: {:.8f} Change quantity: {:.8f} BTC'.format(size, final_fee / config.UNIT, change_quantity / config.UNIT))
+        logger.debug('Size: {} Fee: {:.8f} Change quantity: {:.8f} UNO'.format(size, final_fee / config.UNIT, change_quantity / config.UNIT))
         # If change is necessary, must not be a dust output.
         if change_quantity == 0 or change_quantity >= regular_dust_size:
             sufficient_funds = True
@@ -518,7 +518,7 @@ def construct (db, tx_info, encoding='auto',
         # quantities.
         btc_out = destination_btc_out + data_btc_out
         total_btc_out = btc_out + max(change_quantity, 0) + final_fee
-        raise exceptions.BalanceError('Insufficient {} at address {}. (Need approximately {} {}.) To spend unconfirmed coins, use the flag `--unconfirmed`. (Unconfirmed coins cannot be spent from multi‐sig addresses.)'.format(config.BTC, source, total_btc_out / config.UNIT, config.BTC))
+        raise exceptions.BalanceError('Insufficient {} at address {}. (Need approximately {} {}.) To spend unconfirmed coins, use the flag `--unconfirmed`. (Unconfirmed coins cannot be spent from multi‐sig addresses.)'.format(config.MAINCOIN, source, total_btc_out / config.UNIT, config.MAINCOIN))
 
     '''Finish'''
 
@@ -578,7 +578,7 @@ def construct (db, tx_info, encoding='auto',
     (desired_source, desired_destination_outputs, desired_data) = tx_info
     desired_source = script.make_canonical(desired_source)
     desired_destination = script.make_canonical(desired_destination_outputs[0][0]) if desired_destination_outputs else ''
-    # NOTE: Include change in destinations for BTC transactions.
+    # NOTE: Include change in destinations for UNO transactions.
     # if change_output and not desired_data and desired_destination != config.UNSPENDABLE:
     #    if desired_destination == '':
     #        desired_destination = desired_source
@@ -591,8 +591,8 @@ def construct (db, tx_info, encoding='auto',
     # Parsed transaction info.
     try:
         parsed_source, parsed_destination, x, y, parsed_data = blocks._get_tx_info(unsigned_tx_hex)
-    except exceptions.BTCOnlyError:
-        # Skip BTC‐only transactions.
+    except exceptions.UNOOnlyError:
+        # Skip UNO‐only transactions.
         return unsigned_tx_hex
     desired_source = script.make_canonical(desired_source)
 

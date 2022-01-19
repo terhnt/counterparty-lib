@@ -215,14 +215,14 @@ def test_proc_sendasset():
     message_gas = tester.DEFAULT_STARTGAS
 
     for to, value, asset, expected_result, expected_gascost in [
-        ('n4NdDG7mAJAESJ8E2E1fwmi6bnZMx1DV54', 100, 'XCP', True, 600),
+        ('n4NdDG7mAJAESJ8E2E1fwmi6bnZMx1DV54', 100, 'XUP', True, 600),
     ]:
         senderb = util.get_balance(db, sender, asset)
         recipientb = util.get_balance(db, to, asset)
 
         message_data = ethutils.zpad(address.Address.normalize(to).bytes32(), 32) + \
                        ethutils.zpad(ethutils.int_to_big_endian(value), 32) + \
-                       ethutils.zpad(bytes('XCP', 'utf-8'), 32)
+                       ethutils.zpad(bytes('XUP', 'utf-8'), 32)
 
         _, tx, block = s.mock_tx(tester.a0, tester.a0, 0, message_data, message_gas)  # need to mock a TX to create a VMExt
         ext = processblock.VMExt(db, block, tx)

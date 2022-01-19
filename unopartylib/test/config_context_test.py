@@ -14,17 +14,17 @@ FIXTURE_DB = tempfile.gettempdir() + '/fixtures.parseblock_unittest_fixture.db'
 
 
 def test_config_context(server_db):
-    assert config.BTC_NAME == "Unobtanium"
+    assert config.MAINCOIN_NAME == "Unobtanium"
 
-    with util_test.ConfigContext(BTC_NAME="Unobtanium Testing"):
-        assert config.BTC_NAME == "Unobtanium Testing"
+    with util_test.ConfigContext(MAINCOIN_NAME="Unobtanium Testing"):
+        assert config.MAINCOIN_NAME == "Unobtanium Testing"
 
-        with util_test.ConfigContext(BTC_NAME="Unobtanium Testing Testing"):
-            assert config.BTC_NAME == "Unobtanium Testing Testing"
+        with util_test.ConfigContext(MAINCOIN_NAME="Unobtanium Testing Testing"):
+            assert config.MAINCOIN_NAME == "Unobtanium Testing Testing"
 
-        assert config.BTC_NAME == "Unobtanium Testing"
+        assert config.MAINCOIN_NAME == "Unobtanium Testing"
 
-    assert config.BTC_NAME == "Unobtanium"
+    assert config.MAINCOIN_NAME == "Unobtanium"
 
 
 def test_mock_protocol_changes(server_db):

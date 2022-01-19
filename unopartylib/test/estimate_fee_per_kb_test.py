@@ -32,7 +32,7 @@ def test_estimate_fee_per_kb(fee_per_kb, fee_per_kb_used, server_db, monkeypatch
             server_db, 'send',
             {'source': ADDR[0],
              'destination': ADDR[1],
-             'asset': 'XCP',
+             'asset': 'XUP',
              'quantity': 100},
         )
 

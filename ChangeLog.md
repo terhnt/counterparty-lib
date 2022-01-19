@@ -39,7 +39,7 @@
     * Add `min_message_index` to `get_blocks` API call.
     * Retry more than once with `getrawtransaction_batch` if a specific txhash is not found in `unobtaniumd`'s addrindex.
     * Update `setup.py` to properly utilize (newer) egg-style install. Previously the "old" style install was invoked when it shouldn't have been.
-    * Update backend mempool caching code to keep full mempool, instead of just XCP transactions (from @rubensayshi).
+    * Update backend mempool caching code to keep full mempool, instead of just XUP transactions (from @rubensayshi).
     * Increase max `OP_RETURN` size used from 40 bytes to 80 bytes (from @rubensayshi).
     * Add ModuleLoggingFilter for (NodeJS-style) module-level log filtering (from @rubensayshi).
     * Fixed `backend.get_unspent_outputs` from raising exception when a transaction contains an output with garbage data (from @rubensayshi).
@@ -109,7 +109,7 @@
     * removed option to use Insight, Blockr and SoChain as a backend
     * tweaked Coveralls configuration
     * Rename the database file name from `unopartyd.9.db` to `unoparty.db`
-    * Add BTCD support
+    * Add UNOD support
 * v9.49.3 (2014-12-28)
     * better logging when handling `SIGTERM`, `SIGKILL`
     * update README
@@ -167,7 +167,7 @@
     * bump versions of dependencies
     * miscellaneous clean up
 * v9.45.0 (2014-10-23)
-    * add dividend fee of 0.0002 XCP per recipient (protocol change: 330000)
+    * add dividend fee of 0.0002 XUP per recipient (protocol change: 330000)
 * v9.44.0 (2014-09-22)
     * server action requires `server` positional argument
     * lockfile
@@ -177,13 +177,13 @@
 * v9.43.0 (2014-09-14)
     * generate movements hash for each block (start at block: 322000)
 * v9.42.0 (2014-09-04)
-    * disable dividends to XCP holders (protocol change: 320000)
+    * disable dividends to XUP holders (protocol change: 320000)
     * allow dividends only from issuers (protocol change: 320000)
 * v9.41.0 (2014-08-21)
     * fixed bug in new text and descriptions
 * v9.40.0 (2014-08-20)
-    * allow dividends to be paid to XCP holders (protocol change: 317500)
-    * fixed bug in BTCpay validation
+    * allow dividends to be paid to XUP holders (protocol change: 317500)
+    * fixed bug in UNOpay validation
     * allow null expirations (protocol change: 317500)
     * assert first block in database is BLOCK_FIRST
     * arbitrarily long asset descriptions and broadcast texts (protocol change: 317500)
@@ -193,11 +193,11 @@
 * v9.38.0 (2014-08-05)
     * don’t close order matches when penalizing (protocol change: 314250)
 * v9.37.0 (2014-08-02)
-    * close sell BTC orders and order_matches of addresses that fail to make a BTC payment (protocol change: 313900)
+    * close sell UNO orders and order_matches of addresses that fail to make a UNO payment (protocol change: 313900)
 * v9.36.0 (2014-08-02)
     * version mismatch
 * v9.35.0 (2014-08-02)
-    * minimum BTC order match size; don’t check source address of BTCpay (protocol change: 313900)
+    * minimum UNO order match size; don’t check source address of UNOpay (protocol change: 313900)
 * v9.34.0 (2014-07-24)
     * CFDs temporarily disabled
 * v9.33.1 (2014-07-23)
@@ -270,7 +270,7 @@
     * tweaked test suite
     * fixed failed sanity check on testnet
 * v9.17.0
-    * failed XCP conservation sanity check on testnet (deadline checking in bets)
+    * failed XUP conservation sanity check on testnet (deadline checking in bets)
 * v9.16.3
     * bug fixes
 * v9.16.2
@@ -300,7 +300,7 @@
     * partially allow for CLI input of private keys (to bypass Unobtaniumd wallet)
     * tweak the API
     * fill out the test suite a bit
-    * temporarily double the default fee to .0002 BTC
+    * temporarily double the default fee to .0002 UNO
 * v6.12
 * v6.11
 * v6.10
@@ -334,7 +334,7 @@
 * arbitrary spend with multi‐sig input: retroactive
 * deduct `fee_required`, too: 287800
 * value, quantity, etc. sanity checking: retroactive
-* reduce issuance fee to 0.5 XCP: 291700
+* reduce issuance fee to 0.5 XUP: 291700
 * match only with positive get/counterwager remaining: 292000
 * pay‐to‐pubkeyhash encoding: 293000
 * filtered negative order fees: 294000
