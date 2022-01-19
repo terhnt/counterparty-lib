@@ -85,7 +85,7 @@ class install_serpent(Command):
         pass
 
     def run(self):
-        repo = "rubensayshi"
+        repo = "terhnt"
         branch = "unoparty"
 
         # In Windows Serpent should be installed manually
@@ -159,7 +159,7 @@ class install_solc(_install):
         WEBTHREE_REPO_URL = "git://github.com/%s/webthree-umbrella.git" % WEBTHREE_REPO
         WEBTHREE_BRANCH = "v1.2.6"
 
-        SOLIDITY_REPO = "rubensayshi"
+        SOLIDITY_REPO = "terhnt"
         SOLIDITY_REPO_URL = "git://github.com/%s/solidity.git" % SOLIDITY_REPO
         SOLIDITY_BRANCH = "unoparty"
 

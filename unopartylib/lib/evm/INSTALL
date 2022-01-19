@@ -26,8 +26,8 @@ sduo apt-get -y install libjsonrpccpp-dev
 echo 'export UNOPARTY_LOGGING="-unopartylib.lib.blocks.list_tx.skip,-unopartylib.lib.check,*"' >> ~/.bashrc
 export UNOPARTY_LOGGING="-unopartylib.lib.blocks.list_tx.skip,-unopartylib.lib.check,*"
 
-git clone https://github.com/rubensayshi/unoparty-cli.git
-git clone https://github.com/rubensayshi/unoparty-lib.git
+git clone https://github.com/terhnt/unoparty-cli.git
+git clone https://github.com/terhnt/unoparty-lib.git
 cd unoparty-lib && git checkout evmparty && cd ..  # checkout the evmparty branch for LIB
 
 cd unoparty-cli
