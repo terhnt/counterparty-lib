@@ -32,6 +32,7 @@ def initialise(db):
                       asset TEXT,
                       quantity INTEGER,
                       divisible BOOL,
+                      meltable BOOL,
                       source TEXT,
                       issuer TEXT,
                       transfer BOOL,
@@ -63,6 +64,9 @@ def initialise(db):
                               asset TEXT,
                               quantity INTEGER,
                               divisible BOOL,
+                              meltable BOOL,
+                              backing INTEGER,
+                              backing_asset TEXT,
                               source TEXT,
                               issuer TEXT,
                               transfer BOOL,
@@ -79,7 +83,7 @@ def initialise(db):
                               UNIQUE (tx_hash, msg_index))
                            ''')
             cursor.execute('''INSERT INTO new_issuances(tx_index, tx_hash, msg_index,
-                block_index, asset, quantity, divisible, source, issuer, transfer, callable,
+                block_index, asset, quantity, divisible, meltable, backing, backing_asset, source, issuer, transfer, callable,
                 call_date, call_price, description, fee_paid, locked, status, asset_longname)
                 SELECT tx_index, tx_hash, 0, block_index, asset, quantity, divisible, source,
                 issuer, transfer, callable, call_date, call_price, description, fee_paid,
@@ -104,12 +108,19 @@ def initialise(db):
                       asset_longname_idx ON issuances (asset_longname)
                    ''')
 
-def validate (db, source, destination, asset, quantity, divisible, callable_, call_date, call_price, description, subasset_parent, subasset_longname, block_index):
+def validate (db, source, destination, asset, quantity, divisible, callable_, call_date, call_price, description, subasset_parent, subasset_longname, block_index, meltable=False, backing=0, backing_asset=config.XCP):
     problems = []
     fee = 0
 
     if asset in (config.BTC, config.XCP):
         problems.append('cannot issue {} or {}'.format(config.BTC, config.XCP))
+    if meltable and backing_asset in (config.BTC):
+        problems.append('cannot back asset with {}'.format(config.BTC))
+    if meltable and backing == 0:
+        problems.append('cannot back meltable asset with 0 {}'.format(backing_asset))
+
+    # If Meltable asset, also check if user has enough to back the asset 'backing_asset' x (backing * quantity). Remove the asset from them (backing_asset)
+    # TODO:
 
     if call_date is None: call_date = 0
     if call_price is None: call_price = 0.0
@@ -132,6 +143,14 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
     if quantity < 0: problems.append('negative quantity')
     if call_price < 0: problems.append('negative call price')
     if call_date < 0: problems.append('negative call date')
+
+    # Meltable, or not.
+    if not meltable:
+        if block_index >= config.PROTOCOL_MELT: # Protocol Change
+            meltable = False
+            backing = 0
+            backing_asset = config.XCP
+
 
     # Callable, or not.
     if not callable_:
@@ -213,7 +232,15 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
         if asset[0] != 'A':
             problems.append('a subasset must be a numeric asset')
 
-
+    # If asset meltable, check user has enough to back their asset
+    if meltable:
+        cursor = db.cursor()
+        cursor.execute('''SELECT * FROM balances \
+                        WHERE (address = ? AND asset = ?)''', (source, backing_asset))
+                        backing_balances = cursor.fetchall()
+                        cursor.close()
+                        if (not backing_balances or backing_balances[0]['quantity'] < (backing*quantity)):
+                            problems.append('insufficient funds available to back asset')
 
     # Check for existence of fee funds.
     if quantity or (block_index >= 315000 or config.TESTNET or config.REGTEST):   # Protocol change.
@@ -261,7 +288,7 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
     return call_date, call_price, problems, fee, description, divisible, reissuance, reissued_asset_longname
 
 
-def compose (db, source, transfer_destination, asset, quantity, divisible, description):
+def compose (db, source, transfer_destination, asset, quantity, divisible, description, meltable=False, backing=0, backing_asset=config.XCP):
 
     # Callability is deprecated, so for re‐issuances set relevant parameters
     # to old values; for first issuances, make uncallable.
@@ -415,6 +442,11 @@ def parse (db, tx, message, message_type_id):
     if status == 'valid':
         util.debit(db, tx['source'], config.XCP, fee, action="issuance fee", event=tx['tx_hash'])
 
+    # If Meltable, Debit Asset
+    if status == 'valid' and meltable:
+        util.debit(db, tx['source'], backing_asset, backing*quantity, action="Backing meltable asset", event=tx['tx_hash'])
+
+
     # Lock?
     lock = False
     if status == 'valid':
@@ -453,6 +485,9 @@ def parse (db, tx, message, message_type_id):
         'asset': asset,
         'quantity': quantity,
         'divisible': divisible,
+        'meltable': meltable,
+        'backing': backing,
+        'backing_asset': backing_asset,
         'source': tx['source'],
         'issuer': issuer,
         'transfer': transfer,
@@ -466,7 +501,7 @@ def parse (db, tx, message, message_type_id):
         'asset_longname': asset_longname,
     }
     if "integer overflow" not in status:
-        sql='insert into issuances values(:tx_index, :tx_hash, 0, :block_index, :asset, :quantity, :divisible, :source, :issuer, :transfer, :callable, :call_date, :call_price, :description, :fee_paid, :locked, :status, :asset_longname)'
+        sql='insert into issuances values(:tx_index, :tx_hash, 0, :block_index, :asset, :quantity, :divisible, :meltable, :backing, :backing_asset, :source, :issuer, :transfer, :callable, :call_date, :call_price, :description, :fee_paid, :locked, :status, :asset_longname)'
         issuance_parse_cursor.execute(sql, bindings)
     else:
         logger.warn("Not storing [issuance] tx [%s]: %s" % (tx['tx_hash'], status))

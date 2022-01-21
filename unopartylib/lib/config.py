@@ -40,6 +40,11 @@ BTC_NAME = 'Unobtanium'
 XCP_NAME = 'Unoparty'
 APP_NAME = XCP_NAME.lower()
 
+
+# Protocol Changes
+PROTOCOL_MELT = 800000
+PROTOCOL_MELT_TN = 7000
+
 # Counterparty Ports
 DEFAULT_RPC_PORT_REGTEST = 24120
 DEFAULT_RPC_PORT_TESTNET = 14120
