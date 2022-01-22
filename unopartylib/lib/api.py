@@ -658,7 +658,7 @@ class APIServer(threading.Thread):
                     'owner': last_issuance['issuer'],
                     'divisible': bool(last_issuance['divisible']),
                     'locked': locked,
-                    'meltable': bool(last_issuance['meltable'],
+                    'meltable': bool(last_issuance['meltable']),
                     'backing': last_issuance['backing'],
                     'backing_asset': last_issuance['baccking_asset'],
                     'supply': util.asset_supply(self.db, asset),

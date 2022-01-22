@@ -13,7 +13,7 @@ from unopartylib.lib import (config, exceptions, util)
 
 """Melt asset to earn locked asset inside special assets."""
 
-ID = 60
+ID = 160
 
 def initialise (db):
     cursor = db.cursor()
@@ -91,7 +91,7 @@ def compose (db, source, quantity, asset):
 
     data = message_type.pack(ID)
     data += struct.pack(FORMAT, assetid, quantity, asset)
-    return return (source, [], data)
+    return (source, [], data)
 
 def parse (db, tx, message):
     melt_parse_cursor = db.cursor()
