@@ -16,6 +16,8 @@ from unopartylib.lib import (config, util, exceptions, util, message_type)
 FORMAT_1 = '>QQ?'
 LENGTH_1 = 8 + 8 + 1
 FORMAT_2 = '>QQ??If'
+FORMAT_3 = '>QQ??If?QQ'
+LENGTH_3 = 8 + 8 + 1 + 1 + 4 + 4 + 1 + 8 + 8
 LENGTH_2 = 8 + 8 + 1 + 1 + 4 + 4
 SUBASSET_FORMAT = '>QQ?B'
 SUBASSET_FORMAT_LENGTH = 8 + 8 + 1 + 1
@@ -125,7 +127,7 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
     if meltable and backing_asset in (config.BTC):
         problems.append('cannot back asset with {}'.format(config.BTC))
     if meltable and backing == 0:
-        problems.append('cannot back meltable asset with 0 {}'.format(backing_asset))
+        problems.append('cannot back meltable asset with 0 x {}'.format(backing_asset))
 
     # If Meltable asset, also check if user has enough to back the asset 'backing_asset' x (backing * quantity). Remove the asset from them (backing_asset)
     # If Meltable and divisible, error - meltable assets cannot be divisible.
@@ -249,8 +251,13 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
                         WHERE (address = ? AND asset = ?)''', (source, backing_asset))
         backing_balances = cursor.fetchall()
         cursor.close()
-        if (not backing_balances or backing_balances[0]['quantity'] < (backing*quantity)):
+        if (not backing_balances or backing_balances[0]['quantity'] < backing*quantity):
                 problems.append('insufficient funds available to back asset')
+
+    # If asset meltable ensure the asset backing it is also not Meltable
+    if meltable:
+        if util.is_meltable(db, backing_asset):
+            problems.append('Cannot back an asset with a meltable asset')
 
     # Check for existence of fee funds.
     if quantity or (block_index >= 315000 or config.TESTNET or config.REGTEST):   # Protocol change.
@@ -338,20 +345,22 @@ def compose (db, source, transfer_destination, asset, quantity, divisible, descr
                 #   generate a random numeric asset id which will map to this subasset
                 asset = util.generate_random_asset()
 
-    call_date, call_price, problems, fee, description, divisible, reissuance, reissued_asset_longname = validate(db, source, transfer_destination, asset, quantity, divisible, callable_, call_date, call_price, description, subasset_parent, subasset_longname, util.CURRENT_BLOCK_INDEX)
+    call_date, call_price, problems, fee, description, divisible, reissuance, reissued_asset_longname = validate(db, source, transfer_destination, asset, quantity, divisible, callable_, call_date, call_price, description, subasset_parent, subasset_longname, util.CURRENT_BLOCK_INDEX, meltable, backing, backing_asset)
     if problems: raise exceptions.ComposeError(problems)
 
     asset_id = util.generate_asset_id(asset, util.CURRENT_BLOCK_INDEX)
+    backing_asset_id = util.generate_asset_id(backing_asset, util.CURRENT_BLOCK_INDEX)
     if subasset_longname is None or reissuance:
         # Type 20 standard issuance FORMAT_2 >QQ??If
         #   used for standard issuances and all reissuances
         data = message_type.pack(ID)
         if len(description) <= 42:
-            curr_format = FORMAT_2 + '{}p'.format(len(description) + 1)
+            curr_format = FORMAT_3 + '{}p'.format(len(description) + 1)
         else:
-            curr_format = FORMAT_2 + '{}s'.format(len(description))
+            #curr_format = FORMAT_2 + '{}s'.format(len(description))
+            curr_format = FORMAT_3 + '{}s'.format(len(description))
         data += struct.pack(curr_format, asset_id, quantity, 1 if divisible else 0, 1 if callable_ else 0,
-            call_date or 0, call_price or 0.0, description.encode('utf-8')), 1 if meltable else 0, backing_asset, backing
+            call_date or 0, call_price or 0.0, 1 if meltable else 0, 0 if not meltable else backing, backing_asset_id, description.encode('utf-8'))
     else:
         # Type 21 subasset issuance SUBASSET_FORMAT >QQ?B
         #   Used only for initial subasset issuance
@@ -393,12 +402,12 @@ def parse (db, tx, message, message_type_id):
                 description = description.decode('utf-8')
             except UnicodeDecodeError:
                 description = ''
-        elif (tx['block_index'] > 283271 or config.TESTNET or config.REGTEST) and len(message) >= LENGTH_2: # Protocol change.
-            if len(message) - LENGTH_2 <= 42:
-                curr_format = FORMAT_2 + '{}p'.format(len(message) - LENGTH_2)
+        elif (tx['block_index'] > 283271 or config.TESTNET or config.REGTEST) and len(message) >= LENGTH_3: # Protocol change.
+            if len(message) - LENGTH_3 <= 42:
+                curr_format = FORMAT_3 + '{}p'.format(len(message) - LENGTH_3)
             else:
-                curr_format = FORMAT_2 + '{}s'.format(len(message) - LENGTH_2)
-            asset_id, quantity, divisible, callable_, call_date, call_price, description, meltable, backing_asset, backing = struct.unpack(curr_format, message)
+                curr_format = FORMAT_3 + '{}s'.format(len(message) - LENGTH_3)
+            asset_id, quantity, divisible, callable_, call_date, call_price, meltable, backing, backing_asset_id, description = struct.unpack(curr_format, message)
 
             call_price = round(call_price, 6) # TODO: arbitrary
             try:
@@ -412,12 +421,13 @@ def parse (db, tx, message, message_type_id):
             callable_, call_date, call_price, description = False, 0, 0.0, ''
         try:
             asset = util.generate_asset_name(asset_id, tx['block_index'])
+            backing_asset = util.generate_asset_name(backing_asset_id, tx['block_index'])
             status = 'valid'
         except exceptions.AssetIDError:
             asset = None
             status = 'invalid: bad asset name'
     except exceptions.UnpackError as e:
-        asset, quantity, divisible, callable_, call_date, call_price, description, meltable = None, None, None, None, None, None, None, None
+        asset, quantity, divisible, callable_, call_date, call_price, meltable, backing ,backing_asset, description = None, None, None, None, None, None, None, None, None, None
         status = 'invalid: could not unpack'
 
     # parse and validate the subasset from the message
@@ -453,12 +463,13 @@ def parse (db, tx, message, message_type_id):
         util.debit(db, tx['source'], config.XCP, fee, action="issuance fee", event=tx['tx_hash'])
 
     # If Meltable, Debit Asset
-    try:
-        if status == 'valid' and meltable:
-            util.debit(db, tx['source'], backing_asset, backing*quantity, action="Backing meltable asset", event=tx['tx_hash'])
-    except exceptions.AssetIDError as e:
-        asset = None
-        status = "Meltable isn't available yet"
+    if (tx['block_index'] > 6562 and config.TESTNET):
+        try:
+            if status == 'valid' and meltable:
+                util.debit(db, tx['source'], backing_asset, backing*quantity, action="Backing meltable asset", event=tx['tx_hash'])
+        except exceptions.AssetIDError as e:
+            asset = None
+            status = "Meltable isn't available yet"
 
     # Lock?
     lock = False
@@ -513,6 +524,21 @@ def parse (db, tx, message, message_type_id):
         'status': status,
         'asset_longname': asset_longname,
     }
+
+    bindings_melt= {
+        'tx_index': tx['tx_index'],
+        'tx_hash': tx['tx_hash'],
+        'block_index': tx['block_index'],
+        'source': tx['source'],
+        'asset': backing_asset,
+        'melted': 0,
+        'stored': backing*quantity,
+        'status': 'open',
+    }
+
+    if meltable and "integer overflow" not in status:
+        sql = 'insert into melts values(:tx_index, :tx_hash, :block_index, :source, :asset, :melted, :stored, :status)'
+        issuance_parse_cursor.execute(sql, bindings_melt)
     if "integer overflow" not in status:
         sql='insert into issuances values(:tx_index, :tx_hash, 0, :block_index, :asset, :quantity, :divisible, :meltable, :backing, :backing_asset, :source, :issuer, :transfer, :callable, :call_date, :call_price, :description, :fee_paid, :locked, :status, :asset_longname)'
         issuance_parse_cursor.execute(sql, bindings)

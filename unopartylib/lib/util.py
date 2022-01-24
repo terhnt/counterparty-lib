@@ -752,6 +752,8 @@ def held (db): #TODO: Rename ?
         "SELECT 'XUP' AS asset, SUM(wager) AS total FROM rps WHERE status = 'open'",
         "SELECT 'XUP' AS asset, SUM(wager * 2) AS total FROM rps_matches WHERE status IN ('pending', 'pending and resolved', 'resolved and pending')",
         "SELECT asset, SUM(give_remaining) AS total FROM dispensers WHERE status=0 OR status=1 GROUP BY asset",
+        "SELECT asset, SUM(stored) AS total FROM melts WHERE status='open' GROUP BY asset",
+        "SELECT asset, SUM(melted) AS total FROM melts WHERE status='open' GROUP BY asset",
     ]
 
     sql = "SELECT asset, SUM(total) AS total FROM (" + " UNION ALL ".join(queries) + ") GROUP BY asset;"

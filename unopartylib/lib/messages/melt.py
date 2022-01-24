@@ -22,8 +22,9 @@ def initialise (db):
                       tx_hash TEXT UNIQUE,
                       block_index INTEGER,
                       source TEXT,
+                      asset TEXT,
                       melted INTEGER,
-                      earned INTEGER,
+                      stored INTEGER,
                       status TEXT,
                       FOREIGN KEY (tx_index, tx_hash, block_index) REFERENCES transactions(tx_index, tx_hash, block_index))
                    ''')
@@ -60,12 +61,12 @@ def validate (db, source, destination, quantity, block_index, asset):
 
     if len(available) == 0:
         problems.append('address doesn\'t has the asset %s' % asset)
-    elif len(available) >= 1 and available[0]['quantity'] < escrow_quantity:
-        problems.append('address doesn\'t has enough balance of %s (%i < %i)' % (asset, available[0]['quantity'], quantity))
+    elif len(available) >= 1 and available[0]['quantity'] < quantity:
+        problems.append('address does not have enough balance of %s (%i < %i)' % (asset, available[0]['quantity'], quantity))
 
     # Try to make sure that the melted assets won't go to waste.
     # Check if asset is meltable
-    cursor.execute('''SELECT * FROM assets WHERE asset_name = ?''', (asset_name,))
+    cursor.execute('''SELECT * FROM assets WHERE asset_name = ?''', (asset,))
     assets = list(cursor)
 
     if len(problems) == 0:
@@ -106,6 +107,9 @@ def parse (db, tx, message):
         assetid, quantity, asset = None, None, None
         status = 'invalid: could not unpack'
 
+    #get backing_asset
+    backing_asset = util.get_asset_backing(db, asset)
+
     if config.TESTNET or config.REGTEST:
         problems = []
         status = 'valid'
@@ -115,17 +119,17 @@ def parse (db, tx, message):
             if problems: status = 'invalid: ' + '; '.join(problems)
 
         if status == 'valid':
-            earned = round(util.get_asset_backing_qty(db, asset)*quantity)
+            stored = round(util.get_asset_backing_qty(db, asset)*quantity)
             # Burn the users asset
             util.debit(db, tx['source'], asset, quantity, action='melt', event=tx['tx_hash'])
             # Credit the Burn Address
             addr = config.UNSPENDABLE_TESTNET if config.TESTNET else config.UNSPENDABLE_REGTEST
-            util.credit(db, addr, util.get_asset_backing(db, asset), earned, action='burn', event=tx['tx_hash'])
-            # Credit source address with earned asset from melting
-            util.credit(db, tx['source'], util.get_asset_backing(db, asset), earned, action='burn', event=tx['tx_hash'])
+            util.credit(db, addr, util.get_asset_backing(db, asset), stored, action='burn', event=tx['tx_hash'])
+            # Credit source address with stored asset from melting
+            util.credit(db, tx['source'], util.get_asset_backing(db, asset), stored, action='burn', event=tx['tx_hash'])
 
         else:
-            earned = 0
+            stored = 0
 
         tx_index = tx['tx_index']
         tx_hash = tx['tx_hash']
@@ -133,13 +137,13 @@ def parse (db, tx, message):
         source = tx['source']
 
     else:
-        earned = round(util.get_asset_backing_qty(db, asset)*quantity)
+        stored = round(util.get_asset_backing_qty(db, asset)*quantity)
         # Burn the users asset
         util.debit(db, tx['source'], asset, quantity, action='melt asset', event=tx['tx_hash'])
         # Credit the Burn Address
-        util.credit(db, config.UNSPENDABLE_MAINNET, util.get_asset_backing(db, asset), earned, action='burn', event=tx['tx_hash'])
-        # Credit source address with earned asset from melting
-        util.credit(db, tx['source'], util.get_asset_backing(db, asset), earned, action='melt', event=tx['tx_hash'])
+        util.credit(db, config.UNSPENDABLE_MAINNET, backing_asset, stored, action='burn', event=tx['tx_hash'])
+        # Credit source address with stored asset from melting
+        util.credit(db, tx['source'], backing_asset, stored, action='melt', event=tx['tx_hash'])
 
         tx_index = tx['tx_index']
         tx_hash = tx['tx_hash']
@@ -155,11 +159,12 @@ def parse (db, tx, message):
         'block_index': block_index,
         'melted': quantity,
         'source': source,
-        'earned': earned,
+        'asset': asset,
+        'stored': stored,
         'status': status,
     }
     if "integer overflow" not in status:
-        sql = 'insert into melts values(:tx_index, :tx_hash, :block_index, :source, :melted, :earned, :status)'
+        sql = 'insert into melts values(:tx_index, :tx_hash, :block_index, :source, :asset, :melted, :stored, :status)'
         melt_parse_cursor.execute(sql, bindings)
     else:
         logger.warn("Not storing [melt] tx [%s]: %s" % (tx['tx_hash'], status))
