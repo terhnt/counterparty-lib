@@ -163,7 +163,6 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
             backing = 0
             backing_asset = config.XCP
 
-
     # Callable, or not.
     if not callable_:
         if block_index >= 312500 or config.TESTNET or config.REGTEST: # Protocol change.
@@ -185,6 +184,11 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
     reissued_asset_longname = None
     if issuances:
         reissuance = True
+        # This is only here because i couldn't edit one of the validate calls to include these, this does the job.
+        if util.CURRENT_BLOCK_INDEX >= config.PROTOCOL_MELT:
+            meltable = util.is_meltable(db, asset)
+            backing = util.get_asset_backing_qty(db, asset)
+            backing_asset = util.get_asset_backing(db, asset)
         last_issuance = issuances[-1]
         reissued_asset_longname = last_issuance['asset_longname']
         issuance_locked = False
@@ -253,9 +257,7 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
         cursor.close()
         if (not backing_balances or backing_balances[0]['quantity'] < backing*quantity):
                 problems.append('insufficient funds available to back asset')
-
-    # If asset meltable ensure the asset backing it is also not Meltable
-    if meltable:
+        # If asset meltable ensure the asset backing it is also not Meltable
         if util.is_meltable(db, backing_asset):
             problems.append('Cannot back an asset with a meltable asset')
 
@@ -315,6 +317,11 @@ def compose (db, source, transfer_destination, asset, quantity, divisible, descr
                       ORDER BY tx_index ASC''', ('valid', asset))
     issuances = cursor.fetchall()
     if issuances:
+        if util.CURRENT_BLOCK_INDEX >= config.PROTOCOL_MELT: #Protocol change
+            # Ensure the backing_asset and backing match the original item if reissuing
+            meltable = util.is_meltable(db, asset)
+            backing = util.get_asset_backing_qty(db, asset)
+            backing_asset = util.get_asset_backing(db, asset)
         last_issuance = issuances[-1]
         callable_ = last_issuance['callable']
         call_date = last_issuance['call_date']
@@ -331,6 +338,11 @@ def compose (db, source, transfer_destination, asset, quantity, divisible, descr
     if util.enabled('subassets'): # Protocol change.
         subasset_parent, subasset_longname = util.parse_subasset_from_asset_name(asset)
         if subasset_longname is not None:
+            # when issuing a subasset ensure it cannot be melted
+            meltable = False
+            backing = 0
+            backing_asset = config.XCP
+            #
             # try to find an existing subasset
             sa_cursor = db.cursor()
             sa_cursor.execute('''SELECT * FROM assets \
@@ -463,13 +475,13 @@ def parse (db, tx, message, message_type_id):
         util.debit(db, tx['source'], config.XCP, fee, action="issuance fee", event=tx['tx_hash'])
 
     # If Meltable, Debit Asset
-    if (tx['block_index'] > 6562 and config.TESTNET):
-        try:
-            if status == 'valid' and meltable:
-                util.debit(db, tx['source'], backing_asset, backing*quantity, action="Backing meltable asset", event=tx['tx_hash'])
-        except exceptions.AssetIDError as e:
-            asset = None
-            status = "Meltable isn't available yet"
+    try:
+        if status == 'valid' and meltable:
+            util.debit(db, tx['source'], backing_asset, backing*quantity, action='send', event=tx['tx_hash'])
+            util.credit(db, config.UNSPENDSTORAGE, backing_asset, backing*quantity, action='send', event=tx['tx_hash'])
+    except exceptions.AssetIDError as e:
+        asset = None
+        status = "Meltable isn't available yet"
 
     # Lock?
     lock = False
@@ -525,20 +537,19 @@ def parse (db, tx, message, message_type_id):
         'asset_longname': asset_longname,
     }
 
-    bindings_melt= {
+    send_bindings = {
         'tx_index': tx['tx_index'],
         'tx_hash': tx['tx_hash'],
         'block_index': tx['block_index'],
         'source': tx['source'],
+        'destination': config.UNSPENDSTORAGE,
         'asset': backing_asset,
-        'melted': 0,
-        'stored': backing*quantity,
-        'status': 'open',
+        'quantity': backing*quantity,
+        'status': status,
     }
-
     if meltable and "integer overflow" not in status:
-        sql = 'insert into melts values(:tx_index, :tx_hash, :block_index, :source, :asset, :melted, :stored, :status)'
-        issuance_parse_cursor.execute(sql, bindings_melt)
+        sendsql = 'insert into sends (tx_index, tx_hash, block_index, source, destination, asset, quantity, status, memo) values(:tx_index, :tx_hash, :block_index, :source, :destination, :asset, :quantity, :status, NULL)'
+        issuance_parse_cursor.execute(sendsql, send_bindings)
     if "integer overflow" not in status:
         sql='insert into issuances values(:tx_index, :tx_hash, 0, :block_index, :asset, :quantity, :divisible, :meltable, :backing, :backing_asset, :source, :issuer, :transfer, :callable, :call_date, :call_price, :description, :fee_paid, :locked, :status, :asset_longname)'
         issuance_parse_cursor.execute(sql, bindings)
