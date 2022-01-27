@@ -371,7 +371,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
         config.UNSPENDABLE = config.UNSPENDABLE_TESTNET
         config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_TESTNET
-        config.UNSPENDABLE_STORAGE_ADDRESS = config.UNSPENDSTORAGE_TESTNET
+        config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_TESTNET
         config.PROTOCOL_MELT = config.PROTOCOL_MELT_TESTNET
         if config.TESTCOIN:
             config.BLOCK_FIRST = config.BLOCK_FIRST_TESTNET_TESTCOIN
@@ -396,10 +396,10 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
             if len(custom_args) == 4:
                 config.DEV_FUND_ADDR = custom_args[3]
-                config.UNSPENDABLE_STORAGE_ADDRESS = config.UNSPENDABLE
+                config.UNSPENDSTORAGE = config.UNSPENDABLE
             if len(custom_args) == 5:
                 config.DEV_FUND_ADDR = custom_args[3]
-                config.UNSPENDABLE_STORAGE_ADDRESS = custom_args[4]
+                config.UNSPENDSTORAGE = custom_args[4]
         else:
             raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION|DEV_FUND_ADDRESS|UNSPENDABLE_STORAGE_ADDRESS (version bytes in HH format)"
     elif config.REGTEST:
@@ -409,7 +409,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
         config.UNSPENDABLE = config.UNSPENDABLE_REGTEST
         config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_REGTEST
-        config.UNSPENDABLE_STORAGE_ADDRESS = config.UNSPENDSTORAGE_REGTEST
+        config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_REGTEST
         config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
         if config.TESTCOIN:
             config.BLOCK_FIRST = config.BLOCK_FIRST_REGTEST_TESTCOIN
@@ -426,7 +426,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
         config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_MAINNET
         config.UNSPENDABLE = config.UNSPENDABLE_MAINNET
         config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_MAINNET
-        config.UNSPENDABLE_STORAGE_ADDRESS = config.UNSPENDSTORAGE_MAINNET
+        config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_MAINNET
         config.PROTOCOL_MELT = config.PROTOCOL_MELT_MAINNET
         if config.TESTCOIN:
             config.BLOCK_FIRST = config.BLOCK_FIRST_MAINNET_TESTCOIN

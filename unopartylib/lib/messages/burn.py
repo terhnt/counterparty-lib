@@ -40,8 +40,8 @@ def validate (db, source, destination, quantity, block_index, overburn=False):
     # Check destination address.
     if destination != config.UNSPENDABLE:
         problems.append('wrong destination address')
-    if destination == config.UNSPENDABLE_STORAGE_ADDRESS:
-        problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDABLE_STORAGE_ADDRESS))
+    if destination == config.UNSPENDSTORAGE:
+        problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDSTORAGE))
 
     if not isinstance(quantity, int):
         problems.append('quantity must be in satoshis')
