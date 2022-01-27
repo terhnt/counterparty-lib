@@ -53,6 +53,9 @@ def unpack(db, message, block_index):
 def validate (db, source, destination, asset, quantity, memo_bytes, block_index):
     problems = []
 
+    if destination == config.UNSPENDABLE_STORAGE_ADDRESS:
+        problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDABLE_STORAGE_ADDRESS))
+
     if asset == config.BTC: problems.append('cannot send {}'.format(config.BTC))
 
     if not isinstance(quantity, int):
