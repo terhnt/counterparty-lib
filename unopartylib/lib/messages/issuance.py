@@ -121,8 +121,8 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
 
     if meltable and backing_asset in (config.BTC):
         problems.append('cannot back asset with {}'.format(config.BTC))
-    if meltable and backing == 0:
-        problems.append('cannot back meltable asset with 0 x {}'.format(backing_asset))
+    if meltable and backing <= 0:
+        problems.append('cannot back meltable asset with <= 0 x {}'.format(backing_asset))
 
     if (divisible and meltable): problems.append('Asset cannot be both divisible and meltable')
 
@@ -174,7 +174,6 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
     cursor.close()
     reissued_asset_longname = None
     if issuances:
-        # This is only here because i couldn't edit one of the validate calls to include these, this does the job.
         if util.CURRENT_BLOCK_INDEX >= config.PROTOCOL_MELT:
             meltable = util.is_meltable(db, asset)
             backing = util.get_asset_backing_qty(db, asset)
@@ -347,11 +346,11 @@ def compose (db, source, transfer_destination, asset, quantity, divisible, descr
                 #   generate a random numeric asset id which will map to this subasset
                 asset = util.generate_random_asset()
 
-    call_date, call_price, problems, fee, description, divisible, reissuance, reissued_asset_longname = validate(db, source, transfer_destination, asset, quantity, divisible, callable_, call_date, call_price, description, subasset_parent, subasset_longname, util.CURRENT_BLOCK_INDEX, meltable, backing, backing_asset)
+    call_date, call_price, problems, fee, description, divisible, reissuance, reissued_asset_longname = validate(db, source, transfer_destination, asset, quantity, divisible, callable_, call_date, call_price, description, subasset_parent, subasset_longname, util.CURRENT_BLOCK_INDEX, meltable, backing, backing_asset=config.XCP)
     if problems: raise exceptions.ComposeError(problems)
 
     asset_id = util.generate_asset_id(asset, util.CURRENT_BLOCK_INDEX)
-    backing_asset_id = util.generate_asset_id(backing_asset, util.CURRENT_BLOCK_INDEX)
+    backing_asset_id = util.get_asset_id(db, backing_asset, util.CURRENT_BLOCK_INDEX)
     if subasset_longname is None or reissuance:
         # Type NEW standard issuance FORMAT_3 >QQ??If?QQ
         #   used for standard issuances and all reissuances
@@ -385,6 +384,9 @@ def parse (db, tx, message, message_type_id):
     try:
         subasset_longname = None
         if message_type_id == SUBASSET_ID:
+            meltable = False
+            backing = 0
+            backing_asset = config.XCP
             if not util.enabled('subassets', block_index=tx['block_index']):
                 logger.warn("subassets are not enabled at block %s" % tx['block_index'])
                 raise exceptions.UnpackError
@@ -403,7 +405,7 @@ def parse (db, tx, message, message_type_id):
                 description = description.decode('utf-8')
             except UnicodeDecodeError:
                 description = ''
-        elif (tx['block_index'] > 283271 or config.TESTNET or config.REGTEST) and len(message) >= LENGTH_2: # Protocol change.
+        elif (tx['block_index'] > 283271 or config.TESTNET or config.REGTEST) and len(message) >= LENGTH_3: # Protocol change.
             if len(message) - LENGTH_3 <= 42:
                 curr_format = FORMAT_3 + '{}p'.format(len(message) - LENGTH_3)
             else:
@@ -422,7 +424,8 @@ def parse (db, tx, message, message_type_id):
             callable_, call_date, call_price, description = False, 0, 0.0, ''
         try:
             asset = util.generate_asset_name(asset_id, tx['block_index'])
-            backing_asset = util.generate_asset_name(backing_asset_id, tx['block_index'])
+            if message_type_id != SUBASSET_ID:
+                backing_asset = util.get_asset_name(db, backing_asset_id, tx['block_index'])
             status = 'valid'
         except exceptions.AssetIDError:
             asset = None
@@ -464,14 +467,10 @@ def parse (db, tx, message, message_type_id):
     if status == 'valid':
         util.debit(db, tx['source'], config.XCP, fee, action="issuance fee", event=tx['tx_hash'])
 
-    # If Meltable, Debit Asset
-    try:
-        if status == 'valid' and meltable:
-            util.debit(db, tx['source'], backing_asset, backing*quantity, action='send', event=tx['tx_hash'])
-            util.credit(db, config.UNSPENDSTORAGE, backing_asset, backing*quantity, action='send', event=tx['tx_hash'])
-    except exceptions.AssetIDError as e:
-        asset = None
-        status = "Meltable isn't available yet"
+    # If Meltable, Debit Asset don't do any debit/credit if quantity is 0
+    if status == 'valid' and meltable and (quantity > 0 or backing > 0):
+        util.debit(db, tx['source'], backing_asset, backing*quantity, action='send', event=tx['tx_hash'])
+        util.credit(db, config.UNSPENDSTORAGE, backing_asset, backing*quantity, action='send', event=tx['tx_hash'])
 
     # Lock?
     lock = False

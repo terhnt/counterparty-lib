@@ -39,6 +39,7 @@ def validate (db, source, destination, quantity, block_index, asset):
         return problems
 
     if quantity < 0: problems.append('negative quantity')
+    if quantity == 0: problems.append('cannot melt 0')
 
     # Check if user has enough of asset to melt
     cursor = db.cursor()
@@ -58,7 +59,7 @@ def validate (db, source, destination, quantity, block_index, asset):
 
     if len(problems) == 0:
         meltable = util.is_meltable(db, asset)
-        asset_id = util.generate_asset_id(asset, block_index)
+        asset_id = util.get_asset_id(db, asset, block_index)# generate_asset_id(asset, block_index)
         if asset_id == 0:
             problems.append('cannot melt %s' % asset) # How can we test this on a test vector?
         if meltable == False:
@@ -109,8 +110,7 @@ def parse (db, tx, message):
         if status == 'valid':
             melted = backing*quantity
             # burn the asset that is being melted
-            util.debit(db, tx['source'], asset, quantity, action='send', event=tx['tx_hash'])
-            util.credit(db, config.UNSPENDABLE, asset, quantity, action='send', event=tx['tx_hash'])
+            util.debit(db, tx['source'], asset, quantity, 'destroy', event=tx['tx_hash'])
             # send backing from unspendable storage address to the user who melted
             util.debit(db, config.UNSPENDSTORAGE, backing_asset, melted, action='send', event=tx['tx_hash'])
             util.credit(db, tx['source'], backing_asset, melted, action='send', event=tx['tx_hash'])
@@ -127,8 +127,7 @@ def parse (db, tx, message):
     else:
         melted = backing*quantity
         # burn the asset that is being melted
-        util.debit(db, tx['source'], asset, quantity, action='send', event=tx['tx_hash'])
-        util.credit(db, config.UNSPENDABLE, asset, quantity, action='send', event=tx['tx_hash'])
+        util.debit(db, tx['source'], asset, quantity, 'destroy', event=tx['tx_hash'])
         # send backing from unspendable storage address to the user who melted
         util.debit(db, config.UNSPENDSTORAGE, backing_asset, melted, action='send', event=tx['tx_hash'])
         util.credit(db, tx['source'], backing_asset, melted, action='send', event=tx['tx_hash'])
@@ -139,21 +138,36 @@ def parse (db, tx, message):
         source = tx['source']
         status = 'valid'
 
-    # Add parsed transaction to message-type–specific table.
-    send_bindings = {
+    # Burn
+    bindings = {
         'tx_index': tx_index,
         'tx_hash': tx_hash,
         'block_index': block_index,
         'source': source,
-        'destination': config.UNSPENDABLE,
         'asset': asset,
         'quantity': quantity,
+        'tag': b'',
+        'status': status,
+    }
+    if "integer overflow" not in status:
+        sql = 'insert into destructions values(:tx_index, :tx_hash, :block_index, :source, :asset, :quantity, :tag, :status)'
+        melt_parse_cursor.execute(sql, bindings)
+
+    # Add parsed transaction to message-type–specific table.
+    bindings = {
+        'tx_index': tx_index,
+        'tx_hash': tx_hash,
+        'block_index': block_index,
+        'source': config.UNSPENDSTORAGE,
+        'destination': source,
+        'asset': backing_asset,
+        'quantity': melted,
         'status': status,
     }
 
     if "integer overflow" not in status and "quantity must be in satoshis" not in status:
         sendsql = 'insert into sends (tx_index, tx_hash, block_index, source, destination, asset, quantity, status, memo) values(:tx_index, :tx_hash, :block_index, :source, :destination, :asset, :quantity, :status, NULL)'
-        melt_parse_cursor.execute(sendsql, send_bindings)
+        melt_parse_cursor.execute(sendsql, bindings)
     else:
         logger.warn("Not storing [melt] tx [%s]: %s" % (tx['tx_hash'], status))
         logger.debug("Bindings: %s" % (json.dumps(bindings), ))
