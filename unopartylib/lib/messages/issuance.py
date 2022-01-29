@@ -124,6 +124,9 @@ def validate (db, source, destination, asset, quantity, divisible, callable_, ca
     if meltable and backing <= 0:
         problems.append('cannot back meltable asset with <= 0 x {}'.format(backing_asset))
 
+    if destination == config.UNSPENDSTORAGE:
+        problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDSTORAGE))
+
     if (divisible and meltable): problems.append('Asset cannot be both divisible and meltable')
 
     if call_date is None: call_date = 0
