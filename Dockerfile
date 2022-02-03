@@ -58,7 +58,7 @@ COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod a+x /usr/local/bin/start.sh
 WORKDIR /
 
-EXPOSE 4000 14000
+EXPOSE 4120 14120
 
 # NOTE: Defaults to running on mainnet, specify -e TESTNET=1 to start up on testnet
 ENTRYPOINT ["start.sh"]
