@@ -26,7 +26,7 @@ fi
 : ${COMMAND:="start"}
 
 trap 'kill -TERM $PID' TERM INT
-/usr/local/bin/unoarty-server ${PARAMS} ${COMMAND} &
+/usr/local/bin/unoparty-server ${PARAMS} ${COMMAND} &
 PID=$!
 wait $PID
 trap - TERM INT
