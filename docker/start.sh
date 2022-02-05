@@ -10,14 +10,15 @@ fi
 
 # Bootstrap if the database does not exist (do this here to handle cases
 # where a volume is mounted over the share dir, like the fednode docker compose config does...)
-if [ ! -f /root/.local/share/unoparty/unoparty.db ]; then
-    echo "Downloading mainnet bootstrap DB..."
-    unoparty-server bootstrap --quiet
-fi
-if [ ! -f /root/.local/share/unoparty/unoparty.testnet.db ]; then
-    echo "Downloading testnet bootstrap DB..."
-    unoparty-server --testnet bootstrap --quiet
-fi
+# !!!!Will add this later once boostrap is uploaded to a server!!!!
+# if [ ! -f /root/.local/share/unoparty/unoparty.db ]; then
+#     echo "Downloading mainnet bootstrap DB..."
+#     unoparty-server bootstrap --quiet
+# fi
+# if [ ! -f /root/.local/share/unoparty/unoparty.testnet.db ]; then
+#     echo "Downloading testnet bootstrap DB..."
+#     unoparty-server --testnet bootstrap --quiet
+# fi
 
 # Kick off the server, defaulting to the "start" subcommand
 # Launch utilizing the SIGTERM/SIGINT propagation pattern from
@@ -26,7 +27,7 @@ fi
 : ${COMMAND:="start"}
 
 trap 'kill -TERM $PID' TERM INT
-/usr/local/bin/unoarty-server ${PARAMS} ${COMMAND} &
+/usr/local/bin/unoparty-server ${PARAMS} ${COMMAND} &
 PID=$!
 wait $PID
 trap - TERM INT

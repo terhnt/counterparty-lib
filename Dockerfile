@@ -21,14 +21,14 @@ ENV LC_ALL en_US.UTF-8
 ENV HOME /root
 
 # Install python-bitcoinlib
-ARG BITLIB_BRANCH=main
+ARG BITLIB_BRANCH=master
 ENV BITLIB_BRANCH ${BITLIB_BRANCH}
 RUN git clone -b ${BITLIB_BRANCH} https://github.com/terhnt/python-bitcoinlib.git /python-bitcoinlib
 WORKDIR /python-bitcoinlib
 RUN python3 setup.py install
 
 # Install python-altcoinlib
-ARG ALTLIB_BRANCH=master
+ARG ALTLIB_BRANCH=main
 ENV ALTLIB_BRANCH ${ALTLIB_BRANCH}
 RUN git clone -b ${ALTLIB_BRANCH} https://github.com/terhnt/python-altcoinlib.git /python-altcoinlib
 WORKDIR /python-altcoinlib
@@ -58,7 +58,7 @@ COPY docker/start.sh /usr/local/bin/start.sh
 RUN chmod a+x /usr/local/bin/start.sh
 WORKDIR /
 
-EXPOSE 4000 14000
+EXPOSE 4120 14120
 
 # NOTE: Defaults to running on mainnet, specify -e TESTNET=1 to start up on testnet
 ENTRYPOINT ["start.sh"]
