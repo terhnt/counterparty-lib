@@ -168,15 +168,23 @@ def fee_per_kb(conf_target, mode, nblocks=None):
     :param mode:
     :return: fee_per_kb in satoshis, or None when unable to determine
     """
-    if nblocks is None and conf_target is None:
-        conf_target = nblocks
 
-    feeperkb = rpc('estimatesmartfee', [conf_target, mode])
+    retry = 0
+    feeperkb = -1
+    while feeperkb == -1 and retry < 10:
+        feeperkb = rpc('estimatefee', [conf_target])
+        conf_target += 1
+        retry += 1
 
-    if 'errors' in feeperkb and feeperkb['errors'][0] == 'Insufficient data or no feerate found':
-        return None
+    #if nblocks is None and conf_target is None:
+    #    conf_target = nblocks
 
-    return int(max(feeperkb['feerate'] * config.UNIT, config.DEFAULT_FEE_PER_KB_ESTIMATE_SMART))
+    #feeperkb = rpc('estimatesmartfee', [conf_target, mode])
+
+    #if 'errors' in feeperkb and feeperkb['errors'][0] == 'Insufficient data or no feerate found':
+    #    return None
+
+    return int(max(feeperkb * config.UNIT, config.DEFAULT_FEE_PER_KB_ESTIMATE_SMART))
 
 def sendrawtransaction(tx_hex):
     return rpc('sendrawtransaction', [tx_hex])
