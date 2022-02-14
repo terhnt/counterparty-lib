@@ -19,3 +19,6 @@ https://github.com/terhnt/dogeparty-lib/commit/2e86ec44b7c063f411b715f8df5ff0277
 
 
  https://github.com/terhnt/dogeparty-lib/commit/45671f01600fb4289320b5dfd52479224bfd7684
+
+
+merge melt protocol from ```cleanupdate```

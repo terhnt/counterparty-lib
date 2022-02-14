@@ -1,2 +1,2 @@
-include lib/mainnet_burns.csv
-include lib/protocol_changes.json
+include unopartylib/mainnet_burns.csv
+include unopartylib/protocol_changes.json
