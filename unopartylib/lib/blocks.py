@@ -34,7 +34,7 @@ from unopartylib.lib import message_type
 from unopartylib.lib import arc4
 from unopartylib.lib.transaction_helper import p2sh_encoding
 
-from .messages import (send, order, btcpay, issuance, broadcast, bet, dividend, burn, cancel, rps, rpsresolve, destroy, sweep, dispenser)
+from .messages import (send, order, btcpay, issuance, broadcast, bet, dividend, burn, cancel, rps, rpsresolve, destroy, sweep, dispenser, melt)
 from .messages.versions import enhanced_send, mpma
 
 from .kickstart.blocks_parser import BlockchainParser, ChainstateParser
@@ -128,6 +128,8 @@ def parse_tx(db, tx):
                 dispenser.parse(db, tx, message)
             elif message_type_id == dispenser.DISPENSE_ID and util.enabled('dispensers', block_index=tx['block_index']):
                 dispenser.dispense(db, tx)
+            elif message_type_id == melt.ID:
+                melt.parse(db, tx, message)
             else:
                 cursor.execute('''UPDATE transactions \
                                            SET supported=? \
@@ -397,6 +399,7 @@ def initialise(db):
     rpsresolve.initialise(db)
     sweep.initialise(db)
     dispenser.initialise(db)
+    melt.initialise(db)
 
     # Messages
     cursor.execute('''CREATE TABLE IF NOT EXISTS messages(

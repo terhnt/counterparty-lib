@@ -505,6 +505,40 @@ def is_divisible(db, asset):
         if not issuances: raise exceptions.AssetError('No such asset: {}'.format(asset))
         return issuances[0]['divisible']
 
+def is_meltable(db, asset):
+    """Check if the asset is meltable."""
+    if asset in (config.BTC, config.XCP):
+        return False
+    else:
+        cursor = db.cursor()
+        cursor.execute('''SELECT * FROM issuances \
+                          WHERE (status = ? AND asset = ?)''', ('valid', asset))
+        issuances = cursor.fetchall()
+        if not issuances: raise exceptions.AssetError('No such asset: {}'.format(asset))
+        return issuances[0]['meltable']
+
+def get_asset_backing(db, asset):
+    """Retrieve asset thats stored in meltable asset."""
+    if asset in (config.BTC, config.XCP):
+        raise exceptions.AssetError('Asset is not backed by anything: {}'.format(asset))
+    cursor = db.cursor()
+    cursor.execute('''SELECT * FROM issuances \
+                      WHERE (status = ? AND asset = ?)''', ('valid', asset))
+    issuances = cursor.fetchall()
+    if not issuances: raise exceptions.AssetError('No such asset: {}'.format(asset))
+    return issuances[0]['backing_asset']
+
+def get_asset_backing_qty(db, asset):
+    """Retreive qty an asset is backed by."""
+    if asset in (config.BTC, config.XCP):
+        raise exceptions.AssetError('{} is not meltable'.format(asset))
+    cursor = db.cursor()
+    cursor.execute('''SELECT * FROM issuances \
+                      WHERE (status = ? AND asset = ?)''', ('valid', asset))
+    issuances = cursor.fetchall()
+    if not issuances: raise exceptions.AssetError('No such asset: {}'.format(asset))
+    return issuances[0]['backing']
+
 def value_input(quantity, asset, divisible):
     if asset == 'leverage':
         return round(quantity)

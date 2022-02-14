@@ -254,6 +254,8 @@ def log (db, command, category, bindings):
                 if bindings['divisible']:
                     divisibility = 'divisible'
                     unit = config.UNIT
+                elif bindings['meltable']:
+                    divisibility = 'meltable'
                 else:
                     divisibility = 'indivisible'
                     unit = 1

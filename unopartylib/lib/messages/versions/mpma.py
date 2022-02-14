@@ -78,6 +78,10 @@ def validate (db, source, asset_dest_quant_list, block_index):
         if not destination:
             problems.append('destination is required for {}'.format(asset))
 
+        # destination cannot be the unspendable storage address
+        if destination == config.UNSPENDSTORAGE:
+            problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDSTORAGE))
+
         if util.enabled('options_require_memo'):
             results = cursor.execute('SELECT options FROM addresses WHERE address=?', (destination,))
             if results:

@@ -271,5 +271,12 @@
     "minimum_version_revision": 4,
     "block_index": 1750000,
     "testnet_block_index": 5000
+  },
+  "melt_activated": {
+    "minimum_version_major": 9,
+    "minimum_version_minor": 59,
+    "minimum_version_revision": 4,
+    "block_index": 1800000,
+    "testnet_block_index": 7000
   }
 }
