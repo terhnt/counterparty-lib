@@ -34,7 +34,7 @@ from unopartylib.lib import message_type
 from unopartylib.lib import arc4
 from unopartylib.lib.transaction_helper import p2sh_encoding
 
-from .messages import (send, order, btcpay, issuance, broadcast, bet, dividend, burn, cancel, rps, rpsresolve, destroy, sweep, dispenser)
+from .messages import (send, order, btcpay, issuance, broadcast, bet, dividend, melt, burn, cancel, rps, rpsresolve, destroy, sweep, dispenser)
 from .messages.versions import enhanced_send, mpma
 
 from .kickstart.blocks_parser import BlockchainParser, ChainstateParser
@@ -124,6 +124,8 @@ def parse_tx(db, tx):
                 destroy.parse(db, tx, message)
             elif message_type_id == sweep.ID and util.enabled('sweep_send', block_index=tx['block_index']):
                 sweep.parse(db, tx, message)
+            elif message_type_id == melt.ID:
+                melt.parse(db, tx, message)
             elif message_type_id == dispenser.ID and util.enabled('dispensers', block_index=tx['block_index']):
                 dispenser.parse(db, tx, message)
             elif message_type_id == dispenser.DISPENSE_ID and util.enabled('dispensers', block_index=tx['block_index']):
@@ -386,6 +388,7 @@ def initialise(db):
     send.initialise(db)
     destroy.initialise(db)
     order.initialise(db)
+    melt.initialise(db)
     btcpay.initialise(db)
     issuance.initialise(db)
     broadcast.initialise(db)

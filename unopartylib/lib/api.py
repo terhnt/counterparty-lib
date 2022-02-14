@@ -67,7 +67,7 @@ API_TABLES = ['assets', 'balances', 'credits', 'debits', 'bets', 'bet_matches',
 
 API_TRANSACTIONS = ['bet', 'broadcast', 'btcpay', 'burn', 'cancel', 'destroy',
                     'dividend', 'issuance', 'order', 'send',
-                    'rps', 'rpsresolve', 'sweep', 'dispenser']
+                    'rps', 'rpsresolve', 'sweep', 'dispenser', 'melt']
 
 COMMONS_ARGS = ['encoding', 'fee_per_kb', 'regular_dust_size',
                 'multisig_dust_size', 'op_return_value', 'pubkey',
@@ -658,6 +658,9 @@ class APIServer(threading.Thread):
                     'owner': last_issuance['issuer'],
                     'divisible': bool(last_issuance['divisible']),
                     'locked': locked,
+                    'meltable': bool(last_issuance['meltable']),
+                    'backing': last_issuance['backing'],
+                    'backing_asset': last_issuance['baccking_asset'],
                     'supply': util.asset_supply(self.db, asset),
                     'description': last_issuance['description'],
                     'issuer': last_issuance['issuer']})

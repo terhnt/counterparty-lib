@@ -373,6 +373,8 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_START = config.BURN_START_TESTNET_TESTCOIN
             config.BURN_END = config.BURN_END_TESTNET_TESTCOIN
             config.UNSPENDABLE = config.UNSPENDABLE_TESTNET
+            config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_TESTNET
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_TESTNET
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
             config.ADDRESSVERSION = config.ADDRESSVERSION_TESTNET
@@ -381,21 +383,25 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_START = config.BURN_START_TESTNET
             config.BURN_END = config.BURN_END_TESTNET
             config.UNSPENDABLE = config.UNSPENDABLE_TESTNET
+            config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_TESTNET
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_TESTNET
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
     elif config.CUSTOMNET:
         custom_args = customnet.split('|')
 
-        if len(custom_args) == 3:
+        if len(custom_args) == 4:
             config.MAGIC_BYTES = config.MAGIC_BYTES_REGTEST
             config.ADDRESSVERSION = binascii.unhexlify(custom_args[1])
             config.P2SH_ADDRESSVERSION = binascii.unhexlify(custom_args[2])
             config.BLOCK_FIRST = config.BLOCK_FIRST_REGTEST
             config.BURN_START = config.BURN_START_REGTEST
             config.BURN_END = config.BURN_END_REGTEST
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
             config.UNSPENDABLE = custom_args[0]
+            config.UNSPENDSTORAGE = custom_args[3]
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
-            raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION (version bytes in HH format)"
+            raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION|UNSPENDABLE_STORAGE_ADDRESS (version bytes in HH format)"
     elif config.REGTEST:
         config.MAGIC_BYTES = config.MAGIC_BYTES_REGTEST
         if config.TESTCOIN:
@@ -405,6 +411,8 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_START = config.BURN_START_REGTEST_TESTCOIN
             config.BURN_END = config.BURN_END_REGTEST_TESTCOIN
             config.UNSPENDABLE = config.UNSPENDABLE_REGTEST
+            config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_REGTEST
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
             config.ADDRESSVERSION = config.ADDRESSVERSION_REGTEST
@@ -413,6 +421,8 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_START = config.BURN_START_REGTEST
             config.BURN_END = config.BURN_END_REGTEST
             config.UNSPENDABLE = config.UNSPENDABLE_REGTEST
+            config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_REGTEST
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
     else:
         config.MAGIC_BYTES = config.MAGIC_BYTES_MAINNET
@@ -423,6 +433,8 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_START = config.BURN_START_MAINNET_TESTCOIN
             config.BURN_END = config.BURN_END_MAINNET_TESTCOIN
             config.UNSPENDABLE = config.UNSPENDABLE_MAINNET
+            config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_MAINNET
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_MAINNET
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
             config.ADDRESSVERSION = config.ADDRESSVERSION_MAINNET
@@ -431,6 +443,8 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_START = config.BURN_START_MAINNET
             config.BURN_END = config.BURN_END_MAINNET
             config.UNSPENDABLE = config.UNSPENDABLE_MAINNET
+            config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_MAINNET
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_MAINNET
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
 
     # Misc
