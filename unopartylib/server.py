@@ -366,6 +366,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
     # (more) Testnet
     if config.TESTNET:
         config.MAGIC_BYTES = config.MAGIC_BYTES_TESTNET
+        config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_TESTNET
         if config.TESTCOIN:
             config.ADDRESSVERSION = config.ADDRESSVERSION_TESTNET
             config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_TESTNET
@@ -385,7 +386,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
     elif config.CUSTOMNET:
         custom_args = customnet.split('|')
 
-        if len(custom_args) == 3:
+        if len(custom_args) >= 3:
             config.MAGIC_BYTES = config.MAGIC_BYTES_REGTEST
             config.ADDRESSVERSION = binascii.unhexlify(custom_args[1])
             config.P2SH_ADDRESSVERSION = binascii.unhexlify(custom_args[2])
@@ -394,10 +395,14 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_END = config.BURN_END_REGTEST
             config.UNSPENDABLE = custom_args[0]
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
+            if len(custom_args) == 4:
+                config.DEV_FUND_ADDR = custom_args[3]
+                config.UNSPENDABLE_STORAGE_ADDRESS = config.UNSPENDABLE
         else:
-            raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION (version bytes in HH format)"
+            raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION|DEV_FUND_ADDRESS (version bytes in HH format)"
     elif config.REGTEST:
         config.MAGIC_BYTES = config.MAGIC_BYTES_REGTEST
+        config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_REGTEST
         if config.TESTCOIN:
             config.ADDRESSVERSION = config.ADDRESSVERSION_REGTEST
             config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_REGTEST
@@ -416,6 +421,7 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
     else:
         config.MAGIC_BYTES = config.MAGIC_BYTES_MAINNET
+        config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_MAINNET
         if config.TESTCOIN:
             config.ADDRESSVERSION = config.ADDRESSVERSION_MAINNET
             config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_MAINNET
