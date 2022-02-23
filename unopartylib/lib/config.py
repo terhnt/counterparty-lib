@@ -60,11 +60,12 @@ UNSPENDABLE_TESTNET = 'UUnoPartyXburnTestnetXXXXXXXXFEeN4'
 UNSPENDABLE_MAINNET = 'uNopartyXburnXXXXXXXXXXXXXXXWJmsqn'
 
 # Hardcoded development fund - each uno burned will give a % of XUP to development/maintenance address
-DEV_FUND_ADDR = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt - may move funds to Mo'
-DEV_FUND_ADDR_TESTNET = 'UPxPzftYTiWyNa3Y6Aamyr8unu6xpEsdwK'
+#DEV_FUND_ADDR = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt - may move funds to Mo'
 DEV_FUND_ADDR_REGTEST = '1MHBMEXpWkX5GesyyCD2NGfyFekmyBfGsd'
+DEV_FUND_ADDR_TESTNET = 'UPxPzftYTiWyNa3Y6Aamyr8unu6xpEsdwK'
+DEV_FUND_ADDR_MAINNET = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt
 DEV_FUND_PERCENT = 0.25 # 25% - an additional 25% of each burn reward goes to development
-DEV_FUND = False
+DEV_FUND = True
 
 MAX_BURN = 5 # Maximum amount of UNO that one address can burn
 REWARD_RATE = 2000 # base reward of XUP for burning unobtanium
