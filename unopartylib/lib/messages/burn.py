@@ -4,6 +4,7 @@ import struct
 import decimal
 import logging
 import math
+
 logger = logging.getLogger(__name__)
 
 D = decimal.Decimal

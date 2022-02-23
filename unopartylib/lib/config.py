@@ -71,6 +71,7 @@ UNSPENDSTORAGE_TESTNET = 'UUnopartystorageaddressXXXXXVNZKFF'
 UNSPENDSTORAGE_MAINNET = 'uUnopartystorageaddressXXXXXTLgaam'
 
 # Hardcoded development fund - each uno burned will give a % of XUP to development/maintenance address
+
 DEV_FUND_ADDR_REGTEST = '1MHBMEXpWkX5GesyyCD2NGfyFekmyBfGsd'
 DEV_FUND_ADDR_TESTNET = 'UPxPzftYTiWyNa3Y6Aamyr8unu6xpEsdwK'
 DEV_FUND_ADDR_MAINNET = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt
