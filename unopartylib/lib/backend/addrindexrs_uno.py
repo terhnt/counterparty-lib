@@ -26,7 +26,7 @@ raw_transactions_cache = util.DictCache(size=config.BACKEND_RAW_TRANSACTIONS_CAC
 class BackendRPCError(Exception):
     pass
 
-class AddrIndexRsRPCError(Exception):
+class AddrIndexRs_UnoRPCError(Exception):
     pass
 
 def rpc_call(payload):
@@ -257,7 +257,7 @@ def getrawtransaction_batch(txhash_list, verbose=False, skip_missing=False, _ret
             else:
                 result[tx_hash] = raw_transactions_cache[tx_hash]['hex'] if raw_transactions_cache[tx_hash] is not None else None
         except KeyError as e: #shows up most likely due to finickyness with addrindex not always returning results that we need...
-            print("Key error in addrindexrs still exists!!!!!")
+            print("Key error in addrindexrs_uno still exists!!!!!")
             _logger.warning("tx missing in rawtx cache: {} -- txhash_list size: {}, hash: {} / raw_transactions_cache size: {} / # rpc_batch calls: {} / txhash in noncached_txhashes: {} / txhash in txhash_list: {} -- list {}".format(
                 e, len(txhash_list), hashlib.md5(json.dumps(list(txhash_list)).encode()).hexdigest(), len(raw_transactions_cache), len(payload),
                 tx_hash in noncached_txhashes, tx_hash in txhash_list, list(txhash_list.difference(noncached_txhashes)) ))
@@ -270,7 +270,7 @@ def getrawtransaction_batch(txhash_list, verbose=False, skip_missing=False, _ret
 
     return result
 
-class AddrIndexRsThread (threading.Thread):
+class AddrIndexRs_UnoThread (threading.Thread):
     def __init__(self, host, port):
         threading.Thread.__init__(self)
         self.host = host
@@ -282,22 +282,22 @@ class AddrIndexRsThread (threading.Thread):
         self.is_killed = False
 
     def stop(self):
-        logging.debug('AddrIndexRs thread closing')
+        logging.debug('AddrIndexRs_Uno thread closing')
         self.send({"kill": True})
 
     def connect(self):
         self.lastId = 0
         while True:
-            logging.info('AddrIndexRs connecting...')
+            logging.info('AddrIndexRs_Uno connecting...')
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.settimeout(SOCKET_TIMEOUT)
             try:
                 self.sock.connect((self.host, self.port))
             except:
-                logging.info('Error connecting to AddrIndexRs! Retrying in a few seconds')
+                logging.info('Error connecting to AddrIndexRs_Uno! Retrying in a few seconds')
                 time.sleep(5.0)
             else:
-                logging.info('Connected to AddrIndexRs!')
+                logging.info('Connected to AddrIndexRs_Uno!')
                 break
 
     def run(self):
@@ -313,15 +313,15 @@ class AddrIndexRsThread (threading.Thread):
                     has_sent = False
                     while not(has_sent) and msg:
                         try:
-                            logging.debug('AddrIndexRs sending')
+                            logging.debug('AddrIndexRs_Uno sending')
                             self.sock.send(msg)
                             has_sent = True
                         except Exception as e:
                             #try:
-                            logging.debug('AddrIndexRs error:' + e)
+                            logging.debug('AddrIndexRs_Uno error:' + e)
                             self.connect()
                             #except Exception as e2:
-                            #logging.debug('AddrIndexRs fatal error:' + e2)
+                            #logging.debug('AddrIndexRs_Uno fatal error:' + e2)
 
                     self.message_to_send = None
                     data = b""
@@ -332,18 +332,18 @@ class AddrIndexRsThread (threading.Thread):
                             self.message_result = json.loads(data.decode('utf-8'))
                             retry_count = 0
                             parsed = True
-                            logging.debug('AddrIndexRs Recv complete!')
+                            logging.debug('AddrIndexRs_Uno Recv complete!')
                         except socket.timeout:
-                            logging.debug('AddrIndexRs Recv timeout error sending: '+str(msg))
+                            logging.debug('AddrIndexRs_Uno Recv timeout error sending: '+str(msg))
                             if retry_count <= 0:
                                 self.connect()
                             self.message_result = None
                             retry_count -= -1
                         except socket.error as e:
-                            logging.debug('AddrIndexRs Recv error:' + str(e)+' with msg '+str(msg))
+                            logging.debug('AddrIndexRs_Uno Recv error:' + str(e)+' with msg '+str(msg))
                             self.connect()
                         except Exception as e:
-                            logging.debug('AddrIndexRs Recv error:' + str(e)+' with msg '+str(msg))
+                            logging.debug('AddrIndexRs_Uno Recv error:' + str(e)+' with msg '+str(msg))
                             if retry_count <= 0:
                                 raise e
                             self.message_result = None
@@ -353,7 +353,7 @@ class AddrIndexRsThread (threading.Thread):
             else:
                 self.locker.notify()
         self.sock.close()
-        logging.debug('AddrIndexRs socket closed normally')
+        logging.debug('AddrIndexRs_Uno socket closed normally')
 
     def send(self, msg):
         self.locker.acquire()
@@ -369,13 +369,13 @@ class AddrIndexRsThread (threading.Thread):
 
 _backend = None
 
-def ensure_addrindexrs_connected():
+def ensure_addrindexrs_uno_connected():
     global _backend
     backoff = 500
     max_backoff = 5000
     while _backend == None:
         try:
-            _backend = AddrIndexRsThread(config.INDEXD_CONNECT, config.INDEXD_PORT)
+            _backend = AddrIndexRs_UnoThread(config.INDEXD_CONNECT, config.INDEXD_PORT)
             _backend.daemon = True
             _backend.start()
 
@@ -429,7 +429,7 @@ def unpack_vout(outpoint, tx, block_count):
     }
 
 def get_unspent_txouts(source):
-    ensure_addrindexrs_connected()
+    ensure_addrindexrs_uno_connected()
 
     block_count = getblockcount()
     result = _backend.send({
@@ -494,7 +494,7 @@ def get_unspent_txouts(source):
 #
 # }
 def search_raw_transactions(address, unconfirmed=True):
-    ensure_addrindexrs_connected()
+    ensure_addrindexrs_uno_connected()
 
     hsh = _address_to_hash(address)
     txs = _backend.send({
@@ -515,7 +515,7 @@ def getindexblocksbehind():
     return 0
 
 def init():
-    ensure_addrindexrs_connected()
+    ensure_addrindexrs_uno_connected()
 
 def stop():
     if '_backend' in globals():
