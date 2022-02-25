@@ -59,17 +59,17 @@ cd python-altcoinlib
 sudo python3 ./setup.py install
 ```
 
-Download and install latest addrindexrs:
+Download and install latest addrindexrs_uno:
 ```
-$ git clone https://github.com/terhnt/addrindexrs.git
-$ cd addrindexrs
+$ git clone https://github.com/terhnt/addrindexrs_uno.git
+$ cd addrindexrs_uno
 $ cargo check
  -- Setup the appropiate environment variables --
-  - export ADDRINDEXRS_JSONRPC_IMPORT=1
-  - export ADDRINDEXRS_TXID_LIMIT=15000
-  - export ADDRINDEXRS_COOKIE=user:password
-  - export ADDRINDEXRS_INDEXER_RPC_ADDR=0.0.0.0:8122
-  - export ADDRINDEXRS_DAEMON_RPC_ADDR=unobtanium:65535
+  - export ADDRINDEXRS_UNO_JSONRPC_IMPORT=1
+  - export ADDRINDEXRS_UNO_TXID_LIMIT=15000
+  - export ADDRINDEXRS_UNO_COOKIE=user:password
+  - export ADDRINDEXRS_UNO_INDEXER_RPC_ADDR=0.0.0.0:8122
+  - export ADDRINDEXRS_UNO_DAEMON_RPC_ADDR=unobtanium:65535
  --
 $ cargo build --release
 $ cargo run --release

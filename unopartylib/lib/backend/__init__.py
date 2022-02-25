@@ -16,7 +16,7 @@ from unopartylib.lib import script
 from unopartylib.lib import config
 from unopartylib.lib import exceptions
 
-from unopartylib.lib.backend import addrindexrs
+from unopartylib.lib.backend import addrindexrs_uno
 
 MEMPOOL_CACHE_INITIALIZED = False
 
