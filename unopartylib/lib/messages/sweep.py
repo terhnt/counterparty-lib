@@ -57,6 +57,9 @@ def validate (db, source, destination, flags, memo, block_index):
     if source == destination:
         problems.append('destination cannot be the same as source')
 
+    if destination == config.UNSPENDSTORAGE:
+        problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDSTORAGE))
+
     cursor = db.cursor()
     cursor.execute('''SELECT * FROM balances WHERE (address = ? AND asset = ?)''', (source, 'XUP'))
     result = cursor.fetchall()

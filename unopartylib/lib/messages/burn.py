@@ -41,6 +41,8 @@ def validate (db, source, destination, quantity, block_index, overburn=False):
     # Check destination address.
     if destination != config.UNSPENDABLE:
         problems.append('wrong destination address')
+    if destination == config.UNSPENDSTORAGE:
+        problems.append('cannot send to the unspendable_storage_address: {}'.format(config.UNSPENDSTORAGE))
 
     if not isinstance(quantity, int):
         problems.append('quantity must be in satoshis')
@@ -110,7 +112,6 @@ def parse (db, tx, MAINNET_BURNS, message=None):
             if config.DEV_FUND and (config.TESTNET or config.REGTEST):
                 util.credit(db, config.DEV_FUND_ADDR, config.XCP, int(math.ceil(earned * config.DEV_FUND_PERCENT)), action='burn', event=tx['tx_hash'])
                 earned = earned + int(math.ceil(earned * config.DEV_FUND_PERCENT))
-
         else:
             burned = 0
             earned = 0

@@ -365,28 +365,26 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
 
     # (more) Testnet
     if config.TESTNET:
+        config.ADDRESSVERSION = config.ADDRESSVERSION_TESTNET
+        config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_TESTNET
         config.MAGIC_BYTES = config.MAGIC_BYTES_TESTNET
+        config.UNSPENDABLE = config.UNSPENDABLE_TESTNET
+        config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_TESTNET
+        config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_TESTNET
+        config.PROTOCOL_MELT = config.PROTOCOL_MELT_TESTNET
         if config.TESTCOIN:
-            config.ADDRESSVERSION = config.ADDRESSVERSION_TESTNET
-            config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_TESTNET
             config.BLOCK_FIRST = config.BLOCK_FIRST_TESTNET_TESTCOIN
             config.BURN_START = config.BURN_START_TESTNET_TESTCOIN
             config.BURN_END = config.BURN_END_TESTNET_TESTCOIN
-            config.UNSPENDABLE = config.UNSPENDABLE_TESTNET
-            config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
-            config.ADDRESSVERSION = config.ADDRESSVERSION_TESTNET
-            config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_TESTNET
             config.BLOCK_FIRST = config.BLOCK_FIRST_TESTNET
             config.BURN_START = config.BURN_START_TESTNET
             config.BURN_END = config.BURN_END_TESTNET
-            config.UNSPENDABLE = config.UNSPENDABLE_TESTNET
-            config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
     elif config.CUSTOMNET:
         custom_args = customnet.split('|')
 
-        if len(custom_args) >= 3:
+        if len(custom_args) >= 4:
             config.MAGIC_BYTES = config.MAGIC_BYTES_REGTEST
             config.ADDRESSVERSION = binascii.unhexlify(custom_args[1])
             config.P2SH_ADDRESSVERSION = binascii.unhexlify(custom_args[2])
@@ -395,49 +393,49 @@ def initialise_config(database_file=None, log_file=None, api_log_file=None,
             config.BURN_END = config.BURN_END_REGTEST
             config.UNSPENDABLE = custom_args[0]
             config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
+            config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
             if len(custom_args) == 4:
                 config.DEV_FUND_ADDR = custom_args[3]
-                config.UNSPENDABLE_STORAGE_ADDRESS = config.UNSPENDABLE
+                config.UNSPENDSTORAGE = config.UNSPENDABLE
+            if len(custom_args) == 5:
+                config.DEV_FUND_ADDR = custom_args[3]
+                config.UNSPENDSTORAGE = custom_args[4]
         else:
-            raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION|DEV_FUND_ADDRESS (version bytes in HH format)"
+            raise "Custom net parameter needs to be like UNSPENDABLE_ADDRESS|ADDRESSVERSION|P2SH_ADDRESSVERSION|DEV_FUND_ADDRESS|UNSPENDABLE_STORAGE_ADDRESS (version bytes in HH format)"
     elif config.REGTEST:
+        config.ADDRESSVERSION = config.ADDRESSVERSION_REGTEST
+        config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_REGTEST
         config.MAGIC_BYTES = config.MAGIC_BYTES_REGTEST
+        config.UNSPENDABLE = config.UNSPENDABLE_REGTEST
+        config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_REGTEST
+        config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_REGTEST
+        config.PROTOCOL_MELT = config.PROTOCOL_MELT_REGTEST
         if config.TESTCOIN:
-            config.ADDRESSVERSION = config.ADDRESSVERSION_REGTEST
-            config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_REGTEST
             config.BLOCK_FIRST = config.BLOCK_FIRST_REGTEST_TESTCOIN
             config.BURN_START = config.BURN_START_REGTEST_TESTCOIN
             config.BURN_END = config.BURN_END_REGTEST_TESTCOIN
-            config.UNSPENDABLE = config.UNSPENDABLE_REGTEST
-            config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
-            config.ADDRESSVERSION = config.ADDRESSVERSION_REGTEST
-            config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_REGTEST
             config.BLOCK_FIRST = config.BLOCK_FIRST_REGTEST
             config.BURN_START = config.BURN_START_REGTEST
             config.BURN_END = config.BURN_END_REGTEST
-            config.UNSPENDABLE = config.UNSPENDABLE_REGTEST
-            config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
     else:
         config.MAGIC_BYTES = config.MAGIC_BYTES_MAINNET
+        config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
+        config.ADDRESSVERSION = config.ADDRESSVERSION_MAINNET
+        config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_MAINNET
+        config.UNSPENDABLE = config.UNSPENDABLE_MAINNET
         config.DEV_FUND_ADDR = config.DEV_FUND_ADDR_MAINNET
+        config.UNSPENDSTORAGE = config.UNSPENDSTORAGE_MAINNET
+        config.PROTOCOL_MELT = config.PROTOCOL_MELT_MAINNET
         if config.TESTCOIN:
-            config.ADDRESSVERSION = config.ADDRESSVERSION_MAINNET
-            config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_MAINNET
             config.BLOCK_FIRST = config.BLOCK_FIRST_MAINNET_TESTCOIN
             config.BURN_START = config.BURN_START_MAINNET_TESTCOIN
             config.BURN_END = config.BURN_END_MAINNET_TESTCOIN
-            config.UNSPENDABLE = config.UNSPENDABLE_MAINNET
-            config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
         else:
-            config.ADDRESSVERSION = config.ADDRESSVERSION_MAINNET
-            config.P2SH_ADDRESSVERSION = config.P2SH_ADDRESSVERSION_MAINNET
             config.BLOCK_FIRST = config.BLOCK_FIRST_MAINNET
             config.BURN_START = config.BURN_START_MAINNET
             config.BURN_END = config.BURN_END_MAINNET
-            config.UNSPENDABLE = config.UNSPENDABLE_MAINNET
-            config.P2SH_DUST_RETURN_PUBKEY = p2sh_dust_return_pubkey
 
     # Misc
     config.REQUESTS_TIMEOUT = requests_timeout

@@ -55,15 +55,27 @@ DEFAULT_INDEXD_PORT_REGTEST = 28122
 DEFAULT_INDEXD_PORT_TESTNET = 18122
 DEFAULT_INDEXD_PORT = 8122
 
+# Protocol Changes
+PROTOCOL_MELT_MAINNET = 800000
+PROTOCOL_MELT_TESTNET = 7320
+PROTOCOL_MELT_REGTEST = 1
+
+# Burnaddress
 UNSPENDABLE_REGTEST = '1UnopartyxBurnxAddrXXXXXXXXXX42dPh'
 UNSPENDABLE_TESTNET = 'UUnoPartyXburnTestnetXXXXXXXXFEeN4'
 UNSPENDABLE_MAINNET = 'uNopartyXburnXXXXXXXXXXXXXXXWJmsqn'
 
+# Storageaddress - pretty much burn addresses but will store unoparty backed assets before melting
+UNSPENDSTORAGE_REGTEST = '1UnopartystorageaddressXXXXXXkxGFV'
+UNSPENDSTORAGE_TESTNET = 'UUnopartystorageaddressXXXXXVNZKFF'
+UNSPENDSTORAGE_MAINNET = 'uUnopartystorageaddressXXXXXTLgaam'
+
 # Hardcoded development fund - each uno burned will give a % of XUP to development/maintenance address
-#DEV_FUND_ADDR = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt - may move funds to Mo'
+
 DEV_FUND_ADDR_REGTEST = '1MHBMEXpWkX5GesyyCD2NGfyFekmyBfGsd'
 DEV_FUND_ADDR_TESTNET = 'UPxPzftYTiWyNa3Y6Aamyr8unu6xpEsdwK'
 DEV_FUND_ADDR_MAINNET = 'uVVuwXm2mDK9pr9XkWT5k7ihQyoSC8y2MW' # Controlled by terhnt
+
 DEV_FUND_PERCENT = 0.25 # 25% - an additional 25% of each burn reward goes to development
 DEV_FUND = True
 
@@ -87,7 +99,7 @@ BLOCK_FIRST_TESTNET_TESTCOIN = 1600
 BURN_START_TESTNET_TESTCOIN = BLOCK_FIRST_TESTNET_TESTCOIN
 BURN_END_TESTNET_TESTCOIN = 400000     # A Long Time!
 
-BLOCK_FIRST_TESTNET = 700
+BLOCK_FIRST_TESTNET = 15000
 #BLOCK_FIRST_TESTNET_HASH = '000007b02afb00ae826d948d88f4973c00073425f965917f6298b6d280bde021'
 BURN_START_TESTNET = BLOCK_FIRST_TESTNET
 BURN_END_TESTNET = BURN_END_TESTNET_TESTCOIN   # A Long Time!
